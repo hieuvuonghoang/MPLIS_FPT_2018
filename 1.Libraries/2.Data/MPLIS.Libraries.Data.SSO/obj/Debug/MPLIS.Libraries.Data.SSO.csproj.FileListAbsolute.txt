@@ -1,0 +1,4 @@
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.SSO\bin\Debug\MPLIS.Libraries.Data.SSO.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.SSO\bin\Debug\MPLIS.Libraries.Data.SSO.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.SSO\obj\Debug\MPLIS.Libraries.Data.SSO.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.SSO\obj\Debug\MPLIS.Libraries.Data.SSO.pdb

@@ -1,0 +1,188 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.TTChungBienDongVM
+
+<form id="IDformBienDong_BD">
+    @Html.HiddenFor(model => model.BIENDONGID)
+    @Html.HiddenFor(model => model.QUYETDINHID)
+    @Html.HiddenFor(model => model.MABIENDONG)
+    @Html.HiddenFor(model => model.isCOTTRIENG, new { id = "ckisCOTTRIENGID" })
+    @Html.HiddenFor(model => model.HOSOTIEPNHANID)
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Chỉ số biến động</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.MAHOSOTHUTUCDANGKY, "STT hồ sơ ĐK", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.MAHOSOTHUTUCDANGKY, "", new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.SOTHUTU, "STT biến động", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.SOTHUTU, "", new { @class = "form-control input-sm", @type = "number" })
+                </div>
+            </div>
+            <div class="row" id="divLoaiBienDongID">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.LOAIBIENDONGID, "Loại biến động", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.DropDownListFor(model => model.LOAIBIENDONGID, ViewBag.DM_LOAIBIENDONG_list as SelectList, new { id = "ListLoaibiendongid", @class = "form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.MAHSTTDANGKY, "Mã hồ sơ đăng ký", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.MAHSTTDANGKY, "", new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.THOIDIEMBIENDONG, "Thời điểm biến động", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.THOIDIEMBIENDONG, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.SOQUYETDINH, "Quyết định liên quan", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.SOQUYETDINH, "", new { id = "quyetdinhlienquanRL", @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-6">
+                    <button class="btn-sm btn-inform" type="button" onclick="ChiTietQuyetDinh()">Chi tiết quyết định</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Thông tin hợp đồng, công chứng</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.SOHOPDONG, "Số hợp đồng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.SOHOPDONG, "", new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.SOCONGCHUNG, "Số công chứng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.SOCONGCHUNG, "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.QUYENCONGCHUNG, "Quyển công chứng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.QUYENCONGCHUNG, "", new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.NGAYHOPDONG, "Ngày hợp đồng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.NGAYHOPDONG, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm datepicker" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.NGAYCONGCHUNG, "Ngày công chứng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.NGAYCONGCHUNG, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm datepicker" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.NGAYTRUOCBA, "Ngày trước bạ", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.NGAYTRUOCBA, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm datepicker" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.NOICONGCHUNG, "Nơi công chứng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.TextBoxFor(model => model.NOICONGCHUNG, "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Thông tin biến động</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.LYDOBIENDONG, "Lý do biến động", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.TextBoxFor(model => model.LYDOBIENDONG, "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.NOIDUNGBIENDONG, "Nội dung biến động", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.TextAreaFor(model => model.NOIDUNGBIENDONG, new { @class = "form-control", @rows = "3" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.NOIDUNGHOPDONG, "Nội dung hợp đồng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.TextAreaFor(model => model.NOIDUNGHOPDONG, new { @class = "form-control", @rows = "3" })
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    //divLoaiBienDongID
+    $(function () {
+        if ($('#ListLoaibiendongid').val() != "444444") {
+            $('#btn_ThongTinRieng_BDID').hide();
+        }
+        $('#ListLoaibiendongid').change(function () {
+            var ckcottrienghaykoc = $('#ListLoaibiendongid').val();
+            if ((ckcottrienghaykoc == "444444") || (ckcottrienghaykoc == "45555555")) {
+                $('#divBienDongID_TTRIENG_THECHAP_CTQUYEN').load("/TTBienDong/_BienDong_TTRIENG_THECHAP_TTQUYEN", function (responseTxt, statusTxt, xhr) {
+                });
+                $('#div_BienDong_TTRIENG_ID').show();
+                $('#btn_ThongTinRieng_BDID').show();
+            }
+            else {
+                $('#divBienDongID_TTRIENG_THECHAP_CTQUYEN').html("");
+                $('#div_BienDong_TTRIENG_ID').hide();
+                $('#btn_ThongTinRieng_BDID').hide();
+            }
+        });
+    });
+    function ChiTietQuyetDinh() {
+        $.ajax({
+            type: "GET",
+            url: "/TTBienDong/_PopupQuyetDinh",
+            success: function (html) {
+                $('#dialogformQuyetDinhID').html(html);
+                var options = {
+                    backdrop: "static",
+                    show: true
+                }
+                $("#modalChiTietQDID").modal(options);
+            },
+        });
+    }
+</script>

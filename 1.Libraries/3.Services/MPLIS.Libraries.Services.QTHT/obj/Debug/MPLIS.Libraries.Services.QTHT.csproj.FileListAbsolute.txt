@@ -1,0 +1,16 @@
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\MPLIS.Libraries.Services.QTHT.exe.config
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\MPLIS.Libraries.Services.QTHT.exe
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\MPLIS.Libraries.Services.QTHT.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\AppCore.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\AutoMapper.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\EntityFramework.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\EntityFramework.SqlServer.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\MPLIS.Libraries.Data.SSO.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\AppCore.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\MPLIS.Libraries.Data.SSO.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\AutoMapper.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\EntityFramework.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\bin\Debug\EntityFramework.SqlServer.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\obj\Debug\MPLIS.Libraries.Services.QTHT.csprojResolveAssemblyReference.cache
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\obj\Debug\MPLIS.Libraries.Services.QTHT.exe
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QTHT\obj\Debug\MPLIS.Libraries.Services.QTHT.pdb

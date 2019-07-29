@@ -1,0 +1,128 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSCaNhanVM
+
+<div class='modal fade' id='modalKQTKCaNhanID'>
+    @Html.Hidden("Count", Model.DSCaNhan.Count, new { @id = "CountCaNhanID" })
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'>Kết quả tìm kiếm cá nhân</h4>
+            </div>
+            <div class='modal-body'>
+                <table id="TableDSCaNhanID" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>#</th>
+                            <th>Họ tên</th>
+                            <th>CMT / Hộ chiếu</th>
+                            <th>Nơi cấp</th>
+                            <th>Địa chỉ</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DSCaNhan != null && Model.DSCaNhan.Count > 0)
+                        {
+                            int sTT = 0;
+                            foreach (var item in Model.DSCaNhan)
+                            {
+                                sTT++;
+                                <tr>
+                                    <td>
+                                        @item.CANHANID
+                                    </td>
+                                    <td class="text-right">
+                                        @sTT.
+                                    </td>
+                                    <td>
+                                        @item.HOTEN
+                                    </td>
+                                    <td class="text-center">
+                                        @item.SOGIAYTO
+                                    </td>
+                                    <td>
+                                        @item.NOICAP
+                                    </td>
+                                    <td>
+                                        @item.DIACHI
+                                    </td>
+                                    <td class="text-center"></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var columns = [
+            { "data": "CANHANID" },
+            { "data": "STT" },
+            { "data": "HOTEN" },
+            { "data": "SOGIAYTO" },
+            { "data": "NOICAP" },
+            { "data": "DIACHI" },
+            { "data": null }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnSel'>Chọn</button>";
+                }
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "lengthChange": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+            "autoWidth": false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+            },
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": 't<"bottom"p><"clear">'
+        }
+
+        var TableDSCaNhanID = $('#TableDSCaNhanID').DataTable(options);
+
+        TableDSCaNhanID.rows().nodes().on('click', 'tbody tr', function () {
+            if (TableDSCaNhanID.rows().nodes().length > 0) {
+                ChonCaNhan(TableDSCaNhanID.row($(this)).data());
+            }
+        })
+
+        TableDSCaNhanID.rows().nodes().on('click', 'tbody tr button', function (event) {
+            event.stopPropagation();
+        })
+
+        TableDSCaNhanID.rows().nodes().on('click', 'tbody tr .btnSel', function (event) {
+            ChonCaNhan(TableDSCaNhanID.row($(this).parents('tr')).data());
+        })
+
+        function ChonCaNhan(rowData) {
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/XLHSDangKy/DonDangKy_ChonCaNhan",
+            //    data: { caNhanID: rowData.CANHANID },
+            //    dataType: "html",
+            //    success: function (result) {
+                    
+            //    }
+            //})
+        }
+
+    })
+</script>

@@ -1,0 +1,209 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSDangKyGiayChungNhanVM
+
+<div class="box box-primary">
+    <div class="box-header p-0"></div>
+    <div id="divBoxBodyDSDangKyGCNID" class="box-body" style="padding-bottom:5px;">
+        <div class="row">
+            <form id="formInfoSearchGCNID">
+                <div class="col-xs-5">
+                    <div class="col-xs-5">
+                        @Html.Label("", "Số phát hành", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-7">
+                        @Html.TextBox("SOPHATHANH", "", new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                    <div class="col-xs-5">
+                        @Html.Label("", "Mã vạch", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-7">
+                        @Html.TextBox("MAVACH", "", new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <button id="btnSubmit_formInfoSearchGCNID" type="button" class="btn btn-sm btn-default" data-toggle="tooltip" data-placement="bottom" title="Tìm kiếm GCN và thêm vào danh sách!"><i class='fa fa-plus'></i> Thêm</button>
+                </div>
+            </form>
+        </div>
+        <div class="row p-0">
+            <table id="tableDangKyGCNID" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>#</th>
+                        <th>Số phát hành</th>
+                        <th>Mã vạch</th>
+                        <th>Trạng thái</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.DSDangKyGiayChungNhan != null && Model.DSDangKyGiayChungNhan.Count > 0)
+                    {
+                        int stt = 0;
+                        foreach (var item in Model.DSDangKyGiayChungNhan)
+                        {
+                            stt++;
+                            <tr>
+                                <td>@item.DANGKYGCNID</td>
+                                <td>@item.GIAYCHUNGNHANID</td>
+                                <td>@stt.</td>
+                                <td>@item.SoPhatHanh</td>
+                                <td>@item.MaVach</td>
+                                <td>@item.TrangThai</td>
+                                <td></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var divProcessBar = "<div class='overlay'> <i class='fa fa-refresh fa-spin'></i> </div>";
+
+        var valformInfoSearchGCNID = $("#formInfoSearchGCNID").validate({
+            rules: {
+                MAVACH: "required"
+            },
+            errorPlacement: function (error, element) {
+                return true;
+            }
+        });
+
+        var columns = [
+            { "data": "DANGKYGCNID" },
+            { "data": "GIAYCHUNGNHANID" },
+            { "data": "STT" },
+            { "data": "SoPhatHanh" },
+            { "data": "MaVach" },
+            { "data": "TrangThai" },
+            { "data": null }
+        ]
+
+        var columnDefs = [
+            {
+                "targets": [0, 1],
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "className": "text-center",
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnDel' data-toggle='tooltip' data-placement='bottom' title='Xóa GCN khỏi danh sách'>Xóa</button> <button type='button' class='btn btn-xs btn-heading btnDetail' data-toggle='tooltip' data-placement='bottom' title='Xem thông tin chi tiết GCN'>Chi tiết</button>";
+                }
+            },
+            {
+                "targets": -2,
+                "className": "text-center",
+                "render": function (data) {
+                    if (data == "Y") {
+                        return "Đã phê duyệt, còn tính pháp lý";
+                    } else if (data == "N") {
+                        return "Đã phê duyệt, mất tính pháp lý";
+                    } else if (data == "S") {
+                        return "Đang xử lý, chưa được phê duyệt";
+                    }
+                    return "";
+                }
+            },
+            {
+                "targets": 2,
+                "className": "text-right"
+            },
+            {
+                "targets": [-3, -4],
+                "className": "text-center"
+            }
+        ]
+
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "t<'row p-0'<'col-xs-12 p-0'<'pull-right'p>>>"
+        }
+
+        var tableDangKyGCNID = $('#tableDangKyGCNID').DataTable(options);
+
+        function loadDataDSDangKyGCN() {
+            $('#divBoxBodyDSDangKyGCNID').append(divProcessBar);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKyV2/_DonDangKy_DSGiayChungNhan",
+                dataType: "html",
+                success: function (html) {
+                    $('#divDSDangKyGCNID').html(html);
+                },
+                complete: function () {
+                    $('.overlay', $('#divBoxBodyDSDangKyGCNID')).remove();
+                }
+            })
+        }
+
+        $('#btnSubmit_formInfoSearchGCNID').on('click', function () {
+            var checkForm = $('#formInfoSearchGCNID').valid();
+            if (checkForm) {
+                $('#divBoxBodyDSDangKyGCNID').append(divProcessBar);
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKyV2/DanhSachGCN_ThemGCN",
+                    data: { soPhatHanh: $('#formInfoSearchGCNID [name=SOPHATHANH]').val(), maVach: $('#formInfoSearchGCNID [name=MAVACH]').val() },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+                            loadDataDSDangKyGCN();
+                        }
+                        alert(result.message);
+                    },
+                    complete: function () {
+                        $('.overlay', $('#divBoxBodyDSDangKyGCNID')).remove();
+                    }
+                })
+            }
+        })
+
+        tableDangKyGCNID.rows().nodes().on('click', 'tbody tr .btnDel', function (event) {
+            var rowData = tableDangKyGCNID.row($(this).parents('tr')).data();
+            if (confirm("Xác nhận xóa Giấy Chứng Nhận trong danh sách?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKyV2/DanhSachGCN_XoaGCN",
+                    data: { dangKyGCNID: rowData.DANGKYGCNID },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+                            loadDataDSDangKyGCN();
+                        }
+                        alert(result.message);
+                    }
+                })
+            }
+        })
+
+        tableDangKyGCNID.rows().nodes().on('click', 'tbody tr .btnDetail', function (event) {
+            var rowData = tableDangKyGCNID.row($(this).parents('tr')).data();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSGiayChungNhan/InitCurGiayChungNhan",
+                data: { gCNID: rowData.GIAYCHUNGNHANID, taiGCN: "0" },
+                success: function (result) {
+                    if (result.message == undefined) {
+                        $('#bhs-tabID').html(result);
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            })
+        })
+
+    })
+</script>

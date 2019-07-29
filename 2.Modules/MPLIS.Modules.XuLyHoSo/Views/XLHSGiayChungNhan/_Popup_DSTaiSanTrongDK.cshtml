@@ -1,0 +1,88 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DanhSachTaiSanVM
+
+<div class='modal fade' id='modalformDSTaiSan'>
+    <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'>Danh sách tài sản trong đăng ký</h4>
+            </div>
+            <div class='modal-body'>
+                @Html.HiddenFor(Model => Model.GiayChungNhanID)
+                <table class="table table-bordered" id="popuptableSHTAISAN_THUAID" data-toggle="table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="checkall_QuyenSHTAISANThua" /></th>
+                            <th>#</th>
+                            <th>Loại tài sản</th>
+                            <th>Tên tài sản</th>
+                            <th>Diện tích (m<sup>2</sup>)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DSTaiSanVM != null && Model.DSTaiSanVM.Count > 0)
+                        {
+                            int stt = 0;
+                            foreach (var item in Model.DSTaiSanVM)
+                            {
+                                stt++;
+                                <tr data-id="@item.TaiSanGanLienVoiDatID">
+                                    <td style='text-align: center;'>
+                                        <input type="checkbox" name="DSSHTAISANTHUA_CHON" value="@item.TaiSanGanLienVoiDatID" />
+                                    </td>
+                                    <td style="text-align: right;">
+                                        @stt.
+                                    </td>
+                                    <td>
+                                        @item.LoaiTaiSan
+                                    </td>
+                                    <td>
+                                        @item.TenTaiSan
+                                    </td>
+                                    <td style="text-align: center;">
+                                        @item.DienTich
+                                    </td>
+                                    <td style="text-align: center;">
+                                        @Ajax.ActionLink("Chi tiết", "", "", new { id = item.TaiSanGanLienVoiDatID },
+                                            new AjaxOptions
+                                            {
+                                                HttpMethod = "POST",
+                                                //OnSuccess = "RemoveRow",
+                                                //UpdateTargetId = "divBienDongID_DSCHUVAO",
+                                                InsertionMode = InsertionMode.Replace
+                                            }, new { @class = "btn btn-xs btn-heading", @title = "Chi tiết" })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class='modal-footer' style='text-align:center;'>
+                <button type='button' class='btn btn-primary btn-sm pull-right' onclick="GCN_QSHTS_ThemGCN()">Thêm vào GCN</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var tableSHTAISAN
+    function GCN_QSHTS_ThemGCN() {
+        $.ajax({
+            type: "POST",
+            url: "/XLHSGiayChungNhan/Add_DSSHTAISAN_RTABLE_THUA",
+            data: { dSSHTaiSan: GetDSCheck(tableSHTAISAN), GiayChungNhanID: $('#GiayChungNhanID').attr('value') },
+            success: function (html) {
+                $('#divGCN_Main_SHTaiSanID').html(html);
+                alert("Thêm quyền sở hữu tài sản thành công!");
+            },
+        });
+    }
+    $(document).ready(function () {
+        //Draw DataTable cho TaiSan
+        tableSHTAISAN = InitDataTableXLHS($('#popuptableSHTAISAN_THUAID'));
+        //Xử lý checkBox cho tableSHTAISAN
+        ProcessCheckBox(tableSHTAISAN, $('#checkall_QuyenSHTAISANThua'));
+    });
+</script>
+

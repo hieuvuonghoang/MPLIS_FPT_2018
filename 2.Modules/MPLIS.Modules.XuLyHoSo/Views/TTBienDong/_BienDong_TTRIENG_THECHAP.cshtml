@@ -1,0 +1,78 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.TheChapVM
+
+<form id="IDformBienDong_TTRIENG_THECHAP">
+    @Html.HiddenFor(model => model.BIENDONGID)
+    @Html.HiddenFor(model => model.BDTHECHAPID)
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Thông tin thế chấp</h3>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="Luu_BienDong_TTRIENG_THECHAP()">Lưu thông tin</button>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => Model.NGAYNHANHS, "Ngày nhận hồ sơ", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => Model.NGAYNHANHS, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => Model.NGAYTHECHAP, "Ngày thế chấp", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => Model.NGAYTHECHAP, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => Model.QUYENSO, "Quyển số", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => Model.QUYENSO, "", new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => Model.SOTHUTU, "Số thứ tự", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => Model.SOTHUTU, "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => Model.SODANGKY, "Số đăng ký", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => Model.SODANGKY, "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => Model.NGAYBATDAU, "Ngày bắt đầu", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => Model.NGAYBATDAU, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => Model.NGAYKETTHUC, "Ngày kết thúc", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => Model.NGAYKETTHUC, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    var formBienDong_BD = $('#IDformBienDong_TTRIENG_THECHAP');
+    function Luu_BienDong_TTRIENG_THECHAP() {
+        $.ajax({
+            type: "POST",
+            url: "/TTBienDong/Save_IDformBienDong_TTRIENG_THECHAP",
+            data: formBienDong_BD.serialize(),
+            success: function () {
+                alert("Lưu biến động thông tin thế chấp thành công!");
+            },
+        });
+    }
+</script>

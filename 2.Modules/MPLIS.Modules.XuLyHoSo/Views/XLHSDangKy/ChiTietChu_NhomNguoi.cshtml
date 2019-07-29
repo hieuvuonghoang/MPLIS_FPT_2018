@@ -1,0 +1,287 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.NhomNguoiLS
+
+<form id="formTTNhomNguoiID">
+    @Html.Hidden("NHOMNGUOIID", Model.NHOMNGUOIID)
+    @Html.Hidden("TRANGTHAI", Model.TRANGTHAI)
+    @Html.Hidden("NGUOIDAIDIEN", Model.NGUOIDAIDIEN)
+    <div id="divNhomNguoiNguoiDaiDienID" class="box box-primary m-10">
+        <div class="box-header with-border">
+            <div class="row p-0">
+                <div class="col-xs-4 p-0">
+                </div>
+                <div class="col-xs-4 text-center p-0">
+                    <h3 class="box-title">Đại diện nhóm người</h3>
+                </div>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CMTNGUOIDAIDIEN, "CMT / Hộ chiếu", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @if (Model.TRANGTHAI == 2)
+                    {
+                        @Html.TextBoxFor(model => model.CMTNGUOIDAIDIEN, new { @class = "form-control input-sm", @disabled = "" })
+                    }
+                    else if (Model.TRANGTHAI == 1)
+                    {
+                        @Html.TextBoxFor(model => model.CMTNGUOIDAIDIEN, new { @class = "form-control input-sm" })
+                    }
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.HoTenNguoiDaiDien, "Họ tên", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.HoTenNguoiDaiDien, new { @class = "form-control input-sm", @disabled = "" })
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="box box-primary m-10">
+    <div class="box-header with-border">
+        <h3 class="box-title">Danh sách thành viên</h3>
+    </div>
+    <div id="divNNDSTVID" class="box-body">
+        <table id="TableTVNNID" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>#</th>
+                    <th>Tên thành viên</th>
+                    <th>Loại chủ</th>
+                    <th>Số giấy tờ</th>
+                    <th>Vai trò</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DSThanhVien != null && Model.DSThanhVien.Count > 0)
+                {
+                    int sTT = 0;
+                    foreach (var item in Model.DSThanhVien)
+                    {
+                        sTT++;
+                        <tr>
+                            <td>
+                                @item.NHOMNGUOITHANHVIENID
+                            </td>
+                            <td>
+                                @sTT.
+                            </td>
+                            <td>
+                                @item.HOTEN
+                            </td>
+                            <td>
+                                @item.TENLOAICHU
+                            </td>
+                            <td>
+                                @item.SOGIAYTO
+                            </td>
+                            <td>
+                                @if (item.ISNGUOIDAIDIEN == 1)
+                                {
+                                    @Html.Raw("Đại diện")
+                                }
+                                else
+                                {
+                                    @Html.Raw("Thành viên")
+                                }
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        @Html.DropDownList("CBLoaiChuNhomNguoi", new SelectList(ViewBag.dSLoaiChuNhomNguoi, "LOAICHUID", "TENLOAICHU"), new { @class = "input-sm form-control", @id = "CBLoaiChuNhomNguoiID" })
+        <button id="btnNNThemTVID" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm mới</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var divProcessBar = "<div class='overlay'> <i class='fa fa-refresh fa-spin'></i> </div>";
+
+        var columns = [
+            { "data": "NHOMNGUOITHANHVIENID" },
+            { "data": "STT" },
+            { "data": "HOTEN" },
+            { "data": "TENLOAICHU" },
+            { "data": "SOGIAYTO" },
+            { "data": "TenVaiTro" },
+            { "data": null }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnDel'>Xóa</button>";
+                },
+                "className": "text-center"
+            },
+            {
+                "targets": [1],
+                "className": "text-right"
+            },
+            {
+                "targets": [3, 4, 5],
+                "className": "text-center"
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "t<'row p-0' <'col-xs-6 p-0' <'row p-0' <'col-xs-6 p-0' <'#cbLoaiTVNhomID'> >  <'col-xs-6 p-0' <'#divBtnNNThemTVID'> > > > <'col-xs-6 p-6' <'pull-right'p> > >",
+            "initComplete": function () {
+                initComplete();
+            }
+        }
+
+        function initComplete() {
+            $('#btnNNThemTVID').appendTo($('#divBtnNNThemTVID'));
+            $('#CBLoaiChuNhomNguoiID').appendTo($('#cbLoaiTVNhomID'));
+        }
+
+        var TableTVNNID = $('#TableTVNNID').DataTable(options);
+
+        TableTVNNID.rows().nodes().on('dblclick', 'tbody tr', function () {
+            if (TableTVNNID.rows().nodes().length > 0) {
+                NhomNguoiXemTTTV(TableTVNNID.row($(this)).data(), $(this));
+            }
+        })
+
+        $('#btnNNThemTVID').on('click', function () {
+            $('#divNNDSTVID').append(divProcessBar);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/NhomNguoi_ThemMoiThanhVien",
+                data: { loaiChuID: $('#CBLoaiChuNhomNguoiID').val() },
+                dataType: "html",
+                success: function (html) {
+                    $('#TableTVNNID_wrapper').addClass('d-none');
+                    $('#divNNDSTVID').append(html);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Lỗi: ' + errorThrown);
+                },
+                complete: function () {
+                    $('.overlay', $('#divNNDSTVID')).remove();
+                }
+            })
+        })
+
+        TableTVNNID.rows().nodes().on('click', 'tbody tr .btnDel', function (event) {
+            if (confirm("Xác nhận xóa thành viên Nhóm Người?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/NhomNguoi_XoaThanhVien",
+                    data: { nhomNguoiThanhVienID: TableTVNNID.row($(this).parents('tr')).data().NHOMNGUOITHANHVIENID },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+                            $.ajax({
+                                type: "POST",
+                                url: '/XLHSDangKy/NhomNguoi_GetThongTin',
+                                dataType: "json",
+                                success: function (nhomNguoi) {
+                                    $('#formTTNhomNguoiID [name=NGUOIDAIDIEN]').val(nhomNguoi.NGUOIDAIDIEN);
+                                    $('#formTTNhomNguoiID [name=CMTNGUOIDAIDIEN]').val(nhomNguoi.CMTNGUOIDAIDIEN);
+                                    $('#formTTNhomNguoiID [name=HoTenNguoiDaiDien]').val(nhomNguoi.HoTenNguoiDaiDien);
+                                    TableTVNNID.clear();
+                                    var i = 1;
+                                    for (var temp in nhomNguoi.dSNhomNguoiThanhVien) {
+                                        TableTVNNID.row.add({
+                                            "NHOMNGUOITHANHVIENID": nhomNguoi.dSNhomNguoiThanhVien[temp].NHOMNGUOITHANHVIENID,
+                                            "STT": i + ".",
+                                            "HOTEN": nhomNguoi.dSNhomNguoiThanhVien[temp].HOTEN,
+                                            "TENLOAICHU": nhomNguoi.dSNhomNguoiThanhVien[temp].TENLOAICHU,
+                                            "SOGIAYTO": nhomNguoi.dSNhomNguoiThanhVien[temp].SOGIAYTO,
+                                            "TenVaiTro": nhomNguoi.dSNhomNguoiThanhVien[temp].TenVaiTro
+                                        });
+                                        i++;
+                                    }
+                                    TableTVNNID.draw();
+                                }
+                            })
+                        }
+                        alert(result.mes);
+                    }
+                })
+            }
+        })
+
+        function XoaNhomNguoiTV(table, rowData, rowDel) {
+            if (confirm("Xác nhận xóa thành viên Nhóm Người?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/NhomNguoi_XoaThanhVien",
+                    data: { nhomNguoiThanhVienID: rowData.NHOMNGUOITHANHVIENID },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+                            $.ajax({
+                                type: "POST",
+                                url: '/XLHSDangKy/NhomNguoi_GetThongTin',
+                                dataType: "json",
+                                success: function (nhomNguoi) {
+                                    console.log(nhomNguoi);
+                                    $('#formTTNhomNguoiID [name=NGUOIDAIDIEN]').val(nhomNguoi.NGUOIDAIDIEN);
+                                    $('#formTTNhomNguoiID [name=CMTNGUOIDAIDIEN]').val(nhomNguoi.CMTNGUOIDAIDIEN);
+                                    $('#formTTNhomNguoiID [name=HoTenNguoiDaiDien]').val(nhomNguoi.HoTenNguoiDaiDien);
+                                    TableTVNNID.clear();
+                                    var i = 1;
+                                    for (var temp in nhomNguoi.dSNhomNguoiThanhVien) {
+                                        table.row.add({
+                                            "NHOMNGUOITHANHVIENID": nhomNguoi.dSNhomNguoiThanhVien[temp].NHOMNGUOITHANHVIENID,
+                                            "STT": i + ".",
+                                            "HOTEN": nhomNguoi.dSNhomNguoiThanhVien[temp].HOTEN,
+                                            "TENLOAICHU": nhomNguoi.dSNhomNguoiThanhVien[temp].TENLOAICHU,
+                                            "SOGIAYTO": nhomNguoi.dSNhomNguoiThanhVien[temp].SOGIAYTO,
+                                            "TenVaiTro": nhomNguoi.dSNhomNguoiThanhVien[temp].TenVaiTro
+                                        });
+                                        i++;
+                                    }
+                                    TableTVNNID.draw();
+                                }
+                            })
+                        }
+                        alert(result.mes);
+                    }
+                })
+            }
+        }
+
+        function NhomNguoiXemTTTV(rowData, eDom) {
+            $('#divNNDSTVID').append(divProcessBar);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/NhomNguoi_ChiTietThanhVien",
+                data: { nhomNguoiThanhVienID: rowData.NHOMNGUOITHANHVIENID },
+                dataType: "html",
+                success: function (html) {
+                    $('#TableTVNNID_wrapper').addClass('d-none');
+                    $('#divNNDSTVID').append(html);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Lỗi: ' + errorThrown);
+                },
+                complete: function () {
+                    $('.overlay', $('#divNNDSTVID')).remove();
+                }
+            })
+        }
+
+    })
+
+</script>

@@ -1,0 +1,80 @@
+﻿<link rel="stylesheet" href="~/Content/plugins/datatables/dataTables.bootstrap.min.css">
+<script src="~/Scripts/plugins/datatables/jquery.dataTables.js"></script>
+<script src="~/Scripts/plugins/datatables/dataTables.buttons.js"></script>
+<script src="~/Scripts/plugins/datatables/dataTables.bootstrap.js"></script>
+
+<div id="xlhsnavtabID">
+    <ul class="nav nav-tabs nav-justified">
+        <li id="bhs-li1" class="active">
+            <a data-toggle="tab" href="#bhs-tabID">Hồ sơ tiếp nhận</a>
+        </li>
+        <li id="bhs-li2">
+            <a data-toggle="tab" href="#bhs-tabID">Thông tin đăng ký</a>
+        </li>
+        <li id="bhs-li3">
+            <a data-toggle="tab" href="#bhs-tabID">Biến động</a>
+        </li>
+        <li id="bhs-li4">
+            <a>Giấy chứng nhận</a>
+        </li>
+        <li id="bhs-li5">
+            <a>TT nghĩa vụ tài chính</a>
+        </li>
+        <li id="bhs-li6">
+            <a data-toggle="tab" href="#bhs-tabID">Hồ sơ lưu kho</a>
+        </li>
+        @*<li id="bhs-li7">
+            <a data-toggle="tab" href="#bhs-tabID">Đăng ký test</a>
+        </li>*@
+    </ul>
+
+    <div id="bhs-tabs-cont" class="tab-content">
+        <div id="bhs-tabID" class="tab-pane fade in active">
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#bhs-li1').on('click', function () {
+            disabledTabGCN();
+            $('#bhs-tabID').load('/TTBienDong/_HoSoTiepNhan');
+        });
+        $('#bhs-li2').on('click', function () {
+            disabledTabGCN();
+            $('#bhs-tabID').load('/XLHSDangKy/_DangKy');
+        });
+        $('#bhs-li3').on('click', function () {
+            disabledTabGCN();
+            $.ajax({
+                type: "POST",
+                url: "/TTBienDong/KiemTraBienDong",
+                dataType: "json",
+                success: function (result) {
+                    if (result.exist) {
+                        $('#bhs-tabID').load('/TTBienDong/_BienDong');
+                    } else {
+                        alert(result.mes);
+                        $('#bhs-tabID').load('/TTBienDong/BienDong_ThemMoi_TTChung');
+                    }
+                }
+            })
+        });
+        $('#bhs-li6').on('click', function () {
+            disabledTabGCN();
+            $('#bhs-tabID').load('/XLHSHoSoLuuKho/_HoSoLuuKho');
+        });
+        $('#bhs-li7').on('click', function () {
+            disabledTabGCN();
+            $('#bhs-tabID').load('/XLHSDangKyV2/_DangKy');
+        });
+        function clearBHSTabPane() {
+            $('#bhs-tabs-cont .tab-pane').html('');
+        }
+        function disabledTabGCN() {
+            $('#bhs-li4').addClass('disabled');
+        }
+        $('#bhs-li1').click();
+    });
+</script>
+

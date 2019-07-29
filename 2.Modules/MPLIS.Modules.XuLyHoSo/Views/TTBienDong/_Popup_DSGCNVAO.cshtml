@@ -1,0 +1,87 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSGCNDonVM
+
+<div class='modal fade' id='modalformDSGCNVAOID'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            @using (Ajax.BeginForm("Add_DSGCNVAO_RTABLE", "TTBienDong", new AjaxOptions
+            {
+                OnSuccess = "closeDialog",
+                HttpMethod = "Post",
+                UpdateTargetId = "divBienDongID_DSGCNVAO",
+                InsertionMode = InsertionMode.Replace
+            }))
+            {
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                    <h4 class='modal-title'>Thêm giấy chứng nhận từ đăng ký</h4>
+                </div>
+                <div class='modal-body'>
+                    <table class="table table-bordered" id="popuptable_DSGCNVAOID" data-toggle="table" style="margin-bottom:0px;">
+                        <tbody>
+                            <tr>
+                                <th>#</th>
+                                <th>Số phát hành</th>
+                                <th>Mã vạch</th>
+                                <th>Trạng thái</th>
+                                <th>Hành động</th>
+                            </tr>
+                            @{int rmoivao = 0;
+                                if (Model.DSDangKyGCN != null)
+                                {
+                                    foreach (var item in Model.DSDangKyGCN)
+                                    {
+                                        rmoivao = rmoivao + 1;
+                                        <tr data-id="@item.GIAYCHUNGNHANID">
+                                            <td style="text-align: right;">
+                                                @rmoivao.
+                                            </td>
+                                            <td>
+                                                @item.SoPhatHanh
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @item.MaVach
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @item.TrangThai
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <input type="checkbox" name="DSGCNVAO_CHON" value="@item.GIAYCHUNGNHANID" />
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class='modal-footer' style='text-align:center;'>
+                    <div class="pull-left">
+                        <input type="checkbox" id="checkall_DSGCNVAO_CHON" /><span>Check All</span>
+                    </div>
+                    <button type='submit' class='t100 btn btn-primary btn-sm pull-right'>Lưu</button>
+                </div>
+                                }
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function toggleCheckeddsgcnvao(statusDSGCNVAO_CHON) {
+        $("#popuptable_DSGCNVAOID input").each(function () {
+            $(this).prop("checked", statusDSGCNVAO_CHON);
+        });
+    }
+
+    function closeDialog() {
+        alert('Thêm giấy chứng nhận đầu vào thành công');
+        W_DSGCNVAOID.dialog("close");
+    }
+
+    $(document).ready(function () {
+        $("#checkall_DSGCNVAO_CHON").prop("checked", false);
+        $("#checkall_DSGCNVAO_CHON").click(function () {
+            var statusDSGCNVAO_CHON = $("#checkall_DSGCNVAO_CHON").prop("checked");
+            toggleCheckeddsgcnvao(statusDSGCNVAO_CHON);
+        });
+    });
+</script>

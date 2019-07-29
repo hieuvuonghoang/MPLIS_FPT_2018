@@ -1,0 +1,137 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSGCNBDVM
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Danh sách GCN đầu vào</h3>
+        <button class="btn-xs btn-heading pull-right" type="button" onclick="ThemTuDangKy()">Thêm từ đăng ký</button>
+        <button class="btn-xs btn-heading pull-right" type="button" onclick="ThemMoi()">Thêm mới</button>
+    </div>
+    <div class="box-body">
+        <table id="table_DSGCNVAOID" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Là cha</th>
+                    <th>#</th>
+                    <th>Số phát hành</th>
+                    <th>Mã vạch</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DSGcn != null && Model.DSGcn.Count() > 0)
+                {
+                    int rowdsGCNVaoID = 0;
+                    foreach (var item in Model.DSGcn)
+                    {
+                        if (item.LAGCNVAO == "Y")
+                        {
+                            rowdsGCNVaoID = rowdsGCNVaoID + 1;
+                            <tr data-id="@item.GIAYCHUNGNHANID">
+                                <td class="text-center">
+                                    <input type="checkbox" name="Array_DSGCNCHA" id="@item.GIAYCHUNGNHANID" value="@item.GIAYCHUNGNHANID"
+                                           onclick="calc(@item.GIAYCHUNGNHANID);" />
+                                </td>
+                                <td class="text-right">
+                                    @rowdsGCNVaoID.
+                                </td>
+                                <td class="text-center">
+                                    @item.SoPhatHanh
+                                </td>
+                                <td class="text-center">
+                                    @item.MaVach
+                                </td>
+                                <td class="text-center">
+                                    @item.TrangThai
+                                </td>
+                                <td class="text-center">
+                                    @Ajax.ActionLink("Xóa", "Remove_DSGCNVAO_R", "TTBienDong", new { id = item.BDGCNID },
+                                    new AjaxOptions
+                                    {
+                                        HttpMethod = "POST",
+                                        //OnSuccess = "RemoveRow",
+                                        UpdateTargetId = "divBienDongID_DSGCN",
+                                        InsertionMode = InsertionMode.Replace
+                                    }, new { @class = "btn btn-xs btn-heading", @title = "Xóa" })
+                                    @Ajax.ActionLink("Sao chép", "Copy_DSGCNVAO_R", "TTBienDong", new { id = item.BDGCNID },
+                                    new AjaxOptions
+                                    {
+                                        HttpMethod = "POST",
+                                        OnSuccess = "Load_TTRIENG_THECHAP_CTQUYEN()",
+                                        UpdateTargetId = "divBienDongID_DSGCN",
+                                        InsertionMode = InsertionMode.Replace
+                                    }, new { @class = "btn btn-xs btn-heading btncoppy", @title = "Copy tới đầu ra" })
+                                    @Ajax.ActionLink("Chi tiết", "_GiayChungNhan", "XLHSGiayChungNhan", new { id = item.GIAYCHUNGNHANID, loaiGCN = 1 },
+                                    new AjaxOptions
+                                    {
+                                        HttpMethod = "POST",
+                                        //OnSuccess = "RemoveRow",
+                                        UpdateTargetId = "bhs-tabID",
+                                        InsertionMode = InsertionMode.Replace
+                                    }, new { @class = "btn btn-xs btn-heading", @title = "Chi tiết thông tin GCN" })
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    function ThemTuDangKy() {
+        $.ajax({
+            type: "GET",
+            url: "/TTBienDong/_Popup_DSGCNDangKy",
+            success: function (html) {
+                $('#dialogformDSGCNVAOID').html(html);
+                var options = {
+                    "backdrop": "static",
+                    "show": true
+                }
+                $("#modalformDSGCNVAOID").modal(options);
+            },
+        });
+        //return false;
+    }
+
+    function ThemMoi() {
+        $.ajax({
+            type: "GET",
+            url: "/TTBienDong/ThemMoiGiayChungNhanVao",
+            success: function (html) {
+                console.log(html);
+                $('#divBienDongID_DSGCNVAO').html(html);
+            },
+        });
+        return false;
+    }
+
+    $("#table_DSGCNVAOID input").change(function () {
+        var id = document.getElementById("CurGCNRaID").value;
+        //console.log("CurGCNRaID:" + id);
+        if (id && id != "") {
+            var data = document.getElementById("JSONCha").value;
+            //console.log("json value:" + data);
+            var obj = JSON.parse(data);
+            //console.log("json array:" + obj[id]);
+            var arr = obj[id];
+            var GCNID = this.id;
+            var index = arr.indexOf(GCNID);
+            if ($(this).is(':checked')) {
+                //console.log("GCNID:" + GCNID);
+                if (index == -1) arr.push(GCNID);
+            } else {
+                if (index > -1) arr.splice(index, 1);
+            }
+            obj[id] = arr;
+            document.getElementById("JSONCha").value = JSON.stringify(obj);
+        } else alert('Bạn cần chọn một giấy chứng nhận đầu ra trước');
+    });
+
+    $(document).ready(function () {
+        InitDataTableXLHS($('#table_DSGCNVAOID'));
+    })
+</script>

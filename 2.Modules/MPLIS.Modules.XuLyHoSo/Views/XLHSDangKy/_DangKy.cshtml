@@ -1,0 +1,182 @@
+﻿<div id="divDonDangKyID" class="m-15">
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divDonDangKyID" href="#collapse_DonDangKy_DSGCN">
+                Danh sách GCN trong đăng ký
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuDonDangKy_DSGCN()">Cập nhật</button>
+        </div>
+        <div id="collapse_DonDangKy_DSGCN" class="panel-collapse collapse in">
+            <div id="divDonDangKyID_DSGCN">
+                @Html.Partial("_DonDangKy_DSGCN")
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divDonDangKyID" href="#collapse_DonDangKy_DSCHU">
+                Danh sách Chủ trong đăng ký
+            </a>
+            @*<button class="btn-xs btn-heading pull-right" type="button" onclick="LuuDonDangKy_DSCHU()">Cập nhật</button>*@
+        </div>
+        <div id="collapse_DonDangKy_DSCHU" class="panel-collapse collapse">
+            <div id="divDonDangKyID_DSCHU">
+                @*@Html.Partial("_DonDangKy_DSCHU")*@
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divDonDangKyID" href="#collapse_DonDangKy_DSTHUA">
+                Danh sách Thửa trong đăng ký
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuDonDangKy_DSTHUA()">Cập nhật</button>
+        </div>
+        <div id="collapse_DonDangKy_DSTHUA" class="panel-collapse collapse">
+            <div id="divDonDangKyID_DSTHUA">
+                @Html.Partial("_DonDangKy_DSTHUA")
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divDonDangKyID" href="#collapse_DonDangKy_DSTAISAN">
+                Danh sách tài sản trong đăng ký
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuDonDangKy_DSTAISAN()">Cập nhật</button>
+        </div>
+        <div id="collapse_DonDangKy_DSTAISAN" class="panel-collapse collapse">
+            <div id="divDonDangKyID_DSTAISAN">
+                @Html.Action("_DonDangKy_DSTAISAN")
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="dialogformTaiLieuDoDacID">
+    @*@{Html.RenderPartial("_Popup_QUYENSDDAT");}*@
+</div>
+<div id="dialogformKHUCHUNGCU">
+    @*@{Html.RenderPartial("_Popup_QUYENSDDAT");}*@
+</div>
+<div id="dialogformNHACHUNGCU">
+    @*@{Html.RenderPartial("_Popup_QUYENSDDAT");}*@
+</div>
+<div id="dialogformDIACHI">
+</div>
+<div id="dialogKQTKCaNhan">
+</div>
+<div id="dialogKQTKHoGiaDinh">
+</div>
+<div id="dialogKQTKVoChong">
+</div>
+<div id="dialogKQTKToChuc">
+</div>
+<div id="dialogKQTKTCongDong">
+</div>
+<div id="dialogKQTKNhomNguoi">
+</div>
+<script type="text/javascript">
+    //var formDonDangKy_DSGCN = $('#formDSGCN_ADDID');
+    function LuuDonDangKy_DSGCN() {
+        //document.getElementById('DONDANGKYID').value
+        // alert('123');
+        var dondk = document.getElementById('DONDANGKYID').value;
+        var listgcn = [];
+        // var empTab = document.getElementById('table_DSGCNVAOID');
+        var rowLength = 0;
+        rowLength = $("#table_DSGCNVAOID td").closest("tr").length;// empTab.rows.length;
+        if (rowLength == 0) return;
+        // alert(rowLength);
+        for (var i = 1; i <= rowLength; i += 1) {
+            // var row = empTab.rows[i];
+            var objgcn = {};
+            objgcn.idgcn = document.getElementById('table_DSGCNVAOID').rows[i].cells[0].innerText.trim();
+            //alert(row.cells[0].innerText);
+            listgcn.push(objgcn);
+
+        }
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/Save_formDonDangKy_DSGCN",
+            dataType: "json",
+            success: function (html) {
+                //$('#divDonDangKyID_DSGCN').html(html);
+                if (html === "true") {
+                    $('#bhs-li2').click();
+                    alert("Cập nhật thành công");
+                }
+            },
+        });
+    };
+    var formDonDangKy_DSCHU = $('#IDformDonDangKy_DSCHU');
+    function LuuDonDangKy_DSCHU() {
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/Save_formDonDangKy_DSCHU",
+            //  data: formDonDangKy_DSCHU.serialize(),
+            dataType: "json",
+            success: function (data) {
+                //$('#divDonDangKyID_DSCHU').html(html);
+                if (data === "true") {
+                    alert("Lưu thành công");
+                }
+                else {
+                    alert("Có lỗi xảy ra!!!");
+                }
+
+            },
+        });
+    };
+    //var formDonDangKy_DSTHUA = $('#IDformDonDangKy_DSTHUA');
+    function LuuDonDangKy_DSTHUA() {
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/Save_formDonDangKy_DSTHUA",
+            // data: formDonDangKy_DSTHUA.serialize(),
+            dataType: "json",
+            success: function (data) {
+                //   $('#divDonDangKyID_DSTHUA').html(data);
+                if (data == "true") {
+                    $('#bhs-li2').click();
+                    alert("Lưu thành công");
+                }
+                else {
+                    alert("Có lỗi xảy ra!");
+                }
+
+            },
+        });
+    };
+    var formDonDangKy_DSTAISAN = $('#IDformDonDangKy_DSTAISAN');
+    function LuuDonDangKy_DSTAISAN() {
+        var dt = document.getElementById("JSONTSThua").value;
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/Save_formDonDangKy_DSTAISAN",
+            //  data: formDonDangKy_DSTAISAN.serialize(),
+            data: { JsonTSThua: dt },
+            dataType: "json",
+            success: function (data) {
+                if (data == "true") {
+                    alert("Cập nhật thành công");
+                }
+                else {
+                    alert("Có lỗi xảy ra!");
+                }
+            },
+        });
+    };
+
+    $(document).ready(function () {
+        trigger_tab_doc();
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/Form_DanhSachChu",
+            dataType: "html",
+            success: function (html) {
+                $('#divDonDangKyID_DSCHU').html(html);
+            }
+        })
+    });
+</script>

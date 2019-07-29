@@ -1,0 +1,128 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSCongDongVM
+
+<div class='modal fade' id='modalKQTKCongDongID'>
+    @Html.Hidden("Count", Model.DSCongDong.Count, new { @id = "CountCongDongID" })
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'>Kết quả tìm kiếm cộng đồng</h4>
+            </div>
+            <div class='modal-body'>
+                <table id="TableDSCongDongID" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>#</th>
+                            <th>CMT người đại diện</th>
+                            <th>Tên cộng đồng</th>
+                            <th>Địa chỉ</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DSCongDong != null && Model.DSCongDong.Count > 0)
+                        {
+                            int sTT = 0;
+                            foreach (var item in Model.DSCongDong)
+                            {
+                                sTT++;
+                                <tr>
+                                    <td>
+                                        @item.CONGDONGID
+                                    </td>
+                                    <td class="text-right">
+                                        @sTT.
+                                    </td>
+                                    <td>
+                                        @item.CMTNGUOIDAIDIEN
+                                    </td>
+                                    <td class="text-center">
+                                        @item.TENCONGDONG
+                                    </td>
+                                    <td>
+                                        @item.DIACHI
+                                    </td>
+                                    <td class="text-center"></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var columns = [
+            { "data": "CONGDONGID" },
+            { "data": "STT" },
+            { "data": "CMTNGUOIDAIDIEN" },
+            { "data": "TENCONGDONG" },
+            { "data": "DIACHI" },
+            { "data": null }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnSel'>Chọn</button>";
+                }
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "lengthChange": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+            "autoWidth": false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+            },
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": 't<"bottom"p><"clear">'
+        }
+        var TableDSCongDongID = $('#TableDSCongDongID').DataTable(options);
+
+        TableDSCongDongID.rows().nodes().on('click', 'tbody tr', function () {
+            if (TableDSCongDongID.rows().nodes().length > 0) {
+                ChonCongDong(TableDSCongDongID.row($(this)).data());
+            }
+        })
+
+        TableDSCongDongID.rows().nodes().on('click', 'tbody tr button', function (event) {
+            event.stopPropagation();
+        })
+
+        TableDSCongDongID.rows().nodes().on('click', 'tbody tr .btnSel', function (event) {
+            ChonCongDong(TableDSCongDongID.row($(this).parents('tr')).data());
+        })
+
+        function ChonCongDong(rowData) {
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/DonDangKy_ChonCongDong",
+                data: { congDongID: rowData.CONGDONGID },
+                dataType: "html",
+                success: function (result) {
+                    $('#divCTChuCongDongID')
+                        .html(result)
+                        .ready(function () {
+                            $("#modalKQTKCongDongID").modal('hide');
+                        })
+                }
+            })
+        }
+
+    })
+</script>
+
+

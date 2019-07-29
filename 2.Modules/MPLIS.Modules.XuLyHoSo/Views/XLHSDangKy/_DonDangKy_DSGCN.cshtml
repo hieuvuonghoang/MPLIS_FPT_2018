@@ -1,0 +1,209 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.VM_XuLyHoSo_DK
+
+@Html.HiddenFor(model => Model.DONDANGKYID)
+<div class="box box-primary"  id="Div_GCN_DK">
+    <div class="box-header with-border">
+        <h3 class="box-title">Giấy chứng nhận đã đăng ký</h3>
+    </div>
+    <div class="box-body" style="padding-bottom:5px;">
+        <div class="row">
+            <div class="col-xs-5">
+                <div class="col-xs-5">
+                    @Html.LabelFor(model => model.ADD_GCN_SOPHATHANH, "Số phát hành", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-7">
+                    @Html.TextBoxFor(model => model.ADD_GCN_SOPHATHANH, "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="col-xs-5">
+                <div class="col-xs-5">
+                    @Html.LabelFor(model => model.ADD_GCN_MAVACH, "Mã vạch", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-7">
+                    @Html.TextBoxFor(model => model.ADD_GCN_MAVACH, "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" onclick="ADD_GCNClick()" class="btn-sm btn-inform">Thêm</button>
+            </div>
+        </div>
+        <div class="row">
+            <table id="table_DSGCNVAOID" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th hidden="true">GCN_ID</th>
+                        <th>#</th>
+                        <th>Số phát hành</th>
+                        <th>Mã vạch</th>
+                        <th>Trạng thái</th>
+                        <th>Là cha</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int rdsgcntable = 0;
+                        if (Model != null)
+                        {
+                            if (Model.GCN_DANGKY != null)
+                            {
+                                foreach (var item in Model.GCN_DK)
+                                {
+                                    if (item.themxoa != 3)
+                                    {
+                                        rdsgcntable = rdsgcntable + 1;
+                                        <tr data-id="@item.GIAYCHUNGNHANID">
+                                            <td hidden="true">
+                                                @item.GIAYCHUNGNHANID
+                                            </td>
+                                            <td style="text-align: right;">
+                                                @rdsgcntable.
+                                            </td>
+                                            <td>
+                                                @item.SoPhatHanh
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @item.MaVach
+                                            </td>
+                                            <td style="text-align: center;">
+                                                @item.TrangThai
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <input type="checkbox" name="Array_DSGCNCHA" value="@item.GIAYCHUNGNHANID" />
+                                            </td>
+                                            <td>
+                                                @*@Ajax.ActionLink("Remove", "Remove_DSGCN_Row", "XLHSDangKy", new { id = item.gcnid },
+                                                    new AjaxOptions
+                                                    {
+                                                        HttpMethod = "POST",
+                                                        //OnSuccess = "RemoveRow",
+                                                        UpdateTargetId = "divDSGCN_TABLEID",
+                                                        InsertionMode = InsertionMode.Replace
+                                                    }, new { @class = "btn btn-xs btn-heading", @title = "Xóa" })*@
+                                                @Ajax.ActionLink("Chi tiết", "_GiayChungNhan", "XLHSGiayChungNhan", new { id = item.GIAYCHUNGNHANID, loaiGCN = 0 },
+                                    new AjaxOptions
+                                    {
+                                        HttpMethod = "POST",
+                                        //OnSuccess = "RemoveRow",
+                                        UpdateTargetId = "bhs-tabID",
+                                        InsertionMode = InsertionMode.Replace
+                                    }, new { @class = "btn btn-xs btn-heading", @title = "Chi tiết thông tin GCN" })
+                                                <input style="color:#3c8dbc" class="btn btn-xs btn-heading" type="button" value="Xóa" onclick="removeRowgcn(this)" />
+                                            </td>
+                                        </tr>
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+        InitDataTableXLHS($('#table_DSGCNVAOID'));
+    var arrHead = new Array();
+    arrHead = ['STT', 'sophathanh', 'mavach', 'trangthai', 'lacha', 'hanhdong'];
+    //function ADD_GCNClick() {
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/XLHSDangKy/ADD_GCNDANGKY",
+    //        data: formDSGCN_ADD.serialize(),
+    //        success: function (html) {
+    //            $('#divDSGCN_TABLEID').html(html);
+    //            //alert("Thêm thành công");
+    //        },
+    //    });
+    //};
+    function ADD_GCNClick() {
+        var sophathanh = $("#ADD_GCN_SOPHATHANH").val();
+        var mavach = $("#ADD_GCN_MAVACH").val();
+        var dondangkyid = $('#DONDANGKYID').val();@*//@Html.Raw(Json.Encode(Model.DONDANGKYID));// @Model.DONDANGKYID;*@
+
+        $.ajax({
+            type: "POST",
+
+            url: "/XLHSDangKy/ADD_GCNDANGKY",
+            data: { sph: sophathanh.trim(), mv: mavach.trim(), dondangky_id: dondangkyid.trim() },
+            success: function (data) {
+                //  $('#divDSGCN_TABLEID').html(html);
+                console.log("GCNDK");
+                if (data == true) {
+                    alert("GCN đã được gắn vào đăng ký");
+                }
+                else if (data == false) {
+                    alert("Không tồn tại Gcn trên hệ thống");
+                }
+                else {
+                    $('#Div_GCN_DK').html(data);
+                }
+            },
+        });
+
+    };
+    function removeRowgcn(oButton) {
+        var ans = confirm("Bạn chắc chắn muốn xóa?");
+        //=== If user pressed Ok then delete the record else do nothing.
+        if (ans == true) {
+            var empTab = document.getElementById('table_DSGCNVAOID');
+            var index = oButton.parentNode.parentNode.rowIndex;
+            alert(index);
+            var gcnid = empTab.rows[index].cells[0].innerHTML;
+            var dondangkyid = $('#DONDANGKYID').val();@*//@Html.Raw(Json.Encode(Model.DONDANGKYID));*@
+            empTab.deleteRow(oButton.parentNode.parentNode.rowIndex);
+            $.ajax({
+                type: "POST",
+
+                url: "/XLHSDangKy/XOA_GCNDANGKY",
+                dataType: "html",
+                data: { gcn: gcnid, dondangky_id: dondangkyid },
+                success: function (html) {
+                    console.log("SUCCES");
+                    alert("Xóa  thành công!");
+                    $('#Div_GCN_DK').html(html);
+                },
+            });
+
+        }
+
+    }
+    $(function () {
+
+        @*// var abc=  @Html.Raw(Json.Encode(Model));
+        var empTab = document.getElementById('table_DSGCNVAOID');
+        //alert(abc);
+
+        var rowCnt = empTab.rows.length;        // GET TABLE ROW COUNT.
+        var tr = empTab.insertRow(rowCnt);      // TABLE ROW.
+        tr = empTab.insertRow(rowCnt);
+
+        for (var c = 0; c < arrHead.length; c++) {
+            var td = document.createElement('td');          // TABLE DEFINITION.
+            td = tr.insertCell(c);
+
+            if (c == 0) {           // FIRST COLUMN.
+                // ADD A BUTTON.
+                var button = document.createElement('input');
+
+                // SET INPUT ATTRIBUTE.
+                button.setAttribute('type', 'button');
+                button.setAttribute('value', 'Remove');
+
+                // ADD THE BUTTON's 'onclick' EVENT.
+                button.setAttribute('onclick', 'removeRow(this)');
+
+                td.appendChild(button);
+            }
+            else {
+                // CREATE AND ADD TEXTBOX IN EACH CELL.
+                var ele = document.createElement('input');
+                ele.setAttribute('type', 'text');
+                ele.setAttribute('value', '');
+
+                td.appendChild(ele);
+            }
+        }*@
+    });
+</script>

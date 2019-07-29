@@ -1,0 +1,101 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSGCNBDVM
+
+<form id="formDSGCNBDVMID">
+    @Html.HiddenFor(model => model.JSONCha)
+    @*<input id="CurGCNRaID" name="CurGCNRaID" type="hidden" value="">*@
+    <div id="divBienDongID_DSGCNVAO">
+        @Html.Partial("BienDong_DSGCNVAO")
+    </div>
+    <div id="divBienDongID_DSGCNRA">
+        @Html.Partial("BienDong_DSGCNRA")
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var TableGCNVaoID = $('#TableGCNVaoID').DataTable();
+
+        var TableGCNRaID = $('#TableGCNRaID').DataTable();
+
+        var curGCNRaID = "";
+
+        var objJSONCha = {};
+
+        //Xử lý chuỗi JSONCha trên hai Table:
+
+        TableGCNRaID.rows().nodes().on('click', 'tbody tr', function (event) {
+            if (TableGCNRaID.data().count() > 0) {
+                if (curGCNRaID != TableGCNRaID.row(this).data().GIAYCHUNGNHANID) {
+                    curGCNRaID = TableGCNRaID.row(this).data().GIAYCHUNGNHANID;
+                    $(TableGCNRaID.rows().nodes()).removeClass('activerow');
+                    $(TableGCNRaID.row(this).node()).addClass('activerow');
+                    $.each(TableGCNVaoID.rows().nodes(), function () {
+                        $('[type=checkbox]', this).prop('disabled', false);
+                        $('[type=checkbox]', this).prop('checked', false);
+                    })
+                    objJSONCha = JSON.parse($('#JSONCha').val());
+                    var dSGCNCha = null;
+                    for (var temp in objJSONCha) {
+                        if (temp == curGCNRaID) {
+                            dSGCNCha = objJSONCha[temp];
+                            break;
+                        }
+                    }
+                    if(dSGCNCha != null) {
+                        for(var temp in dSGCNCha) {
+                            $.each(TableGCNVaoID.rows().nodes(), function() {
+                                if (TableGCNVaoID.row(this).data().GIAYCHUNGNHANID == dSGCNCha[temp]) {
+                                    $('[type=checkbox]', this).prop('checked', true);
+                                }
+                            })
+                        }
+                    }
+                } else {
+                    curGCNRaID = "";
+                    $(TableGCNRaID.row(this).node()).removeClass('activerow');
+                    $.each(TableGCNVaoID.rows().nodes(), function () {
+                        $('[type=checkbox]', this).prop('disabled', true);
+                        $('[type=checkbox]', this).prop('checked', false);
+                    })
+                }
+            }
+        })
+
+        TableGCNVaoID.rows().nodes().on('click', 'tbody tr [type=checkbox]', function (event) {
+            if (TableGCNVaoID.data().count() > 0 && curGCNRaID != "") {
+                objJSONCha = JSON.parse($('#JSONCha').val());
+                var dSGCNCha = null;
+                for (var temp in objJSONCha) {
+                    if (temp == curGCNRaID) {
+                        dSGCNCha = objJSONCha[temp];
+                        break;
+                    }
+                }
+                if (dSGCNCha == null) {
+                    objJSONCha[curGCNRaID] = [];
+                    dSGCNCha = objJSONCha[curGCNRaID];
+                }
+                console.log($(this));
+                if ($(this).is(':checked')) {
+                    console.log('Checked');
+                    dSGCNCha.push(TableGCNVaoID.row($(this).parents('tr')).data().GIAYCHUNGNHANID);
+                } else {
+                    console.log('Not Checked');
+                    var index = -1;
+                    for (var temp in dSGCNCha) {
+                        if (dSGCNCha[temp] == TableGCNVaoID.row($(this).parents('tr')).data().GIAYCHUNGNHANID) {
+                            index = temp;
+                            break;
+                        }
+                    }
+                    if (index != -1) {
+                        dSGCNCha.splice(index, 1);
+                    }
+                }
+                console.log(objJSONCha);
+                $('#JSONCha').val(JSON.stringify(objJSONCha));
+            }
+        })
+    })
+</script>

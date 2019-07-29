@@ -1,0 +1,109 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.GiayChungNhanLS
+
+@{
+    bool EnableLoad = false;
+    if (Model.TRANGTHAIXULY == "Y" || (Model.TRANGTHAIXULY == "S" && Model.NGUOIID != null && Model.NGUOIID != ""))
+    {
+        EnableLoad = true;
+    }
+}
+
+<div id="divGiayChungNhanID">
+    @*Tab chứa thông tin chung Giấy Chứng Nhận*@
+    <div id="tabGCN_TTChung_ID" class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divGiayChungNhanID" href="#collapse_GCN_TTChung">
+                Thông tin chung giấy chứng nhận
+            </a>
+        </div>
+        <div id="collapse_GCN_TTChung" class="panel-collapse collapse in">
+            <div id="divGCN_TTChung_ID">
+                @Html.Partial("GiayChungNhan_Main_TTChung")
+            </div>
+        </div>
+    </div>
+    @*Cac Tab chứa thông tin liên quan của Giấy Chứng Nhận (Danh Sách Quyền...)*@
+    @if (EnableLoad)
+    {
+        if (Model.DSTyLeSoHuu != null && Model.DSTyLeSoHuu.Count > 0)
+        {
+            <div id="divTabGCNTLSHID" class="row panel" style="margin-bottom: 5px;">
+                <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+                    <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divGiayChungNhanID" href="#collapse_GCN_TLSH">
+                        Danh sách tỷ lệ sở hữu
+                    </a>
+                </div>
+                <div id="collapse_GCN_TLSH" class="panel-collapse collapse">
+                    <div id="divGCN_TLSH_ID">
+                        @Html.Partial("GiayChungNhan_Main_TLSH")
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="row panel" style="margin-bottom: 5px;">
+            <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+                <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divGiayChungNhanID" href="#collapse_GCN_HanChe">
+                    Danh sách hạn chế
+                </a>
+            </div>
+            <div id="collapse_GCN_HanChe" class="panel-collapse collapse">
+                <div id="divGCN_Main_HanChe">
+                    @Html.Partial("GiayChungNhan_Main_HanChe")
+                </div>
+            </div>
+        </div>
+        <div class="row panel" style="margin-bottom: 5px;">
+            <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+                <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divGiayChungNhanID" href="#collapse_GCN_SDDAT">
+                    Danh sách quyền sử dụng đất
+                </a>
+            </div>
+            <div id="collapse_GCN_SDDAT" class="panel-collapse collapse">
+                <div id="divGCN_Main_SDDATID">
+                    @Html.Partial("GiayChungNhan_Main_SDDat")
+                </div>
+            </div>
+        </div>
+        <div class="row panel" style="margin-bottom: 5px;">
+            <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+                <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divGiayChungNhanID" href="#collapse_GCN_SHTS">
+                    Danh sách quyền sở hữu tài sản
+                </a>
+            </div>
+            <div id="collapse_GCN_SHTS" class="panel-collapse collapse">
+                <div id="divGCN_Main_SHTaiSanID">
+                    @Html.Partial("GiayChungNhan_Main_SHTaiSan")
+                </div>
+            </div>
+        </div>
+        <div class="row panel" style="margin-bottom: 5px;">
+            <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+                <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divGiayChungNhanID" href="#collapse_GCN_QLD">
+                    Danh sách quyền quản lý đất
+                </a>
+            </div>
+            <div id="collapse_GCN_QLD" class="panel-collapse collapse">
+                <div id="divGCN_Main_QLDATID">
+                    @Html.Partial("GiayChungNhan_Main_QLDat")
+                </div>
+            </div>
+        </div>
+        <div class="row panel" style="margin-bottom: 5px;">
+            <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+                <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divGiayChungNhanID" href="#collapse_GCN_BIENDONG">
+                    Danh sách biến động
+                </a>
+            </div>
+            <div id="collapse_GCN_BIENDONG" class="panel-collapse collapse">
+                <div id="divGCN_Main_BIENDONGID">
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        trigger_tab_doc();
+    })
+</script>

@@ -1,0 +1,135 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.CongDongLS
+<form id="formTTCongDongID">
+    @Html.Hidden("CONGDONGID", Model.CONGDONGID)
+    @Html.Hidden("TRANGTHAI", Model.TRANGTHAI)
+    @Html.Hidden("NGUOIDAIDIENID", Model.NGUOIDAIDIENID)
+    <div id="divNguoiDaiDienID" class="box box-primary m-10">
+        <div class="box-header with-border">
+            <div class="row p-0">
+                <div class="col-xs-4 p-0">
+                    <div class="pull-left">
+                        @if (Model.NGUOIDAIDIENID == null)
+                        {
+                            <button id="Btn_ChiTiet_NguoiDaiDienID" type="button" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm mới</button>
+                            <button id="Btn_Xoa_NguoiDaiDienID" type="button" class="btn btn-sm btn-default" disabled><i class='fa fa-trash'></i> Xóa</button>
+                        }
+                        else
+                        {
+                            <button id="Btn_ChiTiet_NguoiDaiDienID" type="button" class="btn btn-sm btn-default"><i class='fa fa-eye'></i> Chi tiết</button>
+                            <button id="Btn_Xoa_NguoiDaiDienID" type="button" class="btn btn-sm btn-default"><i class='fa fa-trash'></i> Xóa</button>
+                        }
+                    </div>
+                </div>
+                <div class="col-xs-4 text-center p-0">
+                    <h3 class="box-title">Người đại diện</h3>
+                </div>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CMTNGUOIDAIDIEN, "CMT / Hộ chiếu", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @if (Model.TRANGTHAI == 2)
+                    {
+                        @Html.TextBoxFor(model => model.CMTNGUOIDAIDIEN, new { @class = "form-control input-sm", @disabled = "" })
+                    }
+                    else if (Model.TRANGTHAI == 1)
+                    {
+                        @Html.TextBoxFor(model => model.CMTNGUOIDAIDIEN, new { @class = "form-control input-sm" })
+                    }
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.NguoiDaiDien.HOTEN, "Họ tên", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.NguoiDaiDien.HOTEN, new { @class = "form-control input-sm", @disabled = "" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divCDCTNguoiDaiDienID" class="m-10">
+    </div>
+    <div class="box box-primary m-10">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.TENCONGDONG, "Tên cộng đồng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.TextBoxFor(model => model.TENCONGDONG, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.DIACHI, "Địa chỉ cộng đồng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.TextAreaFor(model => model.DIACHI, new { @class = "form-control", @rows = "3" })
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var divProcessBar = "<div class='overlay'> <i class='fa fa-refresh fa-spin'></i> </div>";
+
+        $('#Btn_ChiTiet_NguoiDaiDienID').on('click', function () {
+
+            $('#divNguoiDaiDienID').append(divProcessBar);
+
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/NhomNguoi_CongDong_NguoiDaiDien",
+                dataType: "html",
+                success: function (html) {
+                    $('#divNguoiDaiDienID').addClass('d-none');
+                    $('#divCDCTNguoiDaiDienID').html(html);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Lỗi: ' + errorThrown);
+                },
+                complete: function () {
+                    $('.overlay', $('#divNguoiDaiDienID')).remove();
+                }
+            })
+
+        })
+
+        $('#Btn_Xoa_NguoiDaiDienID').on('click', function () {
+            if (confirm("Xác nhận xóa Người Đại Diện?")) {
+                $('#divNguoiDaiDienID').append(divProcessBar);
+                $.ajax({
+                    type: "POST",
+                    url: '/XLHSDangKy/NhomNguoi_CongDong_XoaNguoiDaiDien',
+                    dataType: "html",
+                    success: function (html) {
+                        var objCongDong = FormToObject($('#formTTCongDongID'));
+                        console.log(objCongDong);
+                        $('#divChiTietChu_CongDongID')
+                            .html(html)
+                            .ready(function () {
+                                $('#formTTCongDongID [name=TENCONGDONG]').val(objCongDong['TENCONGDONG']);
+                                $('#formTTCongDongID [name=DIACHI]').val(objCongDong['DIACHI']);
+                            });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('Lỗi: ' + errorThrown);
+                    },
+                    complete: function () {
+                        $('.overlay', $('#divNguoiDaiDienID')).remove();
+                    }
+                })
+            }
+        })
+
+    })
+
+</script>
+
+

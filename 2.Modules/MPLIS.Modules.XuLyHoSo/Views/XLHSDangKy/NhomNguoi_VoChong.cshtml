@@ -1,0 +1,219 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.VoChongLS
+<form id="formTTVoChongID">
+    @Html.Hidden("VOCHONGID", Model.VOCHONGID)
+    @Html.Hidden("TRANGTHAI", Model.TRANGTHAI)
+    @Html.Hidden("VO", Model.VO)
+    @Html.Hidden("CHONG", Model.CHONG)
+    <div id="divChongID" class="box box-primary m-10">
+        <div class="box-header with-border">
+            <div class="row p-0">
+                <div class="col-xs-4 p-0">
+                    <div class="pull-left">
+                        @if (Model.CHONG == null)
+                        {
+                            <button id="Btn_ChiTiet_ChongID" type="button" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm mới</button>
+                            <button id="Btn_Xoa_ChongID" type="button" class="btn btn-sm btn-default" disabled><i class='fa fa-trash'></i> Xóa</button>
+                        }
+                        else
+                        {
+                            <button id="Btn_ChiTiet_ChongID" type="button" class="btn btn-sm btn-default"><i class='fa fa-eye'></i> Chi tiết</button>
+                            <button id="Btn_Xoa_ChongID" type="button" class="btn btn-sm btn-default"><i class='fa fa-trash'></i> Xóa</button>
+                        }
+                    </div>
+                </div>
+                <div class="col-xs-4 text-center p-0">
+                    <h3 class="box-title">Chồng</h3>
+                </div>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CMTCHONG, "CMT / Hộ chiếu", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @if (Model.TRANGTHAI == 2)
+                    {
+                        @Html.TextBoxFor(model => model.CMTCHONG, new { @class = "form-control input-sm", @disabled = "" })
+                    }
+                    else if (Model.TRANGTHAI == 1)
+                    {
+                        @Html.TextBoxFor(model => model.CMTCHONG, new { @class = "form-control input-sm" })
+                    }
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.ChongCN.HOTEN, "Họ tên", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.ChongCN.HOTEN, new { @class = "form-control input-sm", @disabled = "" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divChiTietChongID" class="m-10">
+    </div>
+    <div id="divVoID" class="box box-primary m-10">
+        <div class="box-header with-border">
+            <div class="row p-0">
+                <div class="col-xs-4 p-0">
+                    <div class="pull-left">
+                        @if (Model.VO == null)
+                        {
+                            <button id="Btn_ChiTiet_VoID" type="button" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm mới</button>
+                            <button id="Btn_Xoa_VoID" type="button" class="btn btn-sm btn-default" disabled><i class='fa fa-trash'></i> Xóa</button>
+                        }
+                        else
+                        {
+                            <button id="Btn_ChiTiet_VoID" type="button" class="btn btn-sm btn-default"><i class='fa fa-eye'></i> Chi tiết</button>
+                            <button id="Btn_Xoa_VoID" type="button" class="btn btn-sm btn-default"><i class='fa fa-trash'></i> Xóa</button>
+                        }
+                    </div>
+                </div>
+                <div class="col-xs-4 text-center p-0">
+                    <h3 class="box-title">Vợ</h3>
+                </div>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CMTVO, "CMT / Hộ chiếu", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.CMTVO, new { @class = "form-control input-sm", @disabled = "" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.VoCN.HOTEN, "Họ tên", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.VoCN.HOTEN, new { @class = "form-control input-sm", @disabled = "" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divChiTietVoID" class="m-10">
+    </div>
+    <div class="box box-primary m-10">
+        <div class="box-header with-border">
+            <h3 class="box-title">Địa chỉ</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.DIACHI, "Địa chỉ", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.TextAreaFor(model => model.DIACHI, new { @class = "form-control", @rows = "3" })
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var divProcessBar = "<div class='overlay'> <i class='fa fa-refresh fa-spin'></i> </div>";
+
+        $('#Btn_ChiTiet_ChongID').on('click', function () {
+
+            $('#BtnClose_FormVoChong_ChiTietVoID').click();
+
+            $('#divChongID').append(divProcessBar);
+
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/NhomNguoi_VoChong_Chong",
+                dataType: "html",
+                success: function (html) {
+                    $('#divChongID').addClass('d-none');
+                    $('#divChiTietChongID').html(html);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Lỗi: ' + errorThrown);
+                },
+                complete: function () {
+                    $('.overlay', $('#divChongID')).remove();
+                }
+            })
+
+        })
+
+        $('#Btn_ChiTiet_VoID').on('click', function () {
+
+            $('#BtnClose_FormVoChong_ChiTietChongID').click();
+
+            $('#divVoID').append(divProcessBar);
+
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/NhomNguoi_VoChong_Vo",
+                dataType: "html",
+                success: function (html) {
+                    $('#divVoID').addClass('d-none');
+                    $('#divChiTietVoID').html(html);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Lỗi: ' + errorThrown);
+                },
+                complete: function () {
+                    $('.overlay', $('#divVoID')).remove();
+                }
+            })
+
+        })
+
+        $('#Btn_Xoa_ChongID').on('click', function () {
+            if (confirm("Xác nhận xóa Chồng?")) {
+                $('#divChongID').append(divProcessBar);
+                $.ajax({
+                    type: "POST",
+                    url: '/XLHSDangKy/NhomNguoi_VoChong_XoaChong',
+                    dataType: "html",
+                    success: function (html) {
+                        var objVoChong = FormToObject($('#formTTVoChongID'));
+                        $('#divChiTietChu_VoChongID')
+                            .html(html)
+                            .ready(function () {
+                                $('#formTTVoChongID [name=DIACHI]').val(objVoChong['DIACHI']);
+                            })
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('Lỗi: ' + errorThrown);
+                    },
+                    complete: function () {
+                        $('.overlay', $('#divChongID')).remove();
+                    }
+                })
+            }
+        })
+
+        $('#Btn_Xoa_VoID').on('click', function () {
+            if (confirm("Xác nhận xóa Vợ?")) {
+                $('#divVoID').append(divProcessBar);
+                $.ajax({
+                    type: "POST",
+                    url: '/XLHSDangKy/NhomNguoi_VoChong_XoaVo',
+                    dataType: "html",
+                    success: function (html) {
+                        var objVoChong = FormToObject($('#formTTVoChongID'));
+                        $('#divChiTietChu_VoChongID')
+                            .html(html)
+                            .ready(function () {
+                                $('#formTTVoChongID [name=DIACHI]').val(objVoChong['DIACHI']);
+                            });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('Lỗi: ' + errorThrown);
+                    },
+                    complete: function () {
+                        $('.overlay', $('#divVoID')).remove();
+                    }
+                })
+            }
+        })
+
+    })
+
+</script>

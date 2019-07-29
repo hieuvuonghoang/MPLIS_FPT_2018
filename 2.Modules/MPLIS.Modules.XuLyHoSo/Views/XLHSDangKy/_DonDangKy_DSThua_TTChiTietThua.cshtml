@@ -1,0 +1,171 @@
+﻿<input type="hidden" id="ct_ThuaID" />
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Thông tin chi tiết</h3>
+    </div>
+    <div class='box-body' style="padding: 0;">
+        <section style="background-color: #f9fafc; display: block;">
+            <div id="gcn-popup-tabs">
+                <ul class="nav nav-tabs nav-justified" style="float:none;">
+                    <li class="active" id="TTCHUNG_LIID">
+                        <a href="#TabTTChiTietID" id="openTabTTChiTietID" data-toggle="tab">Thông tin chung thửa đất</a>
+                    </li>
+                    <li id="MDSD_LIID">
+                        <a href="#TabMDSDID" id="openTabMDSDID" data-toggle="tab">Mục đích sử dụng</a>
+                    </li>
+                    <li id="GIADAT_LIID">
+                        <a href="#TabGiaDatID" id="openTabGiaDatID" data-toggle="tab">Giá đất</a>
+                    </li>
+                    <li id="HANCHE_LIID">
+                        <a href="#TabHanCheID" id="openTabHanCheID" data-toggle="tab">Hạn chế</a>
+                    </li>
+                    <li id="HOSOQUET_LIID"> 
+                        <a href="#TabHoSoQuetID" id="openTabHoSoQuetID" data-toggle="tab">Hồ sơ quét</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section>
+            <div class="tab-content" style="padding: 0;">
+                <div class="tab-pane fade in active" id="TabTTChiTietID">
+                    @*@{ Html.RenderPartial("_DonDangKy_DSThua_TTChiTietThua_TTChung");} *@
+                </div>
+                <div class="tab-pane fade" id="TabMDSDID">
+                    @*@{ Html.RenderPartial("_DonDangKy_DSThua_TTChiTietThua_MDSD");} *@
+                </div>
+                <div class="tab-pane fade" id="TabGiaDatID">
+                    @*@{ Html.RenderPartial("_DonDangKy_DSThua_TTChiTietThua_GiaDat");} *@
+                </div>
+                <div class="tab-pane fade" id="TabHanCheID">
+                </div>
+                <div class="tab-pane fade" id="TabHoSoQuetID">
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="box-footer"style="border-top: 1px solid #d2d6de;">
+                <button class="btn-sm btn-inform pull-right" style="margin-left: 5px;" type="button" onclick="LuuThongTinThua()">Lưu thông tin</button>
+                <button class="btn-sm btn-inform pull-right" style="margin-right: 5px;" type="button" onclick="LamMoiThua()">Làm mới</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var xaID = $("[name=XAID] option:selected").val();
+        var huyenID = $("[name=XAID] option:selected").data('huyenid');
+
+        $("#openTabTTChiTietID").on("click", function () {
+            var _hid_ThuaID = "";
+            _hid_ThuaID = $('#hi_ThuaID').val();
+            console.log("CLICKTAB" + _hid_ThuaID);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/_DonDangKy_DSThua_TTChiTietThua_TTChung",
+                data: { huyenID: huyenID, _hid_ThuaID: _hid_ThuaID },
+                dataType: "html",
+                success: function (data) {
+                    $("#TabTTChiTietID").html(data);
+                    $('#hi_ThuaID').val($('#THUADATID').val());
+                }
+            });
+        });
+
+        $('#openTabTTChiTietID').click();
+
+        $("#openTabGiaDatID").on("click", function () {
+            var formdata = $("#ThemMoiThuaDat").serializeArray();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/_ThuaGiaDat",
+                dataType: "html",
+                data: formdata,
+                success: function (data) {
+                    $("#TabGiaDatID").html(data);
+                }
+            });
+        });
+        $("#openTabMDSDID").on("click", function () {
+            var _hid_thuaid = "";
+            _hid_thuaid = $('#hi_ThuaId').val();
+            var formdata = $("#ThemMoiThuaDat").serializeArray();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/_ThuaMDSDDat",
+                dataType: "html",
+                data: formdata,
+                success: function (data) {
+                    $("#TabMDSDID").html(data);
+                }
+            });
+        });
+        $("#openTabHanCheID").on("click", function () {
+            var _hid_thuaid = "";
+            _hid_thuaid = $('#hi_ThuaId').val();
+            var formdata = $("#ThemMoiThuaDat").serializeArray();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/_ThuaHanChe",
+                dataType: "html",
+                data: formdata,
+                success: function (data) {
+                    $("#TabHanCheID").html(data);
+                }
+            });
+        });
+        $("#openTabHoSoQuetID").on("click", function () {
+            var _hid_thuaid = "";
+            _hid_thuaid = $('#hi_ThuaId').val();
+            var formdata = $("#ThemMoiThuaDat").serializeArray();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/_ThuaHoSoQuet",
+                dataType: "html",
+                data: formdata,
+                success: function (data) {
+                    $("#TabHoSoQuetID").html(data);
+                }
+            });
+        });
+    })
+    function LamMoiThua() {
+        //$.each(rows_table_DonDangKy_DSThua_DSThua, function () {
+        //    $(this).removeClass('activerow');
+        //});
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/LamMoiTHua",
+            dataType: "html",
+            success: function (data) {
+                $('#TabTTChiTietID').html(data);
+                alert($('#THUADATID').val());
+                document.getElementById('hi_ThuaID').value = $('#THUADATID').val();
+                $('#openTabTTChiTietID').click();
+            }
+        });
+    }
+    function LuuThongTinThua() {
+        $('#drpdoanduong').prop("disabled", false);
+        var formdata = $("#ThemMoiThuaDat").serializeArray();
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/LuuDuLieuThua",
+            dataType: "html",
+            data: formdata,
+            success: function (data) {
+                if (data == "true") {
+                    alert("Trùng bộ ba xác định !vui lòng nhập lại");
+                }
+                if (data == "false") {
+                    alert("Có thửa trung bộ 3 xác định nhưng chưa có trong đăng ký");
+                }
+                else {
+                    $("#divDonDangKy_DSThua_DSThua_ID").html(data);
+                    $('#hi_ThuaID').val($('#THUADATID').val());
+                    console.log("HI_THUA" + $('#hi_ThuaID').val());
+                    $('#openTabTTChiTietID').click();
+                }
+                }
+
+        });
+    }
+</script>

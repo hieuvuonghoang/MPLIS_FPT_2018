@@ -1,0 +1,192 @@
+﻿@model MPLIS.Libraries.Data.SSO.Models.SSOUserLoginInfors
+
+@using (Html.BeginForm("ThayDoiThongTinNguoiDung", "Home", new { area = "" }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class='modal fade' id='ThongTinCaNhan' role='dialog'>
+        <div class='modal-dialog'>
+            <div class='modal-content' style="width:800px;">
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                    <h4 class='modal-title'>Thông tin cá nhân</h4>
+                </div>
+                <div class='modal-body'>
+                    <div class='row'>
+                        <div class="col-xs-2">
+                            <label class='pull-right control-label'>Tên đăng nhập</label>
+                        </div>
+                        <div class="col-xs-10">
+                            @{
+                                string chucVuNguoiDangNhap = Model.ToChucNguoiDung.CHUCVU + " - " + Model.ToChuc.TENTOCHUC;
+                                switch (Convert.ToInt32(Model.User.LOAINGUOIDUNG))
+                                {
+                                    case 1:
+                                        <input type='text' class='form-control input-sm' id='txtTenDangNhap' disabled='disabled' value='@Model.User.TENDANGNHAP - Giám sát hệ thống' />
+                                        break;
+                                    case 2:
+                                        <input type='text' class='form-control input-sm' id='txtTenDangNhap' disabled='disabled' value='@Model.User.TENDANGNHAP - Quản trị hệ thống' />
+                                        break;
+                                    case 3:
+                                        <input type='text' class='form-control input-sm' id='txtTenDangNhap' disabled='disabled' value='@Model.User.TENDANGNHAP - Người dùng tác nghiệp' />
+                                        break;
+                                    case 4:
+                                        <input type='text' class='form-control input-sm' id='txtTenDangNhap' disabled='disabled' value='@Model.User.TENDANGNHAP - Địa chính phường xã' />
+                                        break;
+                                    case 5:
+                                        <input type='text' class='form-control input-sm' id='txtTenDangNhap' disabled='disabled' value='@Model.User.TENDANGNHAP - Người dùng tra cứu' />
+                                        break;
+                                    default:
+                                        <input type='text' class='form-control input-sm' id='txtTenDangNhap' disabled='disabled' value='@Model.User.TENDANGNHAP ' />
+                                        break;
+                                }
+                            }
+                            <input type='hidden' class='form-control input-sm' name='txtNguoiDungID' id='txtNguoiDungID' value='@Model.User.NGUOIDUNGID' />
+                            <input type='hidden' class='form-control input-sm' name='txtUrlThayDoiThongTinNguoiDung' id='txtUrlThayDoiThongTinNguoiDung' value='' />
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-2">
+                            <label class='pull-right control-label'>Họ và tên</label>
+                        </div>
+                        <div class="col-xs-10">
+                            <input type='text' class='form-control input-sm' id='txtHovaTen' disabled='disabled' value='@Model.User.HOTENNGUOIDUNG' />
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-2">
+                            <label class='pull-right control-label'>Tham gia hệ thống</label>
+                        </div>
+                        <div class="col-xs-3">
+                            @{string date = "ngày ";
+                                date = date + Convert.ToDateTime(Model.User.THOIDIEMMATKHAUCOHIEULUC).Day.ToString() + " - "
+                    + Convert.ToDateTime(Model.User.THOIDIEMMATKHAUCOHIEULUC).Month.ToString() + " - "
+                    + Convert.ToDateTime(Model.User.THOIDIEMMATKHAUCOHIEULUC).Year.ToString();
+                            }
+                            <input type='text' class='form-control input-sm' id='txtMatKhau' disabled='disabled' value='@date' />
+                        </div>
+                        <div class="col-xs-7">
+                            @if (Model.User.THOIDIEMMATKHAUCOHIEULUC != null && Model.User.THOIDIEMMATKHAUHETHIEULUC != null)
+                            {
+                                DateTime thoiDiemHienTai = DateTime.Parse(DateTime.Now.ToString());
+                                DateTime thoiDiemMatKhauCoHieuLuc = DateTime.Parse(Model.User.THOIDIEMMATKHAUCOHIEULUC.ToString());
+                                DateTime thoiDiemMatKhauHetHieuLuc = DateTime.Parse(Model.User.THOIDIEMMATKHAUHETHIEULUC.ToString());
+                                TimeSpan SoNgay = thoiDiemMatKhauHetHieuLuc - thoiDiemHienTai;
+                                <input type='text' class='form-control input-sm' id='txtTBMatKhau' disabled='disabled' value='Mật khẩu @SoNgay.Days ngày còn hiệu lực' />
+                            }
+                            else
+                            {
+                                <input type='text' class='form-control input-sm' id='txtTBMatKhau' disabled='disabled' value='Mật khẩu không xác định được ngày còn hiệu lực' />
+                            }
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-2">
+                            <label class='pull-right control-label'>Cấp người dùng</label>
+                        </div>
+                        <div class="col-xs-3">
+                            @{
+                                string capNguoiDung = Model.ToChuc.CAPTOCHUC.ToString();
+                                switch (capNguoiDung)
+                                {
+                                    case "1":
+                                        <input type='text' class='form-control input-sm' id='txtGioiTinh' disabled='disabled' value='Cấp trung ương' />
+                                        break;
+                                    case "2":
+                                        <input type='text' class='form-control input-sm' id='txtGioiTinh' disabled='disabled' value='Cấp tỉnh' />
+                                        break;
+                                    case "3":
+                                        <input type='text' class='form-control input-sm' id='txtGioiTinh' disabled='disabled' value='Cấp huyện' />
+                                        break;
+                                    case "4":
+                                        <input type='text' class='form-control input-sm' id='txtGioiTinh' disabled='disabled' value='Cấp Xã' />
+                                        break;
+                                    default:
+                                        <input type='text' class='form-control input-sm' id='txtGioiTinh' disabled='disabled' value='Không xác định' />
+                                        break;
+                                }
+                            }
+                        </div>
+                        <div class="col-xs-2">
+                            <label class='pull-right control-label'>Email</label>
+                        </div>
+                        <div class="col-xs-5">
+                            <input type='text' class='form-control input-sm' id='txtEmail' disabled='disabled' value='@Model.User.EMAIL' />
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-2">
+                            <label class='pull-right control-label'>Số điện thoại 1 </label>
+                        </div>
+                        <div class="col-xs-3">
+                            <input type='text' class='form-control input-sm' name='txtSoDienThoai' id='txtSoDienThoai' value='@Model.User.SODIENTHOAI' />
+                        </div>
+                        <div class="col-xs-2">
+                            <label class='pull-right control-label'>Địa chỉ</label>
+                        </div>
+                        <div class="col-xs-5">
+                            <input type='text' class='form-control input-sm' name='txtDiaChi' id='txtDiaChi' value='@Model.User.DIACHI'>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-2">
+                            <label class='pull-right control-label'>Chức vụ - Đơn vị</label>
+                        </div>
+                        <div class="col-xs-10">
+                            <input type='text' disabled='disabled' class='form-control input-sm' name='txtChucVu' id='txtChucVu' value='@chucVuNguoiDangNhap'>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <div class="col-xs-5">
+                            <div class="row" style="padding-left:0px;padding-right:0px;padding-top:0px;">
+                                <div class="col-xs-5">
+                                    <label class='pull-right control-label'>Số điện thoại 2</label>
+                                </div>
+                                <div class="col-xs-7">
+                                    <input type='text' class='form-control input-sm' name='txtSoDienThoai2' id='txtSoDienThoai2' value='@Model.User.SODIENTHOAI2'>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-left:0px;padding-right:0px;">
+                                <div class="col-xs-5" style='display: table-cell;vertical-align: middle;'>
+                                    <label class='pull-right control-label'>Mô tả</label>
+                                </div>
+                                <div class="col-xs-7">
+                                    <textarea class='form-control input-sm' name='txtMoTa' id='txtmota'>@Model.User.MOTA</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-7">
+                            <div class="col-xs-3" style='display: table-cell;vertical-align: middle;'>
+                                <label class='pull-right control-label'>Ảnh đại diện</label>
+                            </div>
+                            <div class="col-xs-9" style='display:table-cell;vertical-align:middle;'>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            @{
+                                                if (Model.User.ANHBIEUTUONG != null)
+                                                {
+                                                    <img id='file' src='data:image/png;base64,@Convert.ToBase64String(Model.User.ANHBIEUTUONG)' width='80' height='90' />
+                                                }
+                                                else
+                                                {
+                                                    <img id='file' src='' width='80' height='90' />
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            <input id='anhDaiDien' type='file' name='anhDaiDien' onchange='readURL(this);'>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class='modal-footer'>
+                    <button type='button' class='t100 btn btn-default btn-sm pull-left' data-dismiss='modal'>Thoát</button>
+                    <button type='submit' class='t100 btn btn-primary btn-sm pull-right'>Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+                                            }

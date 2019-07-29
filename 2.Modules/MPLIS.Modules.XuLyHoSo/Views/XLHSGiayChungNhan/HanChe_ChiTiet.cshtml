@@ -1,0 +1,180 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.HanCheLS
+
+<div id="FormChiTietHanCheID" class="box box-primary m-0">
+    <form id="formHanCheID">
+        @Html.Hidden("HANCHEID", Model.HANCHEID)
+        @Html.Hidden("GIAYCHUNGNHANID", Model.GIAYCHUNGNHANID)
+        <div class="box-header with-border">
+            <div class="row p-0">
+                <div class="col-xs-4 p-0">
+                    <div class="pull-left">
+                        @if (Model.HANCHEID == null || Model.HANCHEID == "")
+                        {
+                            <button id="BtnSave_FormChiTietHanCheID" type="button" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm mới</button>
+                        }
+                        else
+                        {
+                            <button id="BtnSave_FormChiTietHanCheID" type="button" class="btn btn-sm btn-default"><i class='fa fa-check'></i> Lưu thông tin</button>
+                        }
+                        <button id="BtnClear_FormChiTietHanCheID" type="button" class="btn btn-sm btn-default"><i class='fa fa-trash'></i> Xóa trắng</button>
+                    </div>
+                </div>
+                <div class="col-xs-4 text-center p-0">
+                    <h3 class="box-title">Thông tin chi tiết hạn chế</h3>
+                </div>
+                <div class="col-xs-4 p-0">
+                    <div class="pull-right">
+                        <button id="BtnClose_FormChiTietHanCheID" type="button" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.LOAIHANCHEID, "Loại hạn chế", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.DropDownListFor(model => model.LOAIHANCHEID, new SelectList(ViewBag.dSLoaiHanChe, "LOAIHANCHEID", "TENLOAIHANCHE"), "---- Chọn loại hạn chế ----", new { @class = "input-sm form-control" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.NOIDUNGHANCHE, "Nội dung hạn chế", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.TextAreaFor(model => model.NOIDUNGHANCHE, new { @class = "form-control", @rows = "3" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.COQUANBANHANH, "Cơ quan ban hành", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.COQUANBANHANH, new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.SOVANBAN, "Số văn bản", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.SOVANBAN, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.DIENTICH, "Diện tích", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.DIENTICH, new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.SODORANHGIOIHANCHE, "Ranh giới hạn chế", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.SODORANHGIOIHANCHE, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.NGAYBANHANH, "Ngày ban hành", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.NGAYBANHANH, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.NGAYHETHIEULUC, "Ngày hết hiệu lực", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.NGAYHETHIEULUC, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.DUONGDANFILEVANBAN, "Đường dẫn file", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-6">
+                    @Html.TextBoxFor(model => model.DUONGDANFILEVANBAN, new { @class = "form-control input-sm", @readonly = "" })
+                </div>
+                <div class="col-xs-4">
+                    <div class="row p-0">
+                        <div class="col-xs-6 text-center">
+                            <button type="button" class="btn btn-sm btn-default"><i class='fa fa-upload'></i> Upload</button>
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            <button type="button" class="btn btn-sm btn-default"><i class='fa fa-download'></i> Download</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.Label("Hạn chế một phần", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.CheckBox("_HanCheMotPhan", new { @id = "_HanCheMotPhan"})
+                </div>
+                <div class="col-xs-2">
+                    @Html.Label("Còn hiệu lực", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.CheckBox("_ConHieuLuc", new { @id = "_ConHieuLuc"})
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#BtnClose_FormChiTietHanCheID').on('click', function () {
+                $('#FormChiTietHanCheID').siblings().removeClass("d-none");
+                $('#FormChiTietHanCheID').remove();
+            })
+
+            $('#BtnSave_FormChiTietHanCheID').on('click', function () {
+                console.log('Click Save!');
+                var objHanChe = FormToObject($('#formHanCheID'));
+                if ($('#_HanCheMotPhan').is(':checked')) {
+                    objHanChe._HanCheMotPhan = "true";
+                } else {
+                    objHanChe._HanCheMotPhan = "false";
+                }
+                if ($('#_ConHieuLuc').is(':checked')) {
+                    objHanChe._ConHieuLuc = "true";
+                } else {
+                    objHanChe._ConHieuLuc = "false";
+                }
+                console.log(objHanChe);
+                $.ajax({
+                    type: "POST",
+                    url: '/XLHSGiayChungNhan/HanChe_ChiTiet_SaveForm',
+                    data: { data: JSON.stringify(objHanChe) },
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+                        if (result.success) {
+                            $('#divGCN_Main_HanChe').load('/XLHSGiayChungNhan/GiayChungNhan_Main_HanChe');
+                        }
+                        alert(result.message);
+                    }
+                })
+            })
+
+            $('#BtnClear_FormChiTietHanCheID').on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: '/XLHSGiayChungNhan/DanhSachHanChe_ThemMoiHanChe',
+                    dataType: "html",
+                    success: function (html) {
+                        $('#FormChiTietHanCheID').remove();
+                        $('.box-body').has('#TableGCN_HanCheID_wrapper').append(html);
+                    }
+                })
+            })
+
+        })
+
+    </script>
+
+</div>

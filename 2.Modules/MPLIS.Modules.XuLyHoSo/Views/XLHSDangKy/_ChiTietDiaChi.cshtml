@@ -1,0 +1,96 @@
+﻿@using AppCore.Models
+@model AppCore.Models.DC_DIACHI
+<form id="pop_up_themdiachi">
+    <div class="row">
+        <div>
+            <div class="col-xs-3">
+                @Html.LabelFor(Model => Model.DIACHICHITIET, "Địa chỉ chi tiết", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-3">
+                @Html.TextBoxFor(m => m.DIACHICHITIET, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div>
+            <div class="col-xs-3">
+                @Html.LabelFor(Model => Model.TENDUONGPHO, "Tên đường phố", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-3">
+                @Html.TextBoxFor(m => m.TENDUONGPHO, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <div class="col-xs-3">
+                @Html.LabelFor(Model => Model.TENTODANPHO, "Tổ dân phố", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-3">
+                @Html.TextBoxFor(m => m.TENTODANPHO, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div>
+            <div class="col-xs-3">
+                @Html.LabelFor(Model => Model.TENTINH, "Tỉnh", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-3">
+                @Html.DropDownListFor(m => m.TENTINH, new SelectList(ViewBag.tinhdiachi, "TENTINH", "TENTINH"), "---- Lựa chọn ----", new { @class = "form-control input-sm", @id = "drptinh" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <div class="col-xs-3">
+                @Html.LabelFor(Model => Model.TENHUYEN, "Huyện", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-3">
+                @Html.DropDownListFor(m => m.TENHUYEN, new SelectList(ViewBag.huyendiachi, "TENHUYEN", "TENHUYEN"), "---- Lựa chọn ----", new { @class = "form-control input-sm", @disabled = "true", @id = "drphuyen" })
+            </div>
+        </div>
+        <div>
+            <div class="col-xs-3">
+                @Html.LabelFor(Model => Model.TENXA, "Xã/Phường", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-3">
+                @Html.DropDownListFor(m => m.TENXA, new SelectList(ViewBag.xadiachi, "TENKVHC", "TENKVHC"), "---- Lựa chọn ----", new { @class = "form-control input-sm", @disabled = "true", @id = "drpxa" })
+            </div>
+        </div>
+    </div>
+
+</form>
+<script>
+    $(document).ready(function () {
+        $("#drptinh").change(function () {
+            var formdata = $('#pop_up_themdiachi').serializeArray();
+            console.log($('#drptinh').val());
+            if ($('#drptinh').val() != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChonHuyen",
+                    data: formdata,
+                    success: function (html) {
+                        $('#modalformDiaChi_body').html(html);
+                        $('#drphuyen').prop("disabled", false);
+                    }
+                });
+            }
+        });
+        $("#drphuyen").change(function () {
+            var formdata = $('#pop_up_themdiachi').serializeArray();
+            if ($('#drphuyen').val() != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChonXa",
+                    data: formdata,
+                    success: function (html) {
+                        $('#modalformDiaChi_body').html(html);
+                        $('#drpxa').prop("disabled", false);
+                        $('#drphuyen').prop("disabled", false);
+
+                    }
+                });
+            }
+        });
+
+    });
+
+</script>

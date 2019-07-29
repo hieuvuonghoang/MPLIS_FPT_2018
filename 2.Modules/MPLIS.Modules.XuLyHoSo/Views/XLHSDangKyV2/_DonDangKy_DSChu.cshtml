@@ -1,0 +1,179 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSChuDonVM
+
+<div class="box box-primary">
+    <div class="box-header p-0"></div>
+    <div id="divBoxBodyDSDangKyChuID" class="box-body" style="padding-bottom:5px;">
+        <table id="tableDangKyChuID" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>#</th>
+                    <th>Loại chủ</th>
+                    <th>Tên chủ</th>
+                    <th>CMT/Hộ chiếu</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DSDangKyChu != null && Model.DSDangKyChu.Count > 0)
+                {
+                    int sTT = 0;
+                    foreach (var item in Model.DSDangKyChu)
+                    {
+                        sTT++;
+                        <tr>
+                            <td>
+                                @item.LOAI
+                            </td>
+                            <td>
+                                @item.DANGKYNGUOIID
+                            </td>
+                            <td>
+                                @sTT.
+                            </td>
+                            <td>
+                                @item.Chu_TenLoaiChu
+                            </td>
+                            <td>
+                                @item.Chu_HoTen
+                            </td>
+                            <td>
+                                @item.Chu_CMT
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <button id="btnThem_tableDangKyChuID" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm mới</button>
+    @Html.DropDownList("LoaiChuID", new SelectList(ViewBag.dSLoaiChu, "LOAICHUID", "TENLOAICHU"), "---- Chọn loại chủ ----", new { @class = "form-control input-sm", @id = "comboBox_LoaiChuID" })
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var divProcessBar = "<div class='overlay'> <i class='fa fa-refresh fa-spin'></i> </div>";
+
+        var columns = [
+            { "data": "LOAI" },
+            { "data": "DANGKYNGUOIID" },
+            { "data": "STT" },
+            { "data": "TENLOAICHU" },
+            { "data": "TENCHU" },
+            { "data": "CMT" },
+            { "data": null }
+        ]
+
+        var columnDefs = [
+            {
+                "targets": [0, 1],
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnDel'>Xóa</button>";
+                }
+            },
+            {
+                "targets": 2,
+                "className": "text-right"
+            },
+            {
+                "targets": -1,
+                "className": "text-center"
+            }
+        ]
+
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "t<'row p-0'<'col-xs-6 p-0'<'row p-0'<'col-xs-6 p-0'<'#divComboBox_tableDangKyChuID'>><'col-xs-6 p-0' <'#divButton_tableDangKyChuID'>>>><'col-xs-6 p-0'<'pull-right'p>>>",
+            "initComplete": function () {
+                initComplete();
+            }
+        }
+
+        function initComplete() {
+            $('#btnThem_tableDangKyChuID').appendTo($('#divButton_tableDangKyChuID'));
+            $('#comboBox_LoaiChuID').appendTo($('#divComboBox_tableDangKyChuID'));
+        }
+
+        var tableDangKyChuID = $('#tableDangKyChuID').DataTable(options);
+
+        tableDangKyChuID.rows().nodes().on('dblclick', 'tbody tr', function () {
+            if (tableDangKyChuID.rows().nodes().length > 0) {
+                var rowData = tableDangKyChuID.row($(this)).data();
+                $('#divBoxBodyDSDangKyChuID').append(divProcessBar);
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKyV2/_DanhSachChu_ChiTietChu",
+                    data: { dangKyNguoiID: rowData.DANGKYNGUOIID },
+                    success: function (result) {
+                        if (result.message == undefined) {
+                            $('#tableDangKyChuID_wrapper').addClass("d-none");
+                            $('#divBoxBodyDSDangKyChuID').append(result);
+                        } else {
+                            alert(result.message);
+                        }
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('Lỗi: ' + errorThrown);
+                    },
+                    complete: function () {
+                        $('.overlay', $('#divBoxBodyDSDangKyChuID')).remove();
+                    }
+                })
+            }
+        })
+
+        tableDangKyChuID.rows().nodes().on('click', 'tbody tr button', function (event) {
+            event.stopPropagation();
+        })
+
+        tableDangKyChuID.rows().nodes().on('click', 'tbody tr .btnDel', function (event) {
+            var rowData = tableDangKyChuID.row($(this).parents('tr')).data();
+            if (confirm("Xác nhận xóa chủ trong đăng ký?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKyV2/DanhSachChu_XoaChu",
+                    data: { dangKyNguoiID: rowData.DANGKYNGUOIID },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+
+                        }
+                        alert(result.message);
+                    }
+                })
+            }
+        })
+
+        $('#btnThem_tableDangKyChuID').on('click', function () {
+            $('#divBoxBodyDSDangKyChuID').append(divProcessBar);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKyV2/DanhSachChu_ThemMoiChu",
+                data: { loaiChuID: $('#CBLOAICHUID').val() },
+                dataType: "html",
+                success: function (html) {
+                    $('#tableDangKyChuID_wrapper').addClass("d-none");
+                    $('#divBoxBodyDSDangKyChuID').append(html);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Lỗi: ' + errorThrown);
+                },
+                complete: function () {
+                    $('.overlay', $('#divBoxBodyDSDangKyChuID')).remove();
+                }
+            })
+        })
+
+    })
+</script>
+

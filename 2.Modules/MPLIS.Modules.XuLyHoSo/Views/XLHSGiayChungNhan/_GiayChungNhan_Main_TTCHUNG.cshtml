@@ -1,0 +1,83 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.BoHoSoModel
+
+<form id="FormGCN_Main_TTCHUNGID">
+    @Html.HiddenFor(model => model.CurDC_GIAYCHUNGNHAN.DONDANGKYID)
+    @Html.HiddenFor(model => model.CurDC_GIAYCHUNGNHAN.GIAYCHUNGNHANID)
+    @Html.HiddenFor(model => model.CurDC_GIAYCHUNGNHAN.NGUOICAPNHATID)
+    @Html.HiddenFor(model => model.CurDC_GIAYCHUNGNHAN.THOIDIEMCAPNHAT)
+    @Html.HiddenFor(model => model.CurDC_GIAYCHUNGNHAN.THOIDIEMKHOITAO)
+    @Html.HiddenFor(model => model.CurDC_GIAYCHUNGNHAN.TRANGTHAIPL)
+    @Html.HiddenFor(model => model.CurDC_GIAYCHUNGNHAN.DSGCNCha)
+    @Html.HiddenFor(model => model.CurDC_GIAYCHUNGNHAN.uId)
+    <div class="box">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CurDC_GIAYCHUNGNHAN.SOPHATHANH, "Số phát hành", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @*@Html.TextBoxFor(model => model.CurDC_GIAYCHUNGNHAN.SOPHATHANH, "", new { @class = "form-control input-sm" })*@
+                    @*@Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? @Html.TextBoxFor(model => model.CurDC_GIAYCHUNGNHAN.SOPHATHANH, "", new { @class = "form-control input-sm" }) : @Html.TextBoxFor(model => model.CurDC_GIAYCHUNGNHAN.SOPHATHANH, "", new { @class = "form-control input-sm" })*@
+                    @*@Html.TextBoxFor(model => model.CurDC_GIAYCHUNGNHAN.SOPHATHANH, "", new { @class = "form-control input-sm" })*@
+                    @Html.TextBoxFor(model => model.CurDC_GIAYCHUNGNHAN.SOPHATHANH, "", Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? (object)new { @class = "form-control input-sm", @disabled = "" } : (object)new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CurDC_GIAYCHUNGNHAN.MAVACH, "Mã vạch", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.CurDC_GIAYCHUNGNHAN.MAVACH, "", Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? (object)new { @class = "form-control input-sm", @disabled = "" } : (object)new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CurDC_GIAYCHUNGNHAN.SOVAOSO, "Số vào sổ", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.CurDC_GIAYCHUNGNHAN.SOVAOSO, "", Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? (object)new { @class = "form-control input-sm", @disabled = "" } : (object)new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CurDC_GIAYCHUNGNHAN.NGAYCAP, "Ngày cấp", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.CurDC_GIAYCHUNGNHAN.NGAYCAP, "{0:yyyy-MM-dd}", Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? (object)new { @class = "form-control input-sm", @type = "date", @disabled = "" } : (object)new { @class = "form-control input-sm", @type = "date" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CurDC_GIAYCHUNGNHAN.NGUOIID, "Người sử dụng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.DropDownListFor(model => model.CurDC_GIAYCHUNGNHAN.NGUOIID, ViewBag.DS_Nguoi_QuyenSDDAT as SelectList, "-- Chọn --", Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? (object)new { @class = "form-control", @disabled = "" } : (object)new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CurDC_GIAYCHUNGNHAN.BANQUET, "Bản quét", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    <div class="row">
+                        <div class="col-xs-6 text-center">
+                            @*@Html.TextBox("chonFileBanQuetID", "", new { @type = "file", @accept = ".pdf", @class = "form-control input-sm" })*@
+                            <button class="btn-sm btn-inform" type="button" onclick="">Tải lên</button>
+                        </div>
+                        <div class="col-xs-6 text-center">
+                            <button class="btn-sm btn-inform" type="button" onclick="">Tải xuống</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CurDC_GIAYCHUNGNHAN.TRANGTHAIXULY, "Trạng thái", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.DropDownListFor(model => model.CurDC_GIAYCHUNGNHAN.TRANGTHAIXULY, ViewBag.DM_TrangThaiXL as SelectList, "-- Chọn --", new { @class = "form-control", @disabled = "" })
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //$('#CurDC_GIAYCHUNGNHAN_TRANGTHAIXULY').attr('disabled', 'disabled');
+    });
+</script>

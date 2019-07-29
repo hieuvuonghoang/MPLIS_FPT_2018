@@ -1,0 +1,125 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.VM_XuLyHoSo_DK
+
+<div class='modal fade' id='modalformNhaChungCu'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title' id="title_popup_ncc">Nhà Chung Cư</h4>
+            </div>
+            <div class='modal-body' id="modalformNhaChungCu_body">
+                <form id="pop_up_themncc">
+                    @{ Html.RenderAction("_DonDangKy_ncc_ch", new { t = ViewBag.Loadncc });}
+                </form>
+            </div>
+            <div class='modal-footer' style='text-align:center;'>
+                <button type='submit' id="btnthemnccch" class='t100 btn btn-primary btn-sm pull-right'>Lưu</button>
+                <button type='submit' id="btnlammoinccch" class='t100 btn btn-primary btn-sm pull-left'>Làm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        $("#btnthemnccch").on("click", function () {
+            console.log("click");
+            var dondk = $('#DONDANGKYID').val();
+            var formdata = $("#pop_up_themncc").serializeArray();
+            console.log("click"+formdata);
+            formdata.push({
+                name: "DONDANGKYID",
+                value: dondk
+            });
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ThemMoiNhaChungCu",
+                data: formdata,
+                dataType: "json",
+                success: function (data) {
+                    if (data.themmoi === true) {
+                        // alert(data.themmoi);
+                        $("#TAISANID").val(data.TAISANID);
+                        alert("Bạn đã thêm mới thành công!");
+                        // thêm thông tin cá nhân vào bảng đăng ký
+                        var arrHead1 = new Array();
+                        arrHead1 = ['STT', 'TENCHUNGCU', 'DIENTICHSAN', 'hanhdong'];
+                        //alert(obj);
+                        var empTab1 = document.getElementById('table_NHACHUNGCU');
+                        var rowCnt1 = empTab1.rows.length;        // GET TABLE ROW COUNT.
+
+                        var tr1 = empTab1.insertRow(rowCnt1);      // TABLE ROW.
+                        tr1 = empTab1.insertRow(rowCnt1);
+                        //stt = $("#table_DSGCNVAOID td").closest("tr").length;
+                        for (var c = 0; c <= arrHead1.length; c++) {
+                            var td1 = document.createElement('td');          // TABLE DEFINITION.
+                            td1 = tr1.insertCell(c);
+                            td1.setAttribute('align', 'center');
+                            if (c == arrHead1.length) {           // FIRST COLUMN.
+
+                                // ADD A BUTTON xóa
+                                var button = document.createElement('input');
+
+                                // SET INPUT ATTRIBUTE.
+                                button.setAttribute('type', 'button');
+                                button.setAttribute('value', 'Xóa');
+
+                                // ADD THE BUTTON's 'onclick' EVENT.
+                                button.setAttribute('onclick', 'removeRowncc(this)');
+                                td1.setAttribute('align', 'center');
+                                td1.appendChild(button);
+                            }
+
+                            else if (c == 0) {
+                                td1.innerHTML = data.TAISANID;
+                            }
+                            else if (c == 1) {
+                                td1.innerHTML = $("#table_NHACHUNGCU td").closest("tr").length;
+                            }
+                            else if (c == 2) {
+                                td1.innerHTML = data.tennhachungcu;
+                            }
+                            else if (c == 3) {
+                                td1.innerHTML = data.dientichnha;
+                            }
+
+
+                            else {
+
+                            }
+                        }
+                    }
+                        //Cập nhật
+                    else {
+                        $('#table_NHACHUNGCU tr').each(function (i, row) {
+                            var id = $("#table_NHACHUNGCU").children().children().eq(i).children().eq(0).text();
+                            console.log(id);
+                            console.log(data.TAISANID);
+
+                            if (data.TAISANID.trim() === id.trim()) {
+
+                                $("#table_NHACHUNGCU").children().children().eq(i).children().eq(2)[0].innerHTML = data.tennhachungcu;
+                                $("#table_NHACHUNGCU").children().children().eq(i).children().eq(3)[0].innerHTML = data.dientich;                                //  var $row = $(row)
+                                //alert(data.lasdchung);
+                                //$('#table_MDSDTHUA').find("input[type=checkbox]").prop('checked', data.lasdchung);
+                                alert('cập nhật thành công!');
+                                // $("#table_MDSDTHUA").children().children().eq(i).children().eq(4)[0].innerHTML(data.thoihan);
+                            }
+                        });
+                    }
+                }
+            });
+
+        });
+        $("#btnlammoinccch").on("click", function () {
+            
+            $.ajax({
+                type: "GET",
+                url: "/XLHSDangKy/LoadNhaChungCuCH",
+                success: function (response, startus, xhr) {
+                    $('#modalformNhaChungCu_body').html(response);
+                }
+            });
+        });
+    });
+</script>

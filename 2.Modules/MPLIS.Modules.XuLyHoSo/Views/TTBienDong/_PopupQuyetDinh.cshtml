@@ -1,0 +1,177 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.QuyetDinhVM
+
+<div class='modal fade' id='modalChiTietQDID' role="dialog">
+    <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'>Chi tiết quyết định</h4>
+            </div>
+            <div class='modal-body'>
+                <form id="formQuyetDinh">
+                    @Html.HiddenFor(Model => Model.QUYETDINHID)
+                    <div class="row">
+                        <div class="col-xs-2">
+                            @Html.LabelFor(Model => Model.SOQUYETDINH, "Số quyết định", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.TextBoxFor(Model => Model.SOQUYETDINH, "", new { @class = "form-control input-sm" })
+                        </div>
+                        <div class="col-xs-2">
+                            @Html.LabelFor(Model => Model.NGAYQUYETDINH, "Ngày quyết định", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.TextBoxFor(Model => Model.NGAYQUYETDINH, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            @Html.LabelFor(Model => Model.NOIDUNGQUYETDINH, "Nội dung quyết định", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-10">
+                            @Html.TextAreaFor(Model => Model.NOIDUNGQUYETDINH, new { @class = "form-control", @rows = "3" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            @Html.LabelFor(Model => Model.SOHOPDONG, "Số hợp đồng", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.TextBoxFor(Model => Model.SOHOPDONG, "", new { @class = "form-control input-sm" })
+                        </div>
+                        <div class="col-xs-2">
+                            @Html.LabelFor(Model => Model.NGAYHOPDONG, "Ngày hợp đồng", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.TextBoxFor(Model => Model.NGAYHOPDONG, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            @Html.LabelFor(Model => Model.GIATRIHOPDONG, "Giá trị HĐ", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-10">
+                            @Html.TextBoxFor(Model => Model.GIATRIHOPDONG, "", new { @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            @Html.LabelFor(Model => Model.NOIDUNGHOPDONG, "Nội dung HĐ", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-10">
+                            @Html.TextAreaFor(Model => Model.NOIDUNGHOPDONG, new { @class = "form-control", @rows = "3" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            @Html.LabelFor(Model => Model.SOCONGCHUNG, "Số công chứng", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.TextBoxFor(Model => Model.SOCONGCHUNG, "", new { @class = "form-control input-sm" })
+                        </div>
+                        <div class="col-xs-2">
+                            @Html.LabelFor(Model => Model.NGAYCONGCHUNG, "Ngày công chứng", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.TextBoxFor(Model => Model.NGAYCONGCHUNG, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            @Html.LabelFor(Model => Model.QUYENCONGCHUNG, "Quyển công chứng", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-10">
+                            @Html.TextBoxFor(Model => Model.QUYENCONGCHUNG, "", new { @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            @Html.LabelFor(Model => Model.NOICONGCHUNG, "Nơi công chứng", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-10">
+                            @Html.TextBoxFor(Model => Model.NOICONGCHUNG, "", new { @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class='modal-footer' style='text-align:center;'>
+                <button type='button' class='t100 btn btn-primary btn-sm pull-right' onclick="Save_QuyetDinh()">Lưu Quyết Định</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function Save_QuyetDinh() {
+        $.ajax({
+            type: "POST",
+            url: "/TTBienDong/Save_PopupQuyetDinh",
+            data: $('#formQuyetDinh').serialize(),
+            dataType: "html",
+            success: function (result) {
+                alert('Lưu thông tin chi tiết quyết định thành công!');
+                $('#divBienDongID_BD').html(result);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $('#SOQUYETDINH').focusout(function () {
+            $.ajax({
+                type: "POST",
+                url: "/TTBienDong/_Popup_QuyetDinh_TimKiemQD",
+                data: { soQuyetDinh: $(this).val() },
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    if (result.html == undefined) {
+                        for (var index in result) {
+                            $('#modalChiTietQDID #' + index).val(result[index]);
+                        }
+                    } else {
+                        $('#dialogformDSQuyetDinhID')
+                            .html(result.html)
+                            .ready(function () {
+                                var options = {
+                                    backdrop: "static",
+                                    show: true
+                                }
+                                $('#modalChiTietQDID').one('hidden.bs.modal', function () {
+                                    $('#modalDanhSachQuyetDinhID').modal(options)
+                                });
+                                $('#modalDanhSachQuyetDinhID').one('hidden.bs.modal', function () {
+                                    $('#modalChiTietQDID').one('show.bs.modal', function () {
+                                        for (var index in result.quyetDinh) {
+                                            $('#modalChiTietQDID #' + index).val(result.quyetDinh[index]);
+                                        }
+                                    });
+                                    $('#modalChiTietQDID').modal(options);
+                                })
+                                $('#modalChiTietQDID').modal('hide');
+                            });
+                    }
+                    //$('#modalChiTietQDID').removeClass('fade');
+                    //$('#modalChiTietQDID').on('hidden.bs.modal', function () {
+                    //    $('#dialogformQuyetDinhID')
+                    //    .html(result)
+                    //    .ready(function () {
+                    //        $('#modalChiTietQDID').removeClass('fade');
+                    //        var options = {
+                    //            "backdrop": "static",
+                    //            "show": true
+                    //        };
+                    //        $('#modalChiTietQDID').on('show.bs.modal', function () {
+                    //            $('.modal-backdrop').remove();
+                    //        })
+                    //        $('#modalChiTietQDID').modal(options);
+                    //    });
+                    //});
+                    //$('#modalChiTietQDID').on('hide.bs.modal', function () {
+                    //    $('body').append($('.modal-backdrop'));
+                    //});
+                    //$('#modalChiTietQDID').modal('hide');
+                }
+            });
+        });
+    });
+</script>

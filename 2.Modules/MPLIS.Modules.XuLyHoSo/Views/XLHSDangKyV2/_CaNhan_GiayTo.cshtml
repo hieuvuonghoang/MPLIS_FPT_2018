@@ -1,0 +1,295 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.CaNhanLS
+
+<table id="TableGiayToID" class="table table-bordered">
+    <thead>
+        <tr>
+            <th></th>
+            <th>#</th>
+            <th>Loại giấy tờ</th>
+            <th>Số giấy tờ</th>
+            <th>Ngày cấp</th>
+            <th>Nơi cấp</th>
+            <th>Là giấy tờ in GCN</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.DSGiayToTuyThan != null && Model.DSGiayToTuyThan.Count > 0)
+        {
+            int sTT = 0;
+            foreach (var item in Model.DSGiayToTuyThan)
+            {
+                sTT++;
+                <tr>
+                    <td>
+                        @item.LOAIGIAYTOTUYTHANID
+                    </td>
+                    <td>
+                        @sTT.
+                    </td>
+                    <td>
+                        @item.TenLoaiGiayTo
+                    </td>
+                    <td>
+                        @item.SOGIAYTO
+                    </td>
+                    <td>
+                        @if (@item.NGAYCAP != null)
+                        {
+                            @item.NGAYCAP.Value.ToString("dd/MM/yyyy")
+                        }
+                    </td>
+                    <td>
+                        @item.NOICAP
+                    </td>
+                    <td>
+                        @{
+                            bool laGiayToInGCN = item.LAGIAYTOINGCN ?? false;
+                        }
+                        @laGiayToInGCN
+                    </td>
+                    <td></td>
+                </tr>
+                                }
+                            }
+    </tbody>
+</table>
+
+<button id="btnThemGiayToID" type="button" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm mới</button>
+
+<div id="FormTTGTID" class="box box-primary m-0 d-none">
+    <div class="box-header with-border">
+        <div class="row p-0">
+            <div class="col-sm-4 p-0">
+                <div class="pull-left">
+                    <button id="SaveFormTTGTID" type="button" class="btn btn-sm btn-default"></button>
+                    <button id="ClearFormTTGTID" type="button" class="btn btn-sm btn-default"><i class='fa fa-trash'></i> Xóa trắng</i></button>
+                </div>
+            </div>
+            <div class="col-sm-4 text-center p-0">
+                <h3 class="box-title">Chi tiết giấy tờ</h3>
+            </div>
+            <div class="col-sm-4 p-0">
+                <div class="pull-right">
+                    <button id="CloseFormTTGTID" type="button" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-body">
+        <form id="formTTGiayToID">
+            <input type="hidden" name="STT" />
+            <input type="hidden" name="TRANGTHAI" />
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.Label("", "Loại giấy tờ tùy thân", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.DropDownList("LOAIGIAYTOTUYTHANID", new SelectList(ViewBag.dSGiayToTuyThan, "LOAIGIAYTOTUYTHANID", "TENLOAIGIAYTOTUYTHAN"), "---- Lựa chọn ----", new { @class = "form-control input-sm", @id = "LOAIGIAYTOTUYTHANID" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.Label("", "Số giấy tờ", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBox("SOGIAYTO", "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.Label("", "Ngày cấp", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBox("NGAYCAP", "", "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.Label("", "Nơi cấp", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBox("NOICAP", "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.Label("", "Là giấy tờ in GCN", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.CheckBox("LAGIAYTOINGCN", new { @id = "LAGIAYTOINGCN" })
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var valformTTGiayToID = $("#formTTGiayToID").validate({
+            rules: {
+                SOGIAYTO: "required",
+                NGAYCAP: "required",
+                NOICAP: "required",
+                LOAIGIAYTOTUYTHANID: "required"
+            },
+            errorPlacement: function (error, element) {
+                return true;
+            }
+        });
+
+        var columns = [
+			{ "data": "LOAIGIAYTOTUYTHANID" },
+            { "data": "STT" },
+            { "data": "TenLoaiGiayTo" },
+            { "data": "SOGIAYTO" },
+            { "data": "NGAYCAP" },
+            { "data": "NOICAP" },
+            { "data": "LAGIAYTOINGCN" },
+            { "data": null }
+        ]
+        var columnDefs = [
+			{
+			    "targets": 0,
+			    "visible": false
+			},
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnDel'>Xóa</button>";
+                },
+                "className": "text-center"
+            },
+            {
+                "targets": 6,
+                "render": function (data) {
+                    if (data == "True") {
+                        return "<input type='checkbox' disabled checked>";
+                    } else {
+                        return "<input type='checkbox' disabled>";
+                    }
+                }
+            },
+            {
+                "targets": 1,
+                "className": "text-right"
+            },
+            {
+                "targets": [3, 4, 6],
+                "className": "text-center"
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "t<'row p-0'<'col-xs-6 p-0'<'row p-0'<'col-xs-6 p-0'<'#divBtnThemGTID'>>>><'col-xs-6 p-0'<'pull-right'p>>>",
+            "initComplete": function () {
+                initComplete();
+            }
+        }
+
+        function initComplete() {
+            $('#btnThemGiayToID').appendTo($('#divBtnThemGTID'));
+        }
+
+        var TableGiayToID = $('#TableGiayToID').DataTable(options);
+
+        TableGiayToID.rows().nodes().on('dblclick', 'tbody tr', function () {
+            if (TableGiayToID.data().count() > 0) {
+                $('#TableGiayToID_wrapper').addClass('d-none');
+                XemTTGiayTo(TableGiayToID.row(this).data());
+                $('#FormTTGTID').removeClass('d-none');
+            }
+        })
+
+        TableGiayToID.rows().nodes().on('click', 'tbody tr .btnDel', function (event) {
+            XoaGiayTo(TableGiayToID, TableGiayToID.row($(this).parents('tr')).data(), TableGiayToID.row($(this).parents('tr')));
+        })
+
+        function XoaGiayTo(table, rowData, rowDel) {
+            if (confirm("Xác nhận xóa giấy tờ?")) {
+                table
+					.row(rowDel)
+					.remove();
+                var i = 1;
+                table.rows().every(function () {
+                    var d = this.data();
+                    d.STT = i++;
+                    d.STT += ".";
+                    table.row(this).data(d);
+                })
+                table.draw();
+            }
+        }
+
+        $('#CloseFormTTGTID').on('click', function () {
+            $('#TableGiayToID_wrapper').removeClass('d-none');
+            $('#FormTTGTID').addClass('d-none');
+        })
+
+        $('#ClearFormTTGTID').on('click', function () {
+            document.getElementById("formTTGiayToID").reset();
+            $('#FormTTGTID [name=TRANGTHAI]').val("1");
+            $('#FormTTGTID [name=LAGIAYTOINGCN]').val("false");
+            $('#FormTTGTID [name]').removeClass('error');
+            $('#SaveFormTTGTID').html("<i class='fa fa-plus'></i> Thêm mới");
+        })
+
+        $('#SaveFormTTGTID').on('click', function () {
+            var checkForm = $('#formTTGiayToID').valid();
+            if (checkForm) {
+                var objGiayTo = FormToObject($('#formTTGiayToID'));
+                objGiayTo.TenLoaiGiayTo = $('#LOAIGIAYTOTUYTHANID option:selected').text();
+                if ($('#LAGIAYTOINGCN').is(':checked')) {
+                    objGiayTo.LAGIAYTOINGCN = "True";
+                } else {
+                    objGiayTo.LAGIAYTOINGCN = "False";
+                }
+                objGiayTo.NGAYCAP = ConverDatatimeddmmYYYY(objGiayTo.NGAYCAP);
+                if (objGiayTo.TRANGTHAI == "1") {
+                    objGiayTo.STT = TableGiayToID.data().count() + 1;
+                    objGiayTo.STT += ".";
+                    $('#FormTTGTID [name=STT]').val(objGiayTo.STT);
+                    TableGiayToID.row.add(objGiayTo).draw();
+                    $('#FormTTGTID [name=TRANGTHAI]').val('2');
+                    $('#SaveFormTTGTID').html("<i class='fa fa-check'></i> Lưu thông tin");
+                    alert('Thêm mới giấy tờ thành công!');
+                    $('#ClearFormTTGTID').click();
+                } else {
+                    $.each(TableGiayToID.rows().nodes(), function () {
+                        var curRow = TableGiayToID.row(this).data();
+                        if (curRow.STT == objGiayTo.STT) {
+                            TableGiayToID.row(this).data(objGiayTo).draw();
+                            return false;
+                        }
+                    })
+                    alert('Cập nhật thông tin giấy tờ thành công!');
+                }
+            }
+        })
+
+        $('#btnThemGiayToID').on('click', function () {
+            $('#FormTTGTID [name]').removeClass('error');
+            $('#ClearFormTTGTID').click();
+            $('#TableGiayToID_wrapper').addClass('d-none');
+            $('#FormTTGTID').removeClass('d-none');
+        })
+
+        function XemTTGiayTo(rowData) {
+            $('#FormTTGTID [name]').removeClass('error');
+            $('#SaveFormTTGTID').html("<i class='fa fa-check'></i> Lưu thông tin");
+            $('#FormTTGTID [name=STT]').val(rowData.STT);
+            $('#FormTTGTID [name=TRANGTHAI]').val("2");
+            $('#FormTTGTID [name=SOGIAYTO]').val(rowData.SOGIAYTO);
+            $('#FormTTGTID [name=NGAYCAP]').val(ConverDatatime(rowData.NGAYCAP));
+            $('#FormTTGTID [name=NOICAP]').val(rowData.NOICAP);
+            $('#FormTTGTID [name=LOAIGIAYTOTUYTHANID]').val(rowData.LOAIGIAYTOTUYTHANID);
+            if (rowData.LAGIAYTOINGCN == "True") {
+                $('#FormTTGTID [name=LAGIAYTOINGCN]').prop('checked', true);
+            } else {
+                $('#FormTTGTID [name=LAGIAYTOINGCN]').prop('checked', false);
+            }
+        }
+    })
+</script>
+
+

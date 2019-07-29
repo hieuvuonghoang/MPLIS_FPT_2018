@@ -1,0 +1,137 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.CaNhanLS
+
+<div class="nav-tabs-custom m-0">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#CaNhan_Tab_ChiTiet" data-toggle="tab">Cá nhân</a></li>
+        <li><a href="#CaNhan_Tab_GiayTo" data-toggle="tab">Giấy tờ</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="CaNhan_Tab_ChiTiet">
+            <form id="formTTCaNhanID">
+                @Html.HiddenFor(model => model.CANHANID)
+                @Html.HiddenFor(model => model.TRANGTHAI)
+                <div class="row">
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.SOGIAYTO, "Số CMND", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.TextBoxFor(model => model.SOGIAYTO, new { maxlength = "30", @class = "form-control input-sm" })
+                    </div>
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.MASOTHUE, "Mã số thuế", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.TextBoxFor(model => model.MASOTHUE, new { maxlength = "30", @class = "form-control input-sm" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.HODEM, "Họ đệm", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.TextBoxFor(model => model.HODEM, new { @class = "form-control input-sm" })
+                    </div>
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.TEN, "Tên", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.TextBoxFor(model => model.TEN, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.NGAYSINH, "Ngày sinh", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.TextBoxFor(model => model.NGAYSINH, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control input-sm" })
+                    </div>
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.NGAYCAP, "Ngày cấp", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.TextBoxFor(model => model.NGAYCAP, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control input-sm" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.NOICAP, "Nơi cấp", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.TextBoxFor(model => model.NOICAP, new { maxlength = "30", @class = "form-control input-sm" })
+                    </div>
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.GIOITINH, "Giới tính", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.DropDownListFor(model => model.GIOITINH, new SelectList(ViewBag.dSGioiTinh, "GIOITINH", "TENGIOITINH"), "---- Lựa chọn ----", new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.DANTOCID, "Dân tộc", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.DropDownListFor(model => model.DANTOCID, new SelectList(ViewBag.dSDanToc, "DANTOCID", "TENDANTOC"), "---- Lựa chọn ----", new { @class = "form-control input-sm" })
+                    </div>
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.QUOCTICHID, "Quốc tịch", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.DropDownListFor(model => model.QUOCTICHID, new SelectList(ViewBag.dSQuocTich, "QUOCTICHID", "TENQUOCGIATV"), "---- Lựa chọn ----", new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.SODIENTHOAI, "Số điện thoại", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.TextBoxFor(model => model.SODIENTHOAI, new { @class = "form-control input-sm" })
+                    </div>
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.EMAIL, "Email", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.TextBoxFor(model => model.EMAIL, new { @class = "form-control input-sm" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model._CONSONG, "Đã mất", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-4">
+                        @Html.CheckBox("_CONSONG", Model._CONSONG)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        @Html.LabelFor(model => model.DIACHI, "Địa chỉ", new { @class = "pull-right control-label" })
+                    </div>
+                    <div class="col-xs-10">
+                        @Html.TextAreaFor(model => model.DIACHI, new { @class = "form-control", @rows = "3" })
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="tab-pane" id="CaNhan_Tab_GiayTo">
+            @Html.Partial("CaNhan_GiayTo")
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ('@Model.FLAGSEARCH' == 'True') {
+            $('#SOGIAYTO').on('focusout', function () {
+                if ($('#SOGIAYTO').val() != "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "/XLHSDangKy/TimKiem_CaNhan",
+                        data: { soGiayTo : }
+                    })
+                }
+            })
+        }
+    })
+</script>
+

@@ -1,0 +1,123 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSThuaBDVM
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Danh sách thửa xử lý</h3>
+        <button class="btn-xs btn-heading pull-right" type="submit" onclick="ThemThuaXuLy()">Thêm thửa xử lý</button>
+    </div>
+    <div class="box-body">
+        <table id="table_DSTHUAXLID" class="table table-bordered">
+            <tbody>
+                <tr>
+                    <th>Là cha</th>
+                    <th>#</th>
+                    <th>Xã/phường</th>
+                    <th>SH tờ bản đồ</th>
+                    <th>STT thửa</th>
+                    <th>DT pháp lý (m2)</th>
+                    <th>Địa chỉ</th>
+                    <th></th>
+                </tr>
+                @{int rowDSTHUAXLID = 0;
+                    if (Model.DSThua != null)
+                    {
+                        foreach (var item in Model.DSThua)
+                        {
+                            if (item.LOAITHUABD == "X")
+                            {
+                                rowDSTHUAXLID = rowDSTHUAXLID + 1;
+                                <tr data-id="@item.THUADATID">
+                                    <td style="text-align: center;">
+                                        <input type="checkbox" name="Array_DSTHUACHA" value="@item.THUADATID" />
+                                    </td>
+                                    <td style="text-align: right;">
+                                        @rowDSTHUAXLID.
+                                    </td>
+                                    <td style="text-align: left;">
+                                        @item.XaPhuong
+                                    </td>
+                                    <td style="text-align: right;">
+                                        @item.SHToBanDo
+                                    </td>
+                                    <td style="text-align: right;">
+                                        @item.STTThua
+                                    </td>
+                                    <td style="text-align: right;">
+                                        @item.DienTich
+                                    </td>
+                                    <td style="text-align: left;">
+                                        @item.DiaChi
+                                    </td>
+                                    <td style="text-align: center;">
+                                        @Ajax.ActionLink("Remove", "Remove_DSTHUAXL_R", "TTBienDong", new { id = item.BDTHUAID },
+                                             new AjaxOptions
+                                             {
+                                                 HttpMethod = "POST",
+                                                 //OnSuccess = "RemoveRow",
+                                                 UpdateTargetId = "divBienDongID_DSTHUA",
+                                                 InsertionMode = InsertionMode.Replace
+                                             }, new { @class = "btn", @title = "Xóa" })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function ThemThuaXuLy() {
+        $.ajax({
+            type: "GET",
+            url: "/TTBienDong/_Popup_DSTHUAXL",
+            success: function (html) {
+                $('#dialogformDSTHUAXLID').html(html);
+                var W_DSTHUAXLID = $("#dialogformDSTHUAXLID").dialog({
+                    autoOpen: false,
+                    height: 400,
+                    width: 800,
+                    modal: true,
+                    buttons: {
+                        Cancel: function () {
+                            W_DSTHUAXLID.dialog("close");
+                        }
+                    },
+                });
+                W_DSTHUAXLID.dialog("open");
+            },
+        });
+    }
+
+    $("#table_DSTHUAXLID input").change(function () {
+        var id = document.getElementById("CurThuaSelectedID").value;
+        if (id && id != "") {
+            var checked = false;
+            var inputs = document.getElementById("table_DSTHUAXLID").getElementsByTagName("input");
+            for (i = 0; i < inputs.length; i++) {
+                var inid = $(inputs[i]).value;
+                if (id == inid) {
+                    checked = true;
+                    break;
+                }
+            }
+            if (!checked) {
+                var data = document.getElementById("JSONThuaCha").value;
+                var obj = JSON.parse(data);
+                var arr = obj[id];
+                var ThuaID = this.value;
+                var index = arr.indexOf(ThuaID);
+                if ($(this).is(':checked')) {
+                    if (index == -1) arr.push(ThuaID);
+                } else {
+                    if (index > -1) arr.splice(index, 1);
+                }
+                obj[id] = arr;
+                document.getElementById("JSONThuaCha").value = JSON.stringify(obj);
+            }
+        } else alert('Bạn cần chọn một thửa đầu ra trước');
+    });
+
+</script>

@@ -1,0 +1,98 @@
+﻿@using AppCore.Models
+@model AppCore.Models.HS_VITRILUUTRU
+<div class='modal fade' id='modalformViTriLuu'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button id="closebt" type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title' id="title_popup_vitriluu">Vị trí lưu trữ</h4>
+            </div>
+            <div class='modal-body' id="modalformViTriLuu_body">
+                @Html.HiddenFor(m => m.VITRILUUTRUID, new { @class = "form-control" })
+                <div class="row">
+                    <div>
+                        <div class="col-xs-3">
+                            @Html.LabelFor(Model => Model.MAVITRILUUTRU, "Mã vị trí lưu trữ", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-7">
+                            @Html.TextBoxFor(Model => Model.MAVITRILUUTRU, new { @class = "form-control input-sm", @readonly = "true" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        <div class="col-xs-3">
+                            @Html.LabelFor(Model => Model.TENVITRILUUTRU, "Tên vị trí lưu trữ", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-7">
+                            @Html.TextBoxFor(m => m.TENVITRILUUTRU, new { @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='modal-footer' style='text-align:center;'>
+                <button type='submit' id="btnthemvitriluu" class='t100 btn btn-primary btn-sm pull-right'>Lưu</button>
+                <button type='submit' id="btnlammoivitriluu" class='t100 btn btn-primary btn-sm pull-left'>Làm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#btnthemvitriluu').on('click', function () {
+            var loai = $('#MAVITRILUUTRU').val();
+            var ten = $('#TENVITRILUUTRU').val();
+            var id = $('#VITRILUUTRUID').val();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSHoSoLuuKho/CapNhatViTri",
+                data: { Loai: loai, ten: ten,id:id },
+                success: function (data) {
+                    $('#drpKeHSLuuKho').html();
+                    console.log(data);
+                    if (data.trangthai == "capnhat") {
+                        $('#closebt').click();
+                        if (data.vitrima == "001") {
+                            var drpphong = document.getElementById('drpPhongHSLuuKho');
+                            drpphong.options[drpphong.selectedIndex].innerHTML = data.vitriten;
+                        }
+                        else if (data.vitrima == "002") {
+                            var drpke = document.getElementById('drpKeHSLuuKho');
+                            drpke.options[drpke.selectedIndex].innerHTML = data.vitriten;
+                        }
+                        else if (data.vitrima == "003") {
+                            var drpngan = document.getElementById('drpNganHSLuuKho');
+                            drpngan.options[drpngan.selectedIndex].innerHTML = data.vitriten;
+                        }
+                        else if (data.vitrima == "004") {
+                            var drphop = document.getElementById('drpHopHSLuuKho');
+                            drphop.options[drphop.selectedIndex].innerHTML = data.vitriten;
+                        }
+                    }
+                    else {
+                        if (data.vitrima == "001") {
+                            var option = new Option(data.vitriten, data.vitriid); $('#drpPhongHSLuuKho').append($(option));
+                        }
+                        else if (data.vitrima == "002") {
+                            var option = new Option(data.vitriten, data.vitriid); $('#drpKeHSLuuKho').append($(option));
+                        }
+                        else if (data.vitrima == "003") {
+                            var option = new Option(data.vitriten, data.vitriid); $('#drpNganHSLuuKho').append($(option));
+                        }
+                        else if (data.vitrima == "004") {
+                            var option = new Option(data.vitriten, data.vitriid); $('#drpHopHSLuuKho').append($(option));
+                        }
+                        $('#VITRILUUTRUID').val("");
+                        $('#TENVITRILUUTRU').val("");
+                    }
+
+                }
+            });
+
+        });
+        $('#btnlammoivitriluu').on('click', function () {
+            $('#VITRILUUTRUID').val("");
+            $('#TENVITRILUUTRU').val("");
+        });
+    });
+</script>

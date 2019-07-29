@@ -1,0 +1,121 @@
+﻿@model AppCore.Models.QT_HOSOTIEPNHAN
+
+<div class="box box-primary">
+    <div class="box-body">
+        @Html.HiddenFor(model => model.HOSOTIEPNHANID)
+        <div class="row">
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.TENHOSO, "Tên hồ sơ", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(model => model.TENHOSO, "", new { @class = "form-control input-sm", @disabled = "" })
+            </div>
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.LOAIHOSO, "Loại hồ sơ", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @*@Html.DropDownListFor(model => model.LOAIHOSO, new SelectList(ViewBag.DSLoaiHoSo, "LOAIHOSO", "TENLOAI"), new { @class = "form-control input-sm", @disabled = "" })*@
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.SOBIENNHAN, "Số biên nhận hồ sơ", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(model => model.SOBIENNHAN, "", new { @class = "form-control input-sm", @disabled = "" })
+            </div>
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.QUYENTIEPNHAN, "Quyền tiếp nhận", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(model => model.QUYENTIEPNHAN, "", new { @class = "form-control input-sm", @disabled = "" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.NGUOINOPHOSO, "Người nộp hồ sơ", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(model => model.NGUOINOPHOSO, "", new { @class = "form-control input-sm", @disabled = "" })
+            </div>
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.CANBOTIEPNHANID, "Cán bộ", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(model => model.CANBOTIEPNHANID, "", new { @class = "form-control input-sm", @disabled = "" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.SODIENTHOAI, "Số điện thoại", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(model => model.SODIENTHOAI, "", new { @class = "form-control input-sm", @disabled = "" })
+            </div>
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.EMAIL, "Email", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(model => model.EMAIL, "", new { @class = "form-control input-sm", @disabled = "" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.VAITRONGUOINOPHOSO, "Vai trò người nộp", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @*@Html.DropDownListFor(model => model.LOAIHOSO, new SelectList(ViewBag.DSVaiTroNguoiNop, "VAITRONGUOINOPHOSO", "TENVAITRO"), new { @class = "form-control input-sm", @disabled = "" })*@
+            </div>
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.TenThuThuHanhChinh, "Thủ tục hành chính", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(model => model.TenThuThuHanhChinh, "", new { @class = "form-control input-sm", @disabled = "" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.DIACHINGUOINOPHS, "Địa chỉ", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-10">
+                @Html.TextAreaFor(model => model.DIACHINGUOINOPHS, new { @class = "form-control", @rows = "3", @disabled = "" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.MOTATOMTAT, "Mô tả tóm tắt", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-10">
+                @Html.TextAreaFor(model => model.MOTATOMTAT, new { @class = "form-control", @rows = "3", @disabled = "" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.SOGIAYTO, "Số giấy tờ", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(model => model.SOGIAYTO, "", new { @class = "form-control input-sm", @disabled = "" })
+            </div>
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.PHUONGPHAPNHANTHONGBAO, "Phương pháp tiếp nhận", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @*@Html.DropDownListFor(model => model.LOAIHOSO, new SelectList(ViewBag.DSPhuongPhapNhanThongBao, "PHUONGPHAPNHANTHONGBAO", "TENPHUONGPHAP"), new { @class = "form-control input-sm", @disabled = "" })*@
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.NGAYHENLAYPHIEUCHUYENTHUE, "Ngày hẹn lấy phiếu chuyển thuế", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(model => model.NGAYHENLAYPHIEUCHUYENTHUE, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm", @disabled = "" })
+            </div>
+            <div class="col-xs-2">
+                @Html.LabelFor(model => model.NGAYHENTRAHOSO, "Ngày hẹn trả hồ sơ", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-4">
+                @Html.TextBoxFor(model => model.NGAYHENTRAHOSO, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm", @disabled = "" })
+            </div>
+        </div>
+    </div>
+</div>

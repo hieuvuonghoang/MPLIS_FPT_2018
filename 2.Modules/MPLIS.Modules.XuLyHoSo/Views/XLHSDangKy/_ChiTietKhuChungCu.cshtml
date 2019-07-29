@@ -1,0 +1,77 @@
+﻿@using AppCore.Models
+@model AppCore.Models.DangKyTaiSan
+@{using (Html.BeginForm("_DonDangKy_TSNHARIENGLE", "XLHSDangKy", FormMethod.Post, new { @id = "ThemMoiKhuChungCu" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.CurKhuChungCu.KHUCHUNGCUID, new { @class = "form-control" })
+        @Html.HiddenFor(m => m.CurKhuChungCu.uId, new { @class = "form-control" })
+
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model => Model.tenxats, "Phường/Xã", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-7">
+                    @Html.TextBoxFor(Model=>Model.tenxats, new { @class = "form-control input-sm", @readonly = "true" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model => Model.CurKhuChungCu.TENKHU, "Tên khu chung cư", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-7">
+                    @Html.TextBoxFor(m => m.CurKhuChungCu.TENKHU, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model => Model.CurKhuChungCu.DIENTICHKHU, "Diện tích", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-7">
+                    @Html.TextBoxFor(m => m.CurKhuChungCu.DIENTICHKHU, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model => Model.CurKhuChungCu.DIACHI, "Địa chỉ", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-7">
+                    @Html.TextAreaFor(m => m.CurKhuChungCu.DIACHI, new { @class = "form-control input-sm", @row = "2" })
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    }
+}
+<div class="row">
+    <button type='submit' class='t100 btn btn-primary btn-sm pull-right' id="btnthemmoikcc">Lưu</button>
+</div>
+
+<script>
+    $(function () {
+        $('#btnthemmoikcc').on("click", function () {
+            var dondk = $('#DONDANGKYID').val();
+            var formdata = $("#ThemMoiKhuChungCu").serializeArray();
+            formdata.push({
+                name: "DONDANGKYID",
+                value: dondk
+            });
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ThemMoiKhuChungCu",
+                data: formdata,
+                dataType: "json",
+                success: function (data) {
+                    alert("Bạn đã thêm mới thành công!");
+                }
+            });
+        });
+    });
+</script>
+

@@ -1,0 +1,73 @@
+﻿@using AppCore.Models
+@model HS_HOSO
+    <div  id="divHSLK_THUA">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Danh sách thông tin thửa đất</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <input type="button" class="btn-sm btn-inform" id="btncapnhatthua" value="Cập nhật từ dữ liệu hồ sơ" />
+                </div>
+                <div class="row">
+                    <table id="table_HoSoLK_THUA" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="t50" hidden>hsthuaid</th>
+                                <th class="t50">STT</th>
+                                <th class="t100">Xã</th>
+                                <th class="t100">Số tờ bản đồ</th>
+                                <th class="t100">Số thứ tự thửa</th>
+                            </tr>
+                        </thead>
+                        @{
+                            int rtdtable = 0;
+                            if (Model != null)
+                            {
+                                if (Model.DSThua != null)
+                                {
+                                    foreach (var itemtd in Model.DSThua)
+                                    {
+                                        rtdtable = rtdtable + 1;
+                                        <tr data-id="@itemtd.TOTHUAID">
+                                            <td align="center" hidden>
+                                                @itemtd.TOTHUAID
+                                            </td>
+                                            <td align="center">@rtdtable</td>
+                                            <td align="center">@itemtd.tenxa</td>
+                                            <td align="center">@itemtd.SOTO</td>
+                                            <td align="center">@itemtd.SOTHUA</td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+<script>
+    $(document).ready(function () {
+        table_checkthuats = InitDataTableXLHS($('#table_HoSoLK_THUA'));
+        $('#btncapnhatthua').on("click", function () {
+            $.ajax({
+                type: "POST",
+                url: "/XLHSHoSoLuuKho/CapNhatTHUA",
+                success: function (data) {
+                    console.log(data);
+                    $('#divHoSoTiepNhanID_Thua').html(data);
+                }
+            });
+
+        });
+
+    });
+
+
+</script>
+
+
+

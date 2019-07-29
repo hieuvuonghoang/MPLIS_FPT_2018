@@ -1,0 +1,59 @@
+﻿@model AppCore.Models.QT_HOSOTIEPNHAN
+
+<div id="divXLHS_HoSoTiepNhanID" class="m-15">
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divXLHS_HoSoTiepNhanID" href="#collapse_XLHS_HSTN_TTTNID">
+                Thông tin tiếp nhận hồ sơ
+            </a>
+        </div>
+        <div id="collapse_XLHS_HSTN_TTTNID" class="panel-collapse collapse in">
+            <div id="divHSTN_TTTiepNhanID">
+                @Html.Partial("~Views/XuLyHoSo/_XLHS_HoSoTiepNhan_TTTiepNhan.cshtml")
+            </div>
+        </div>
+    </div>
+
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divXLHS_HoSoTiepNhanID" href="#collapse_XLHS_HSTN_DSFILEDANHKEMID">
+                Danh sách file đính kèm
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="">Cập nhật</button>
+        </div>
+        <div id="collapse_XLHS_HSTN_DSFILEDANHKEMID" class="panel-collapse collapse">
+            <div id="divHSTN_DSFILEDANHKEMID">
+                @Html.Partial("~Views/XuLyHoSo/_XLHS_HoSoTiepNhan_DSFileDinhKem.cshtml")
+            </div>
+        </div>
+    </div>
+
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divXLHS_HoSoTiepNhanID" href="#collapse_XLHS_HSTN_TTKQID">
+                Thông tin trả hồ sơ
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="CapNhatHSTNTTTra()">Cập nhật</button>
+        </div>
+        <div id="collapse_XLHS_HSTN_TTKQID" class="panel-collapse collapse">
+            <div id="divHSTN_TTTraHoSoID">
+                @Html.Partial("~Views/XuLyHoSo/_XLHS_HoSoTiepNhan_TTTraHoSo.cshtml")
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //kích hoạt sự kiện trên các tab dọc
+        trigger_tab_doc();
+    })
+
+    function CapNhatHSTNTTTiepNhan() {
+
+    }
+
+    function CapNhatHSTNTTTra() {
+
+    }
+</script>

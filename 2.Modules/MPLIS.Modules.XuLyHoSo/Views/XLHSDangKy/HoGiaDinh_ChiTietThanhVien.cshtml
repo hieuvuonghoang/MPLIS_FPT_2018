@@ -1,0 +1,156 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.HoGiaDinhThanhVienLS
+
+<div id="FormHGD_ChiTietTVID" class="box box-primary m-0">
+    <form id="formHoGiaDinhThanhVienID" class="d-none">
+        @Html.Hidden("HOGIADINHTVID", Model.HOGIADINHTVID)
+        @Html.Hidden("HOGIADINHID", Model.HOGIADINHID)
+        @Html.Hidden("CANHANID", Model.CANHANID)
+        @Html.Hidden("TRANGTHAI", Model.TRANGTHAI)
+        @Html.Hidden("QHVOICHUHOID", Model.QHVOICHUHOID)
+    </form>
+    <div class="box-header with-border">
+        <div class="row p-0">
+            <div class="col-xs-4 p-0">
+                <div class="pull-left">
+                    @if (Model.TRANGTHAI == 1)
+                    {
+                        <button id="BtnSave_FormHGD_ChiTietTVID" type="button" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm mới</button>
+                    }
+                    else if (Model.TRANGTHAI == 2)
+                    {
+                        <button id="BtnSave_FormHGD_ChiTietTVID" type="button" class="btn btn-sm btn-default"><i class='fa fa-check'></i> Lưu thông tin</button>
+                    }
+                    <button id="BtnClear_FormHGD_ChiTietTVID" type="button" class="btn btn-sm btn-default"><i class='fa fa-trash'></i> Xóa trắng</button>
+                </div>
+            </div>
+            <div class="col-xs-4 text-center p-0">
+                <h3 class="box-title">Thông tin chi tiết thành viên</h3>
+            </div>
+            <div class="col-xs-4 p-0">
+                <div class="row p-0">
+                    <div class="col-xs-3 p-0">
+                    </div>
+                    <div class="col-xs-6 p-0">
+                        <div class="pull-right">
+                            @Html.DropDownList("CB_QHVOICHUHOID", new SelectList(ViewBag.dSQuanHe, "QHVOICHUHOID", "TENQUANHE"), "---- Chọn vai trò ----", new { @class = "form-control input-sm", @id = "CB_QHVOICHUHOID" })
+                        </div>
+                    </div>
+                    <div class="col-xs-3 p-0">
+                        <div class="pull-right">
+                            <button id="BtnClose_FormHGD_ChiTietTVID" type="button" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-body p-0">
+        @Html.Partial("ChiTietChu_CaNhan", Model.ThanhVien)
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#BtnClose_FormHGD_ChiTietTVID').on('click', function () {
+                $('#FormHGD_ChiTietTVID').siblings().removeClass("d-none");
+                $('#FormHGD_ChiTietTVID').remove();
+            })
+
+            $('#BtnSave_FormHGD_ChiTietTVID').on('click', function () {
+                var objHoGiaDinhThanhVien = FormToObject($('#formHoGiaDinhThanhVienID'));
+                var TableGiayToID = $('#TableGiayToID').DataTable();
+                var dSGiayTo = [];
+                $.each(TableGiayToID.rows().nodes(), function () {
+                    var curRow = TableGiayToID.row(this).data();
+                    var objGiayTo = {};
+                    for (var temp in curRow) {
+                        objGiayTo[temp] = curRow[temp];
+                    }
+                    dSGiayTo.push(objGiayTo);
+                })
+                for (var temp in dSGiayTo) {
+                    if (dSGiayTo[temp]["LAGIAYTOINGCN"] == "True") {
+                        dSGiayTo[temp]["LAGIAYTOINGCN"] = "true";
+                    } else {
+                        dSGiayTo[temp]["LAGIAYTOINGCN"] = "false";
+                    }
+                    dSGiayTo[temp]["NGAYCAP"] = ConverDatatime(dSGiayTo[temp]["NGAYCAP"]);
+                    delete dSGiayTo[temp]["STT"];
+                    delete dSGiayTo[temp]["TenLoaiGiayTo"];
+                    delete dSGiayTo[temp]["TRANGTHAI"];
+                }
+                objHoGiaDinhThanhVien["ThanhVien"] = FormToObject($('#formTTCaNhanID'));
+                objHoGiaDinhThanhVien["ThanhVien"]["DSGiayToTuyThan"] = dSGiayTo;
+                console.log(objHoGiaDinhThanhVien);
+                $.ajax({
+                    type: "POST",
+                    url: '/XLHSDangKy/Save_FormHGD_ChiTietTVID',
+                    data: { data: JSON.stringify(objHoGiaDinhThanhVien) },
+                    dataType: "json",
+                    success: function (result) {
+                        console.log(result);
+                        if (result.success) {
+                            if ('@Model.TRANGTHAI' == '1') {
+                                $('#BtnClear_FormHGD_ChiTietTVID').click();
+                            }
+                            var TableTVHGDID = $('#TableTVHGDID').DataTable();
+                            var objTemp = null;
+                            var rowEle = null;
+                            $.each(TableTVHGDID.rows().nodes(), function () {
+                                var curRow = TableTVHGDID.row(this).data();
+                                if (curRow.HOGIADINHTVID == result.obj.HOGIADINHTVID) {
+                                    objTemp = TableTVHGDID.row(this).data();
+                                    rowEle = this;
+                                    return false;
+                                }
+                            })
+                            if (objTemp != null) {
+                                result.obj.STT = TableTVHGDID.row(rowEle).data().STT;
+                                TableTVHGDID.row(rowEle).data(result.obj).draw();
+                            } else {
+                                result.obj.STT = TableTVHGDID.data().count() + 1;
+                                result.obj.STT += ".";
+                                TableTVHGDID.row.add(result.obj).draw();
+                            }
+                            $.ajax({
+                                type: "POST",
+                                url: '/XLHSDangKy/HoGiaDinh_GetThongTin',
+                                dataType: "json",
+                                success: function (hoGiaDinh) {
+                                    console.log(hoGiaDinh);
+                                    $('#formTTHoGiaDinhID [name=CHUHO]').val(hoGiaDinh.CHUHO);
+                                    $('#formTTHoGiaDinhID [name=VOCHONG]').val(hoGiaDinh.VOCHONG);
+                                    $('#formTTHoGiaDinhID [name=CMTCHUHO]').val(hoGiaDinh.CMTCHUHO);
+                                    $('#formTTHoGiaDinhID [name=CHUHO_HOTEN]').val(hoGiaDinh.CHUHO_HOTEN);
+                                    $('#formTTHoGiaDinhID [name=CMTVOCHONG]').val(hoGiaDinh.CMTVOCHONG);
+                                    $('#formTTHoGiaDinhID [name=VOCHONG_HOTEN]').val(hoGiaDinh.VOCHONG_HOTEN);
+                                }
+                            })
+                        }
+                        alert(result.mes);
+                    }
+                })
+            })
+
+            $('#BtnClear_FormHGD_ChiTietTVID').on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: '/XLHSDangKy/HoGiaDinh_ThemMoiThanhVien',
+                    dataType: "html",
+                    success: function (html) {
+                        $('#FormHGD_ChiTietTVID').remove();
+                        $('#HGDDSTVID').append(html);
+                    }
+                })
+            })
+
+            $('#CB_QHVOICHUHOID').on('change', function () {
+                $('#formHoGiaDinhThanhVienID [name=QHVOICHUHOID]').val($('#CB_QHVOICHUHOID').val());
+            })
+
+            $('#CB_QHVOICHUHOID').val('@Model.QHVOICHUHOID')
+
+        })
+
+    </script>
+</div>

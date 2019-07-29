@@ -1,0 +1,149 @@
+﻿@model AppCore.Models.QT_HOSOTIEPNHAN
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Thông tin chi tiết</h3>
+    </div>
+    <div class="box-body">
+        
+    </div>
+    <div class="box-footer" style="border-top: 1px solid #d2d6de;">
+        <button class="btn btn-sm btn-default pull-right" style="margin-left: 5px;" type="button" onclick="">Lưu thông tin</button>
+        <button class="btn btn-sm btn-default pull-right" style="margin-right: 5px;" type="button" onclick="">Làm mới</button>
+    </div>
+</div>
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Danh sách file đính kèm</h3>
+    </div>
+    <div class="box-body">
+        <table id="TableDSFileDinhKemID" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>#</th>
+                    <th>Tên file</th>
+                    <th>Loại</th>
+                    <th>Đường dẫn</th>
+                    <th>Loại báo cáo</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DSFileDinhKem != null && Model.DSFileDinhKem.Count > 0)
+                {
+                    int sTT = 0;
+                    foreach (var item in Model.DSFileDinhKem)
+                    {
+                        sTT++;
+                        <tr>
+                            <td>
+                                @item.FILEDINHKEMHOSOID
+                            </td>
+                            <td>
+                                @sTT.
+                            </td>
+                            <td>
+                                @item.TENFILE
+                            </td>
+                            <td>
+                                @item.LOAI
+                            </td>
+                            <td>
+                                @item.DUONGDANFILE
+                            </td>
+                            <td>
+                                @item.LOAIBAOCAO
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var columns = [
+            { "data": "FILEDINHKEMHOSOID" },
+            { "data": "STT" },
+            { "data": "TENFILE" },
+            { "data": "LOAI" },
+            { "data": "DUONGDANFILE" },
+            { "data": "LOAIBAOCAO" },
+            { "data": null }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnSel'>Chọn</button>";
+                }
+            },
+            {
+                "targets": [2],
+                "className": "text-right"
+            },
+            {
+                "targets": [-1],
+                "className": "text-center"
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "lengthChange": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+            "autoWidth": false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+            },
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": 't<"bottom"p><"clear">'
+        }
+
+        var TableDSFileDinhKemID = $('#TableDSFileDinhKemID').DataTable(options);
+
+        TableDSFileDinhKemID.rows().nodes().on('click', 'tbody tr', function () {
+            if (TableDSFileDinhKemID.rows().nodes().length > 0) {
+                ChonFileDinhKem(TableDSFileDinhKemID.row($(this)).data());
+                if ($(TableDSFileDinhKemID.row(this).node()).attr('class').indexOf('activerow') != -1) {
+                    $(TableDSFileDinhKemID.row(this).node()).removeClass('activerow');
+                } else {
+                    $(TableDSFileDinhKemID.rows().nodes()).removeClass('activerow');
+                    $(TableDSFileDinhKemID.row(this).node()).addClass('activerow');
+                }
+            }
+        })
+
+        TableDSFileDinhKemID.rows().nodes().on('click', 'tbody tr button', function (event) {
+            event.stopPropagation();
+        })
+
+        function ChonFileDinhKem(rowData) {
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/XLHSDangKy/DonDangKy_ChonToChuc",
+            //    data: { toChucID: rowData.TOCHUCID },
+            //    dataType: "html",
+            //    success: function (result) {
+            //        $('#divCTChuToChucID')
+            //            .html(result)
+            //            .ready(function () {
+            //                $("#modalKQTKToChucID").modal('hide');
+            //            })
+            //    }
+            //})
+        }
+
+    })
+</script>

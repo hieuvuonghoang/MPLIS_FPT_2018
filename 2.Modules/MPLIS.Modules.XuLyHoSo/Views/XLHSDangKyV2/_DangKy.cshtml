@@ -1,0 +1,82 @@
+﻿<div id="divDonDangKyID" class="m-15">
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divDonDangKyID" href="#collapse_DonDangKy_DSGCN">
+                Danh sách GCN trong đăng ký
+            </a>
+        </div>
+        <div id="collapse_DonDangKy_DSGCN" class="panel-collapse collapse in">
+            <div id="divDSDangKyGCNID">
+                <div class='overlay'> <i class='fa fa-refresh fa-spin'></i> </div>
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divDonDangKyID" href="#collapse_DonDangKy_DSCHU">
+                Danh sách Chủ trong đăng ký
+            </a>
+        </div>
+        <div id="collapse_DonDangKy_DSCHU" class="panel-collapse collapse">
+            <div id="divDSDangKyChuID">
+                <div class='overlay'> <i class='fa fa-refresh fa-spin'></i> </div>
+            </div>
+        </div>
+    </div>
+    @*<div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divDonDangKyID" href="#collapse_DonDangKy_DSTHUA">
+                Danh sách Thửa trong đăng ký
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuDonDangKy_DSTHUA()">Cập nhật</button>
+        </div>
+        <div id="collapse_DonDangKy_DSTHUA" class="panel-collapse collapse">
+            <div id="divDonDangKyID_DSTHUA">
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divDonDangKyID" href="#collapse_DonDangKy_DSTAISAN">
+                Danh sách tài sản trong đăng ký
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuDonDangKy_DSTAISAN()">Cập nhật</button>
+        </div>
+        <div id="collapse_DonDangKy_DSTAISAN" class="panel-collapse collapse">
+            <div id="divDonDangKyID_DSTAISAN">
+            </div>
+        </div>
+    </div>*@
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        trigger_tab_doc();
+
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKyV2/_DonDangKy_DSGiayChungNhan",
+            dataType: "html",
+            success: function (html) {
+                $('#divDSDangKyGCNID').html(html);
+            },
+            complete: function () {
+                $('.overlay', $('#divDSDangKyGCNID')).remove();
+            }
+        })
+
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKyV2/_DonDangKy_DSChu",
+            dataType: "html",
+            success: function (html) {
+                $('#divDSDangKyChuID').html(html);
+            },
+            complete: function () {
+                $('.overlay', $('#divDSDangKyChuID')).remove();
+            }
+        })
+    });
+</script>
+

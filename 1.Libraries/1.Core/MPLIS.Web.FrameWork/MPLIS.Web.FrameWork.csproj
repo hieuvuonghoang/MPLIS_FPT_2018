@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F439CD8B-8AAD-45F7-9A14-9E4112598877}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MPLIS.FrameWork</RootNamespace>
+    <AssemblyName>MPLIS.FrameWork</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Extras.CommonServiceLocator">
+      <HintPath>..\..\..\packages\Autofac.Extras.CommonServiceLocator.3.2.0\lib\net40\Autofac.Extras.CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Autofac.Mvc5.3.3.4\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper, Version=3.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActionFilters\HttpParamActionAttribute.cs" />
+    <Compile Include="Common\ValidationResult.cs" />
+    <Compile Include="Extensions\ActivityLogAttribute.cs" />
+    <Compile Include="Authentication\ClaimsExtensions.cs" />
+    <Compile Include="Authentication\MPLISAuthorizeAttribute.cs" />
+    <Compile Include="Authentication\CustomUser.cs" />
+    <Compile Include="Base\BaseController.cs" />
+    <Compile Include="Extensions\ExtJson\CrudResult.cs" />
+    <Compile Include="Extensions\ExtJson\JsonData.cs" />
+    <Compile Include="Extensions\ExtJson\JsonResultCustom.cs" />
+    <Compile Include="Extensions\NotificationExtensions.cs" />
+    <Compile Include="Helpers\DropDownListForExtensions.cs" />
+    <Compile Include="Helpers\LabelForExtensions.cs" />
+    <Compile Include="Helpers\TextBoxForExtensions.cs" />
+    <Compile Include="Helpers\UtilitiesHelper.cs" />
+    <Compile Include="ModelBuilder\DoubleModelBinder.cs" />
+    <Compile Include="ModelBuilder\DecimalModelBinder.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Helpers\DisplayNameHelper.cs" />
+    <Compile Include="ModelBuilder\DateTimeModelBinder.cs" />
+    <Compile Include="Models\TreeObj.cs" />
+    <Compile Include="Mvc\AjaxList.cs" />
+    <Compile Include="Mvc\AjaxListResult.cs" />
+    <Compile Include="Mvc\ButtonCancel.cs" />
+    <Compile Include="Mvc\ButtonEdit.cs" />
+    <Compile Include="Mvc\ButtonLoad.cs" />
+    <Compile Include="Mvc\ButtonSave.cs" />
+    <Compile Include="Mvc\ComboTreeHelpers.cs" />
+    <Compile Include="ActionFilters\AntiForgeryTokenFilterProvider .cs" />
+    <Compile Include="ActionFilters\CompressResponseAttribute.cs" />
+    <Compile Include="Extensions\ControllerExtensions.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="Helpers\BaseHtmlHelper.cs" />
+    <Compile Include="Helpers\UserHtmlHelper.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\SocialGoalUser.cs" />
+    <Compile Include="Models\UserInfo.cs" />
+    <Compile Include="Mvc\MPLISExtensions.cs" />
+    <Compile Include="Mvc\MPLISHelperBase.cs" />
+    <Compile Include="Mvc\MPLISHtmlHelper.cs" />
+    <Compile Include="Mvc\MPLISHtmlHelperExtensions.cs" />
+    <Compile Include="Mvc\MPLISInfo.cs" />
+    <Compile Include="Mvc\EnumerableExtensions.cs" />
+    <Compile Include="Mvc\SerializationExtensions.cs" />
+    <Compile Include="Mvc\Utils.cs" />
+    <Compile Include="PluginManager\MPLISController.cs" />
+    <Compile Include="PluginManager\MPLISControllerFactory.cs" />
+    <Compile Include="PluginManager\MPLISPlugin.cs" />
+    <Compile Include="PluginManager\MPLISStartUp.cs" />
+    <Compile Include="PluginManager\MPLISViewEngine.cs" />
+    <Compile Include="PluginManager\IMPLISController.cs" />
+    <Compile Include="PluginManager\IMPLISPlugin.cs" />
+    <Compile Include="PluginManager\IStartupTask.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Routes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\2.Data\MPLIS.Libraries.Data.SSO\MPLIS.Libraries.Data.SSO.csproj">
+      <Project>{30176E2B-1FD8-4B91-B698-F441415A7DE9}</Project>
+      <Name>MPLIS.Libraries.Data.SSO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\2.Data\AppCore\AppCore.csproj">
+      <Project>{0a99aae9-81de-4322-af61-3c99d27629f1}</Project>
+      <Name>AppCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

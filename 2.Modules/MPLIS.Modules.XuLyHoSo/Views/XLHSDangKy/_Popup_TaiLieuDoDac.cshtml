@@ -1,0 +1,110 @@
+﻿@using MPLIS.Libraries.Data.XuLyHoSo.Models
+@using AppCore.Models
+@model DC_TAILIEUDODAC
+
+<div class='modal fade' id='modalformTaiLieuDoDacID'>
+    <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'>Chi tiết tài liệu đo đạc</h4>
+            </div>
+            <div class='modal-body'>
+                <form method="POST" id="Form_TaiLieuDoDac">
+                    @Html.HiddenFor(model => model.TAILIEUDODACID)
+                    @Html.HiddenFor(model => model.THUADATID)
+                    <div class="row">
+                        <div class="col-xs-2">
+                            @Html.LabelFor(model => model.LOAIBANDODIACHINHID, "Loại bản đồ địa chính", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.DropDownListFor(model => model.LOAIBANDODIACHINHID, new SelectList(ViewBag.loaibando, "LOAIBANDODIACHINHID", "TENLOAIBANDODIACHINH").ToList(), "--- Lựa chọn ---", new { @class = "form-control required", required = "required" })
+                        </div>
+                        <div class="col-xs-2">
+                            @Html.LabelFor(model => model.TENTAILIEU, "Tên tài liệu", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.TextBoxFor(model => model.TENTAILIEU, new { @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            @Html.LabelFor(model => model.PHUONGPHAPDO, "Phương pháp đo", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.TextBoxFor(model => model.PHUONGPHAPDO, new { @class = "form-control input-sm" })
+                        </div>
+                        <div class="col-xs-2">
+                            @Html.LabelFor(model => model.MUCDOCHINHXAC, "Mức độ chính xác", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.TextBoxFor(model => model.MUCDOCHINHXAC, new { @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            @Html.LabelFor(model => model.TYLEDODAC, "Tỷ lệ đo đạc", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.TextBoxFor(model => model.TYLEDODAC, new { maxlength = "30", @class = "form-control input-sm" })
+                        </div>
+                        <div class="col-xs-2">
+                            @Html.LabelFor(model => model.NGAYHOANTHANH, "Ngày hoàn thành", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-4">
+                            @Html.TextBoxFor(model => model.NGAYHOANTHANH, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                </form>
+            </div> 
+            <div class='modal-footer' style='text-align:center;'>
+                <button type='button' class='btn btn-primary btn-sm pull-right'>Làm mới</button>
+                <button type='button' class='btn btn-primary btn-sm pull-right'>Cập nhật</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+
+    $(function () {
+        $("#btncapnhattailieudodac").on("click", function () {
+            var formdata = $("#Form_TaiLieuDoDac").serializeArray();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/SaveDoDac",
+                data: formdata,
+                dataType: "html",
+                success: function (data) {
+
+                    $('#div_tailieudodac').html(data);
+                    alert('Lưu tài liệu thành công');
+                    alert($('#formtailieudodacid').val());
+                    alert($('#formThuaid').val());
+                    $('#THUADATID').val($('#formThuaid').val());
+                    $('#TAILIEUDODACID').val($('#formtailieudodacid').val());
+                    $('#TENTAILIEUDD').val($('#TENTAILIEU').val());
+                }
+            });
+
+        });
+
+
+        $("#btnthemmoitailieudodac").on("click", function () {
+            var thuaid = $('#hi_ThuaId').val();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/LamMoiDoDac",
+                data: { THUAID: thuaid.trim() },
+                dataType: "html",
+                success: function (data) {
+                    $('#div_tailieudodac').html(data);
+                    //alert($('#THUADATID').val());
+                    //$('#hi_ThuaId').val($('#THUADATID').val());
+                }
+            });
+        });
+
+    });
+</script>

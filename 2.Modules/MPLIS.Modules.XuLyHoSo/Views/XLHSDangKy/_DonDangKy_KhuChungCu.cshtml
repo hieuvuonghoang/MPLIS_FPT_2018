@@ -1,0 +1,73 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.VM_XuLyHoSo_DK
+<div class='modal fade' id='modalformKhuChungCu'>
+    <input id="CurKCCID" name="CurKCCID" type="hidden" value="" style="display:none">
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title' id="title_popup_kcc">Khu Chung Cư</h4>
+            </div>
+            <div class='modal-body'>
+                <div>
+                    <ul class="nav nav-tabs nav-justified">
+                        <li class="active"> <a class="mauchu-tab" href="#tabKhu" id="openTabKhu" data-toggle="tab">Thông tin khu chung cư</a></li>
+                        <li>                <a class="mauchu-tab" href="#tabNha" id="openTabNha" data-toggle="tab">Nhà trong khu chung cư</a></li>
+                        <li>                <a class="mauchu-tab" href="#tabHangmuc" id="openTabHangmuc" data-toggle="tab">Hạng mục ngoài căn hộ</a></li>
+
+                    </ul>
+                    <div class="tab-content" id="tabs">
+                        <div class="tab-pane fade in active" id="tabKhu">
+                            @Html.Action("_ChiTietKhuChungCu",new {t= ViewBag.ID })
+                        </div>
+                        <div class="tab-pane fade" id="tabNha">
+                        </div>
+                        <div class="tab-pane fade" id="tabHangmuc">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        var kccid = $('#CurKCCID').val();
+        console.log("kccid" + kccid);
+        $("#openTabKhu").on("click", function () {
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/_ChiTietKhuChungCu",
+                data:{t : kccid.trim()},
+                dataType: "html",
+                success: function (response, startus, xhr) {
+                    $("#tabKhu").html(response);
+                },
+            });
+        });
+        $("#openTabNha").on("click", function () {
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/_ChiTietNhaChungCu",
+                data: { t: kccid.trim() },
+                dataType: "html",
+                success: function (response, startus, xhr) {
+                    $("#tabNha").html(response);
+                },
+            });
+        });
+        $("#openTabHangmuc").on("click", function () {
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/_ChiTietHangMucNCH",
+                data: { t: kccid.trim() },
+                dataType: "html",
+                success: function (response, startus, xhr) {
+                    $("#tabHangmuc").html(response);
+                },
+            });
+        });
+
+    });
+
+</script>

@@ -1,0 +1,89 @@
+﻿@using AppCore.Models
+@model DC_THUADAT
+    <form id="divHanCheThua">
+        @Html.HiddenFor(m => m.CurHanChe.THUADATID, new { @class = "form-control" })
+        @Html.HiddenFor(m => m.CurHanChe.HANCHEID, new { @class = "form-control" })
+   @*  @Html.HiddenFor(m => m.CurHanChe., new { @class = "form-control" })*@   
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(Model=>Model.CurHanChe.LOAIHANCHEID,"Loại hạn chế", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(Model=>Model.CurHanChe.LOAIHANCHEID, new SelectList(ViewBag.mdsdhanche, "LOAIHANCHEID", "TENLOAIHANCHE"), new { @class = "form-control input-sm"})
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(Model => Model.CurHanChe.NOIDUNGHANCHE, "Nội dung hạn chế", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(Model => Model.CurHanChe.NOIDUNGHANCHE, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(Model => Model.CurHanChe.COQUANBANHANH, "Cơ quan ban hành", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(Model => Model.CurHanChe.COQUANBANHANH, new {  @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(Model => Model.CurHanChe.NGAYBANHANH, "Ngày ban hành", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(Model => Model.CurHanChe.NGAYBANHANH, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(Model => Model.CurHanChe.SOVANBAN, "Số văn bản", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(Model => Model.CurHanChe.SOVANBAN, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(Model=>Model.CurHanChe.DIENTICH,"Diện tích", new { @class = "pull-right control-label" })
+            </div> 
+            <div class="col-xs-8">
+                @Html.TextBoxFor(Model=>Model.CurHanChe.DIENTICH, new { @class = "form-control input-sm"})
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(Model => Model.CurHanChe.SODORANHGIOIHANCHE, "Ranh giới hạn chế", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(Model => Model.CurHanChe.SODORANHGIOIHANCHE, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(Model => Model.CurHanChe.NGAYHETHIEULUC, "Ngày hết hiệu lực", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(Model => Model.CurHanChe.NGAYHETHIEULUC, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(Model => Model.CurHanChe._HanCheMotPhan, "Hạn chế một phần", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-2" style="padding-top: 7px;">
+                @Html.CheckBoxFor(Model => Model.CurHanChe._HanCheMotPhan)
+            </div>
+            <div class="col-xs-4">
+                @Html.LabelFor(Model => Model.CurHanChe._ConHieuLuc, "Còn hiệu lực", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-2" style="padding-top: 7px;">
+                @Html.CheckBoxFor(Model => Model.CurHanChe._ConHieuLuc)
+            </div>
+        </div>
+
+    </form>
+<script>
+
+</script>

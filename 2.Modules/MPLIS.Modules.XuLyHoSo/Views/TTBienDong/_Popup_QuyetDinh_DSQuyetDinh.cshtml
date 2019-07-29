@@ -1,0 +1,65 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSQuyetDinhVM
+<div class='modal fade' id='modalDanhSachQuyetDinhID' role="dialog">
+    <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'>Danh sách quyết định</h4>
+            </div>
+            <div class='modal-body'>
+                <table class="table table-bordered" id="dSQDTableID" data-toggle="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Số hợp đồng</th>
+                            <th>Số công chứng</th>
+                            <th>Quyển công chứng</th>
+                            <th>Nơi công chứng</th>
+                            <th>Ngày công chứng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int stt = 0;
+                            foreach (var item in Model.DSQuyetDinh)
+                            {
+                                stt++;
+                                <tr data-id="@item.QUYETDINHID">
+                                    <td class="text-right">
+                                        @stt.
+                                    </td>
+                                    <td class="text-center">
+                                        @item.SOHOPDONG
+                                    </td>
+                                    <td class="text-center">
+                                        @item.SOCONGCHUNG
+                                    </td>
+                                    <td class="text-center">
+                                        @item.QUYENCONGCHUNG
+                                    </td>
+                                    <td class="text-center">
+                                        @item.NOICONGCHUNG
+                                    </td>
+                                    <td class="text-center">
+                                        @item.NGAYCONGCHUNG
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class='modal-footer' style='text-align:center;'>
+                <button type='button' class='t100 btn btn-primary btn-sm pull-right' onclick="Chon_QuyetDinh()">Chọn</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var dSQDTableID = InitDataTableXLHS($('#dSQDTableID'));
+    ActiveRowDataTable(dSQDTableID, 'activerow');
+    function Chon_QuyetDinh() {
+        console.log('Chờ xử lý');
+    }
+</script>

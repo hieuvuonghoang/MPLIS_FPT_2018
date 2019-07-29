@@ -1,0 +1,175 @@
+﻿@using AppCore.Models
+@model DC_THUADAT
+
+<div class="row" id="div_MDSD_Thua">
+    <div class="col-xs-6">
+        <div class="row" style="padding: 0;">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Danh sách mục đích sử dụng</h3>
+                </div>
+                <div class="box-body">
+                    <table id="table_MDSDTHUA" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th hidden>ID</th>
+                                <th>#</th>
+                                <th>MĐSD</th>
+                                <th>Diện tích(m<sup>2</sup>)</th>
+                                <th>Thời hạn SD</th>
+                                <th>Sử dụng chung</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int rdsgcntable = 0;
+                                if (Model != null)
+                                {
+                                    if (Model.DSMucDichSuDungDat != null)
+                                    {
+                                        foreach (var item in Model.DSMucDichSuDungDat)
+                                        {
+                                            rdsgcntable = rdsgcntable + 1;
+                                            <tr data-mucdichsudungdatid="@item.MUCDICHSUDUNGDATID">
+                                                <td hidden>@item.MUCDICHSUDUNGDATID</td>
+                                                <td class="text-right">
+                                                    @rdsgcntable.
+                                                </td>
+                                                <td class="text-center">
+                                                    @item.TenMDSD
+                                                </td>
+                                                <td class="text-center">
+                                                    @item.DIENTICH
+                                                </td>
+                                                <td>
+                                                    @item.THOIHANSUDUNG
+                                                </td>
+                                                <td>
+                                                    @Html.CheckBoxFor(a=>item._SUDUNGCHUNG, new { @disabled = "true" })
+                                                </td>
+                                                <td>
+                                                    <input type="button" class="btn btn-xs btn-heading" value="Xóa" onclick="xoamdsd(this)" />
+                                                    <input type="button" class="btn btn-xs btn-heading" value="Vị trí" onclick="vitrimdsd(this)" />
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 0;">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Danh sách vị trí trong mục đích sử dụng</h3>
+                </div>
+                <div class="box-body">
+                    <div id="Div_DSViTri">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Thông tin chi tiết mục đích sử dụng</h3>
+            </div>
+            <div class="box-body">
+                <div id="ChiTietMDSD">
+                    @Html.Partial("DonDangKy_DSThua_ChiTietMDSD")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        var tableMD= InitDataTableXLHS($('#table_MDSDTHUA'));
+        tableMD.rows().nodes().on("click", "tbody tr", function () {
+            console.log("CLICK");
+            if (tableMD.rows().nodes().length > 0) {
+                if ($(tableMD.row(this).node()).attr('class').indexOf('activerow') != -1) {
+                    $(tableMD.row(this).node()).removeClass('activerow');
+                } else {
+                    $(tableMD.rows().nodes()).removeClass('activerow');
+                    $(tableMD.row(this).node()).addClass('activerow');
+                } var idMDSD = $(this)[0].cells[0].innerHTML;
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChiTietMDSD",
+                    data: { idmdsdthuadat: idMDSD.trim() },
+                    datatype: "html",
+                    success: function (data) {
+                        $('#ChiTietMDSD').html(data);
+                        if ($(drpLoaiThoiHan).val() != 0) {
+                            console.log($('#TUNGAY').val());
+                            $('#MDSDTuNgay').prop("disabled", false);
+                            $('#MDSDDenNgay').prop("disabled", false);
+                        }
+                        else {
+                            $('#MDSDTuNgay').prop("disabled", true);
+                            $('#MDSDDenNgay').prop("disabled", true);
+                        }
+                    }
+                })
+
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/DanhSachViTri",
+                    data: { idmdsdthuadat: idMDSD.trim() },
+                    datatype: "html",
+                    success: function (data) {
+                        $('#Div_DSViTri').html(data);
+
+                    }
+                })
+            }
+
+        })
+        tableMD.rows().nodes().on("click", "tbody tr input", function (event) {
+            event.stopPropagation();
+        });
+    });
+    function xoamdsd(button) {
+        var ans = confirm("Bạn chắc chắn muốn xóa?");
+        //=== If user pressed Ok then delete the record else do nothing.
+        if (ans == true) {
+            var empTab = document.getElementById('table_MDSDTHUA');
+            var index = button.parentNode.parentNode.rowIndex;
+            var mucdichid = empTab.rows[index].cells[0].innerHTML;
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/XoaMDSDThua",
+                dataType: "html",
+                data: { mucdichid: mucdichid.trim()},
+                success: function (html) {
+                    console.log("SUCCES");
+                    alert("Xóa  thành công!");
+                    $('#div_MDSD_Thua').html(html);
+                },
+            });
+        }
+    }
+    function vitrimdsd(button) {
+        var empTab = document.getElementById('table_MDSDTHUA');
+        var index = button.parentNode.parentNode.rowIndex;
+        var mucdichid = empTab.rows[index].cells[0].innerHTML;
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/LoadViTri",
+            dataType: "html",
+            data: { mucdichid: mucdichid.trim() },
+            success: function (data) {
+                console.log("SUCCES");
+                $('#ChiTietMDSD').html(data);
+            },
+        });
+    }
+</script>

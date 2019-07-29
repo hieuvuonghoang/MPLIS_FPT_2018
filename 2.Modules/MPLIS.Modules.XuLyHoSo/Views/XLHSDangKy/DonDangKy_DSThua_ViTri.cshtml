@@ -1,0 +1,91 @@
+﻿@using AppCore.Models
+@model DC_THUADAT
+
+<table id="table_ViTriMDSD" class="table table-bordered">
+    <thead>
+        <tr>
+            <th hidden>ID</th>
+            <th>STT</th>
+            <th>Đườmg/Đoạn đường/Khu vực</th>
+            <th>Vị trí</th>
+            <th>Chiều sâu</th>
+            <th>Chiều rộng ngõ</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int rdsvttable = 0;
+            if (Model != null)
+            {
+                if (Model.DSViTri != null)
+                {
+                    foreach (var item in Model.DSViTri)
+                    {
+                        rdsvttable = rdsvttable + 1;
+                        <tr data-vitriid="@item.VITRIID">
+                            <td hidden>@item.VITRIID</td>
+                            <td class="text-right">
+                                @rdsvttable.
+                            </td>
+                            <td class="text-center">
+                                @(item.DUONG + " " + item.DOANDUONG + " " + item.KHUVUC)
+
+                            </td>
+                            <td class="text-center">
+                                @item.VITRI
+                            </td>
+                            <td>
+                                @item.CHIEUSAU
+                            </td>
+                            <td>
+                                @item.CHIEURONGNGOHEM
+                            </td>
+                            <td>
+                                <input type="button" class="btn btn-xs btn-heading" value="Xóa" onclick="xoavitri(this)" />
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>
+<script>
+    
+    InitDataTableXLHS($('#table_ViTriMDSD'));
+    $('#table_ViTriMDSD tbody').on("click", "tr", function (e) {
+        $(this).addClass('activerow').siblings().removeClass('activerow');
+        var idvitri = $(this)[0].cells[0].innerHTML;
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/ChiTietViTri",
+            data: { idvitri: idvitri.trim() },
+            datatype: "html",
+            success: function (data) {
+                $('#ChiTietMDSD').html(data);
+            }
+        })
+    });
+
+    function xoavitri(button) {
+        var ans = confirm("Bạn chắc chắn muốn xóa?");
+        //=== If user pressed Ok then delete the record else do nothing.
+        if (ans == true) {
+            var empTab = document.getElementById('table_ViTriMDSD');
+            var index = button.parentNode.parentNode.rowIndex;
+            var vitriid = empTab.rows[index].cells[0].innerHTML;
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/XoaViTri",
+                dataType: "html",
+                data: { vitriid: vitriid.trim() },
+                success: function (html) {
+                    console.log("SUCCES");
+                    alert("Xóa  thành công!");
+                    $('#Div_DSViTri').html(html);
+                },
+            });
+        }
+    }
+</script>

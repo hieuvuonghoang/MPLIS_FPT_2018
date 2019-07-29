@@ -1,0 +1,495 @@
+﻿@using MPLIS.Libraries.Data.XuLyHoSo.Models
+@using AppCore.Models
+@model DC_THUADAT
+<div class="row">
+    <div class="col-xs-6 form-group">
+        <fieldset>
+            <legend>
+                Danh sách thửa mục đích sử dụng
+            </legend>
+            <div id="divdsthuamdsd">
+                <table id="table_MDSDTHUA" class="bordered">
+                    <thead>
+                        <tr>
+                            <th class="t50" hidden="true">MUCDICHSUDUNGDATID</th>
+                            <th class="t50">STT</th>
+                            <th class="t100">MDSD</th>
+                            <th class="t100">Diện tích(m2)</th>
+                            <th class="t100">Thời hạn SD</th>
+                            <th class="t50">Sử dụng chung</th>
+                            <th class="t50">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int rdsgcntable = 0;
+                            if (Model != null)
+                            {
+                                if (Model.DSMucDichSuDungDat != null)
+                                {
+                                    foreach (var item in Model.DSMucDichSuDungDat)
+                                    {
+
+                                        rdsgcntable = rdsgcntable + 1;
+                                        <tr data-id="@item.MUCDICHSUDUNGDATID">
+                                            <td hidden="true">
+                                                @item.MUCDICHSUDUNGDATID
+                                            </td>
+                                            <td>
+                                                @rdsgcntable
+                                            </td>
+                                            <td>
+                                                @item.TenMDSD
+                                            </td>
+                                            <td>
+                                                @item.DIENTICH
+                                            </td>
+                                            <td>
+                                                @item.THOIHANSUDUNG
+                                            </td>
+                                            <td>
+                                                @item.SUDUNGCHUNG
+                                            </td>
+                                            <td>
+                                             
+                                                <input type="button" value="Xóa" onclick="xoamdsd(this)" />
+                                            </td>
+                                             
+                                        </tr>
+
+                                    }
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
+    </div>
+    @{using (Html.BeginForm("_ThuaMDSDDat", "XLHSDangKy", FormMethod.Post, new { @id = "ThemMoiMdsdThua" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.CurMDSDDAT.MUCDICHSUDUNGDATID, new { @class = "form-control input-sm" })
+            @*@Html.HiddenFor(m => m.DSMDSD, new { @class = "form-control input-sm" })*@
+            @Html.HiddenFor(m => m.CurMDSDDAT.THUADATID, new { @class = "form-control input-sm" })
+            <div class="col-xs-6 form-group">
+                <fieldset>
+                    <legend>
+                        Chi tiết thửa mục đích sử dụng
+                    </legend>
+                    <div id="divchitietthuamdsd" class="row">
+                        <div class="form-control-static">
+                            <div class="col-xs-12">
+                                <div class="collabel-xs-4">
+                                    @Html.Label("Mục đích sử dụng")
+                                </div>
+                                <div>
+                                    @*<input type="" class="form-control input-sm" value="@Model.CurDC_BienDong.MAHOSOTHUTUCDANGKY">*@
+                                    @Html.DropDownListFor(m => m.CurMDSDDAT.MUCDICHSUDUNGID, new SelectList(ViewBag.mdsddat, "MUCDICHSUDUNGID", "TENMUCDICHSUDUNG"), new { @class = "collabel-xs-5 text"  })
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-control-static">
+                            <div class="col-xs-12">
+                                <div class="collabel-xs-4">
+                                    @Html.Label("Mục đích sử dụng quy hoạch")
+                                </div>
+                                <div>
+                                    @*<input type="" class="form-control input-sm" value="@Model.CurDC_BienDong.MAHOSOTHUTUCDANGKY">*@
+                                    @Html.DropDownListFor(m => m.CurMDSDDAT.MUCDICHSUDUNGQHID, new SelectList(ViewBag.mdsdquyhoach, "MUCDICHSUDUNGQHID", "TENMUCDICHSUDUNGQH"), new { @class = "collabel-xs-5 text"  })
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-control-static">
+                            <div class="col-xs-12">
+                                <div class="collabel-xs-4">
+                                    @Html.Label("Diện tích")
+                                </div>
+                                <div>
+                                    @*<input type="text" class="collabel-xs-4 text" />*@
+                                    @Html.TextBoxFor(m => m.CurMDSDDAT.DIENTICH, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-control-static">
+                            <div class="col-xs-12">
+                                <div class="collabel-xs-4">
+                                    @Html.Label("Diện tích SD Chung")
+                                </div>
+                                <div>
+                                    @*<input type="text" class="collabel-xs-4 text" />*@
+                                    @Html.TextBoxFor(m => m.CurMDSDDAT.SUDUNGCHUNG, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-control-static">
+                            <div class="col-xs-12">
+                                <div class="collabel-xs-4">
+                                    @Html.Label("Thời hạn sử dụng")
+                                </div>
+                                <div>
+                                    @*<input type="text" class="collabel-xs-4 text" />*@
+                                    @Html.TextBoxFor(m => m.CurMDSDDAT.THOIHANSUDUNG, new { @class = "collabel-xs-5 text" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-control-static">
+                            <div class="col-xs-12">
+                                <div class="collabel-xs-4">
+                                    @Html.Label("Nguồn gốc sử dụng")
+                                </div>
+                                <div>
+                                    @*<input type="" class="form-control input-sm" value="@Model.CurDC_BienDong.MAHOSOTHUTUCDANGKY">*@
+                                    @Html.DropDownListFor(m => m.CurMDSDDAT.MDSDGOCID, new SelectList(ViewBag.mdsdnguongoc, "LOAINGUONGOCSUDUNGID", "TENNGUONGOCSUDUNG"), new { @class = "collabel-xs-5 text"  })
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-control-static">
+                            <div class="col-xs-12">
+                                <div class="collabel-xs-5">
+                                    <div class="row">
+                                        @*<input type="checkbox" title="Là mục đích chính" />*@
+                                        @Html.CheckBoxFor(x => x.CurMDSDDAT._LAMUCDICHCHINH, new { @class = "col-xs-2" })
+                                        <label>Là mục đích chính?</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-control-static">
+                            <div>
+                                <div class="col-xs-2">
+                                    <input type="button" id="btnthemmoimdsd" value="Cập nhật MDSD" />
+                                </div>
+                                <div class="col-xs-2">
+                                    <input type="button" id="btnxoatrangmdsd" value="làm mới" />
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+
+
+
+        }
+    }
+</div>
+<script>
+    function xoamdsd(oButton) {
+        var ans = confirm("Bạn chắc chắn muốn xóa?");
+        //=== If user pressed Ok then delete the record else do nothing.
+        if (ans == true) {
+            //alert('xóa thành công!');
+            var empTab = document.getElementById('table_MDSDTHUA');
+            var index = oButton.parentNode.parentNode.rowIndex;
+            // alert(index);
+            var nguoiid = empTab.rows[index].cells[0].innerHTML;
+
+
+            empTab.deleteRow(oButton.parentNode.parentNode.rowIndex);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/XOA_MDSD",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({ mdsdthuaid: nguoiid }),
+                success: function (data) {
+                    if (data === "true") {
+                        alert("Xóa mục đích sử dụng gắn vào thửa thành công!");
+                    }
+                    else {
+                        alert("Có lỗi xảy ra!");
+                    }
+                },
+            });
+
+        }
+
+    }
+    $(function () {
+
+
+        @*var rawdata=   @Html.Raw(Json.Encode( @Model.DSMDSD));
+        // alert(abc);
+        var stringdata = JSON.stringify(rawdata) ;
+
+        // alert(json);
+        var jsondata = JSON.parse(stringdata);
+        var arrHeadthua = new Array();
+        arrHeadthua = ['STT', 'mdsd', 'dientich', 'thoihan', 'lasdchung', 'hanhdong'];
+        //alert(obj);
+        for(var ir = 0 ;ir<= jsondata.length -1;ir ++)
+        {
+            var empTab = document.getElementById('table_MDSDTHUA');
+            var rowCnt = empTab.rows.length;        // GET TABLE ROW COUNT.
+
+            var tr = empTab.insertRow(rowCnt);      // TABLE ROW.
+            tr = empTab.insertRow(rowCnt);
+            //stt = $("#table_DSGCNVAOID td").closest("tr").length;
+            for (var c = 0; c <= arrHeadthua.length; c++) {
+                var td = document.createElement('td');          // TABLE DEFINITION.
+                td = tr.insertCell(c);
+
+                if (c == arrHeadthua.length) {           // FIRST COLUMN.
+                    // ADD A BUTTON.
+                    var button = document.createElement('input');
+
+                    // SET INPUT ATTRIBUTE.
+                    button.setAttribute('type', 'button');
+                    button.setAttribute('value', 'Xóa');
+
+                    // ADD THE BUTTON's 'onclick' EVENT.
+                    button.setAttribute('onclick', 'xoamdsd(this)');
+
+                    td.appendChild(button);
+                }
+
+                else if (c == 0) {
+                    td.innerHTML = jsondata[ir].id_mdsdthuadat;
+                    td.hidden = true;
+                }
+                else if (c == 1) {
+                    td.innerHTML = $("#table_MDSDTHUA td").closest("tr").length;
+                }
+                else if (c == 2) {
+                    td.innerHTML =  jsondata[ir].tenmdsd;
+                }
+                else if (c == 3) {
+                    td.innerHTML =  jsondata[ir].dientich;
+                }
+                else if (c == 4) {
+                    td.innerHTML =  jsondata[ir].thoihansd;
+                }
+                else if (c == 5) {
+                    var button = document.createElement('input');
+                    //alert(jsondata[ir].lasudungchung);
+                    // SET INPUT ATTRIBUTE.
+                    button.setAttribute('type', 'checkbox');
+                    //button.setAttribute('name', 'checklasdchung');
+                    if (jsondata[ir].lasudungchung == true) {
+                        //alert(jsondata[ir].lasudungchung );
+                        //button.setAttribute('checked', true);
+                        button.checked  = true;
+                    }
+                    else {
+                        // alert(jsondata[ir].lasudungchung );
+                        //button.click();
+                        button.checked  = false;
+                        //  button.setAttribute('checked', false);
+                    }
+
+                    td.appendChild(button);
+                }
+
+
+
+                    //else if (c == 4)
+                    //{
+                    //    td.innerHTML = "Y";
+                    //}
+                else {
+
+                }
+            }
+        }*@
+        // $('#table_MDSDTHUA tbody tr').click(function () {
+        $("#table_MDSDTHUA").on("click", "tr", function (e) {
+            // alert('af');
+            $(this).addClass('activerow').siblings().removeClass('activerow');
+
+            //var empTab = document.getElementById('table_MDSDTHUA');
+            //var index = this.parentNode.parentNode.rowIndex;
+            // alert(index);
+            var idmdsddat =$(this)[0].cells[0].innerHTML;
+            //alert(idmdsddat);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ChiTietMDSD",
+                data: {idmdsdthuadat:idmdsddat },
+                dataType: "json",
+                success: function (data) {
+                    ////  alert(data.idmdsddat);
+                   
+                    $('#CurMDSDDAT_MUCDICHSUDUNGDATID').val(data.idmdsddat);
+                    $('#CurMDSDDAT_MUCDICHSUDUNGID').val(data.idmdsd);
+                    $('#CurMDSDDAT_MUCDICHSUDUNGQHID').val(data.idmdsdqh);
+                    $('#CurMDSDDAT_DIENTICH').val(data.dientich);
+                    $('#CurMDSDDAT_SUDUNGCHUNG').val(data.lasudungchung);
+                    $('#CurMDSDDAT_THOIHANSUDUNG').val(data.thoihansd);
+                    $('#CurMDSDDAT_MDSDGOCID').val(data.idmdsdnguongoc);
+                    $('#CurMDSDDAT__LAMUCDICHCHINH').prop('checked', data.lamdchinh);
+
+                }
+            });
+        });
+        $("#btnthemmoimdsd").on("click", function () {
+
+            // validate kvhc, soto, sothua
+
+            var id_mdsd = $("#CurMDSDDAT_MUCDICHSUDUNGID option:selected").val();
+            var ten_mdsd = $("#CurMDSDDAT_MUCDICHSUDUNGID option:selected").text();
+            var id_mdsddat = $("#CurMDSDDAT_MUCDICHSUDUNGDATID").val();
+            //var id_thua = $("#CurMDSDDAT_THUADATID").val();
+            var id_thua = $('#hi_ThuaId').val();
+            var id_mdsdqh = $("#CurMDSDDAT_MUCDICHSUDUNGQHID option:selected").val();
+            var id_mdsdng = $("#CurMDSDDAT_MDSDGOCID option:selected").val();
+            var dientich = $("#CurMDSDDAT_DIENTICH").val();
+            var thoihansd = $("#CurMDSDDAT_THOIHANSUDUNG").val();
+            var lachinh = $("#CurMDSDDAT__LAMUCDICHCHINH").val();
+            var lachung = $("#CurMDSDDAT_SUDUNGCHUNG").val();
+
+           // alert(ten_mdsd);
+           
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/themmdsddat",
+                data: {_idmdsddat: id_mdsddat,_idmdsd:id_mdsd,_idmdsdqh: id_mdsdqh,_idmdsdng: id_mdsdng,_thoihan: thoihansd,_dientich: dientich,_idthua: id_thua,_lachung: lachung,_lachinh: lachinh,_tenmdsd: ten_mdsd},
+                //   data: formdata,
+                 dataType: "json",
+                success: function (data) {
+
+                    if (data.ketqua === "themmoi") {
+                      //  alert(data.ketqua);
+                        //alert(data.id_mdsddat);
+                        $('#CurMDSDDAT_MUCDICHSUDUNGDATID').val(data.id_mdsddat);
+                        alert("Bạn đã thêm mới mục đích sử dụng cho thửa đất thành công!");
+
+                        var arrHeadthua = new Array();
+                        arrHeadthua = ['STT', 'mdsd', 'dientich', 'thoihan', 'lasdchung', 'hanhdong'];
+                        //alert(obj);
+                        var empTab = document.getElementById('table_MDSDTHUA');
+                        var rowCnt = empTab.rows.length;        // GET TABLE ROW COUNT.
+
+                        var tr = empTab.insertRow(rowCnt);      // TABLE ROW.
+                        tr = empTab.insertRow(rowCnt);
+                        //stt = $("#table_DSGCNVAOID td").closest("tr").length;
+                        for (var c = 0; c <= arrHeadthua.length; c++) {
+                            var td = document.createElement('td');          // TABLE DEFINITION.
+                            td = tr.insertCell(c);
+
+                            if (c == arrHeadthua.length) {           // FIRST COLUMN.
+                                // ADD A BUTTON.
+                                var button = document.createElement('input');
+
+                                // SET INPUT ATTRIBUTE.
+                                button.setAttribute('type', 'button');
+                                button.setAttribute('value', 'Xóa');
+
+                                // ADD THE BUTTON's 'onclick' EVENT.
+                                button.setAttribute('onclick', 'xoamdsd(this)');
+
+                                td.appendChild(button);
+                            }
+
+                            else if (c == 0) {
+                                td.innerHTML = data.id_mdsddat;
+                                td.hidden = true;
+                            }
+                            else if (c == 1) {
+                                td.innerHTML = $("#table_MDSDTHUA td").closest("tr").length;
+                            }
+                            else if (c == 2) {
+                                td.innerHTML = data.tenmdsddat;
+                            }
+                            else if (c == 3) {
+                                td.innerHTML = data.dientich;
+                            }
+                            else if (c == 4) {
+                                td.innerHTML = data.thoihan;
+                            }
+                            else if (c == 5) {
+                                //var button = document.createElement('input');
+                                //alert(data.lasdchung);
+                                //// SET INPUT ATTRIBUTE.
+                                //button.setAttribute('type', 'checkbox');
+                                //button.setAttribute('name', 'checklasdchung');
+                                //if (data.lasdchung == true) {
+                                //    button.setAttribute('checked', true);
+                                //}
+                                //else {
+                                //    button.setAttribute('checked', false);
+                                //}
+
+                                //td.appendChild(button);
+                                td.innerHTML = data.lasdchung;
+                            }
+
+
+
+                                //else if (c == 4)
+                                //{
+                                //    td.innerHTML = "Y";
+                                //}
+                            else {
+
+                            }
+                        }
+                    }
+                    else {
+                        $('#CurMDSDDAT_MUCDICHSUDUNGDATID').val(data.id_mdsddat);
+
+                        $('#table_MDSDTHUA tr').each(function (i, row)
+                        {
+                            id = $("#table_MDSDTHUA").children().children().eq(i).children().eq(0).text();
+                            //alert(data.id_mdsddat);
+                            //alert(id);
+                            if(data.id_mdsddat===id.trim())
+                            {
+                                $("#table_MDSDTHUA").children().children().eq(i).children().eq(2)[0].innerHTML=data.tenmdsddat;
+                                $("#table_MDSDTHUA").children().children().eq(i).children().eq(3)[0].innerHTML=data.dientich ;
+                                $("#table_MDSDTHUA").children().children().eq(i).children().eq(4)[0].innerHTML=data.thoihan;
+                                //  var $row = $(row)
+                                alert(data.lasdchung);
+                                //$('#table_MDSDTHUA').find("input[type=checkbox]").prop('checked', data.lasdchung);
+                                $("#table_MDSDTHUA").children().children().eq(i).children().eq(5)[0].innerHTML = data.lasdchung;
+
+                                // $("#table_MDSDTHUA").children().children().eq(i).children().eq(4)[0].innerHTML(data.thoihan);
+                            }
+                            //alert( );
+                            //$("#table_MDSDTHUA").children().children().eq(i).children().eq(1).append("sdfasdf");
+                            // $('#table_MDSDTHUA').find('tr#'+i).find('td:eq(2)').html('xxx');
+                            // alert(row);
+                            //var $row = $(row),
+                            // $objId = $row.find('input[name*="hdnObjectId"]'),
+                            // $checkedBox = $row.find('input:checked');
+
+                            ////   if ($(checkedBox).length)
+                            //if ($(row).find('input:checked').length)
+                            //{
+                            //    ids = ids + "," + $(row).find('input[name*="hdnObjectId"]').val();
+                            //}
+                        });
+                        alert("Sửa mục đích sử dụng thành công!");
+                        //return;
+                        ////}
+                    }
+
+
+
+
+                }
+            });
+            // }
+            //else {
+            //    alert('Có lỗi xảy ra');
+            //}
+        });
+        $("#btnxoatrangmdsd").on("click", function () {
+            $('#CurMDSDDAT_MUCDICHSUDUNGDATID').val("");
+            $('#CurMDSDDAT_MUCDICHSUDUNGID').val("");
+            $('#CurMDSDDAT_MUCDICHSUDUNGQHID').val("");
+            $('#CurMDSDDAT_DIENTICH').val("");
+            $('#CurMDSDDAT_SUDUNGCHUNG').val("");
+            $('#CurMDSDDAT_THOIHANSUDUNG').val("");
+            $('#CurMDSDDAT_MDSDGOCID').val("");
+            $('#ObjThemMoi_lamucdichchinh').prop('checked', false);
+            //$('#ObjThemMoi_lasudungchung').prop('checked', false);
+        });
+    });
+</script>

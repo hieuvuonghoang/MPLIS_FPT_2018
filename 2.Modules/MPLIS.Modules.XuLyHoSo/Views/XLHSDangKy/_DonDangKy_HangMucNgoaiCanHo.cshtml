@@ -1,0 +1,87 @@
+﻿@using AppCore.Models
+@model AppCore.Models.DangKyTaiSan
+@{using (Html.BeginForm("_DonDangKy_TSNHARIENGLE", "XLHSDangKy", FormMethod.Post, new { @id = "ThemMoiHangMucNgoaiCanHo" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.CurHangMucNgoaiCanHo.HANGMUCSOHUUCHUNGID, new { @class = "form-control" })
+        @Html.HiddenFor(m => m.CurHangMucNgoaiCanHo.uId, new { @class = "form-control" })
+
+        <div class="row" id="khuchungcuhmnch" hidden>
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurNhaChungCu.KHUCHUNGCUID,"Khu chung cư", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-7">
+                    @Html.DropDownListFor(m => m.CurNhaChungCu.KHUCHUNGCUID, new SelectList(ViewBag.listkhuchungcu, "KHUCHUNGCUID", "TENKHU"), "---- Lựa chọn ----", new { @class = "form-control input-sm", @id = "drpkhuchungcuhmnch" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurHangMucNgoaiCanHo.NHACHUNGCUID,"Nhà chung cư", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-7">
+                    @Html.DropDownListFor(m => m.CurHangMucNgoaiCanHo.NHACHUNGCUID, new SelectList(ViewBag.listnhachungcu, "NHACHUNGCUID", "TENCHUNGCU"), "---- Lựa chọn ----", new { @class = "form-control input-sm", @id = "drpnhachungcuhmnch" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurHangMucNgoaiCanHo.TENHANGMUC,"Tên hạng mục", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-7">
+                    @Html.TextBoxFor(m => m.CurHangMucNgoaiCanHo.TENHANGMUC, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurHangMucNgoaiCanHo.DIENTICH,"Diện tích", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-7">
+                    @Html.TextBoxFor(m => m.CurHangMucNgoaiCanHo.DIENTICH, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    }
+}
+<script>
+    $(function () {
+        $("#btnthemkhuchungcuhmnch").on("click", function () {
+            console.log("click button");
+            $.ajax({
+                type: "GET",
+                url: "/XLHSDangKy/_DonDangKy_KhuChungCu",
+                success: function (html) {
+                    $('#dialogformKHUCHUNGCU').html(html);
+                    var options = {
+                        "backdrop": "static",
+                        "show": true
+                    }
+                    $("#modalformKhuChungCu").modal(options);
+                }
+            });
+        });
+        $("#btnthemnhachungcuhmnch").on("click", function () {
+            console.log("click button");
+            $.ajax({
+                type: "GET",
+                url: "/XLHSDangKy/_Popup_NhaChungCu",
+                success: function (html) {
+                    $('#dialogformNHACHUNGCU').html(html);
+                    var options = {
+                        "backdrop": "static",
+                        "show": true
+                    }
+                    $("#modalformNhaChungCu").modal(options);
+                }
+            });
+        });
+
+    });
+
+</script>

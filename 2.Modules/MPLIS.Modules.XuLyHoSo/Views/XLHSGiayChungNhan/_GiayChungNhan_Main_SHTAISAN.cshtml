@@ -1,0 +1,65 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.BoHoSoModel
+
+<div class="box">
+    <div class="box-body">
+        <table id="_GCN_Main_SHTAISAN_TableID" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Loại tài sản</th>
+                    <th>Tên tài sản</th>
+                    <th>Diện tích (m<sup>2</sup>)</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.CurDC_GIAYCHUNGNHAN != null && Model.CurDC_GIAYCHUNGNHAN.DSQuyenSHTS != null && Model.CurDC_GIAYCHUNGNHAN.DSQuyenSHTS.Count > 0)
+                {
+                    int sttdsQUYENSHTAISAN = 0;
+                    foreach (var item in Model.CurDC_GIAYCHUNGNHAN.DSQuyenSHTS)
+                    {
+                        sttdsQUYENSHTAISAN = sttdsQUYENSHTAISAN + 1;
+                        <tr data-id="@item.QUYENSOHUUTAISANID">
+                            <td class="text-right">
+                                @sttdsQUYENSHTAISAN.
+                            </td>
+                            <td>
+                                @item.LoaiTaiSan
+                            </td>
+                            <td>
+                                @item.TenTaiSan
+                            </td>
+                            <td class="text-center">
+                                @item.DienTich
+                            </td>
+                            <td class="text-center">
+                                @(item.TRANGTHAIPL == "T" ? "Đang thế chấp" : "Bình thường")
+                            </td>
+                            <td class="text-center">
+                                @Ajax.ActionLink("Xóa", "Remove_DSSHTAISAN_Row", "XLHSGiayChungNhan", new { quyenSHTSID = item.QUYENSOHUUTAISANID, gcnID = Model.CurDC_GIAYCHUNGNHAN.GIAYCHUNGNHANID },
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    OnSuccess = "RemoveRow_GCN_Main_SHTAISAN_TableID",
+                                    UpdateTargetId = "divGCN_Main_SHTAISANID",
+                                    InsertionMode = InsertionMode.Replace
+                                }, Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? (object)new { @class = "btn btn-xs btn-heading", @title = "Xóa", @disabled = "" } : (object)new { @class = "btn btn-xs btn-heading", @title = "Xóa" })
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var _GCN_Main_SHTAISAN_TableID;
+    function RemoveRow_GCN_Main_SHTAISAN_TableID(objJson) {
+        RemoveRowDataTable($('#_GCN_Main_SHTAISAN_TableID'), objJson.RowID);
+    }
+    $(document).ready(function () {
+        _GCN_Main_SHTAISAN_TableID = InitDataTableXLHS($('#_GCN_Main_SHTAISAN_TableID'));
+    });
+</script>

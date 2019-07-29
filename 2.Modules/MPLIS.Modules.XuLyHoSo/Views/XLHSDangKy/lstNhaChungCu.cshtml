@@ -1,0 +1,89 @@
+﻿@model AppCore.Models.DangKyTaiSan
+@Html.HiddenFor(m => m.CurNhaChungCu.NHACHUNGCUID, new { @class = "form-control input-sm" })
+@Html.HiddenFor(m => m.CurNhaChungCu.uId, new { @class = "form-control input-sm" })
+<table id="table_NHACHUNGCU" class="table table-bordered">
+    <thead>
+        <tr>
+            <th class="t100" hidden>TAISAN _ID</th>
+            <th class="t50">STT</th>
+            <th class="t100">Tên Nhà</th>
+            <th class="t100">Diện tích</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int rtdtable = 0;
+            if (Model != null)
+            {
+                if (Model.lstNhaChungCu != null)
+                {
+                    foreach (var item in Model.lstNhaChungCu)
+                    {
+                        rtdtable = rtdtable + 1;
+                        <tr data-id="@item.NHACHUNGCUID">
+                            <td align="center" hidden>@item.uId</td>
+                            <td align="center">@rtdtable</td>
+                            <td align="center">@item.TENCHUNGCU</td>
+                            <td align="center">@item.DIENTICHSAN</td>
+                        </tr>
+
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        InitDataTableXLHS($('#table_NHACHUNGCU'));
+    });
+    function removeRowncc(button) {
+        var ans = confirm("Bạn chắc chắn muốn xóa?");
+        //=== If user pressed Ok then delete the record else do nothing.
+        if (ans == true) {
+            //alert('xóa thành công!');
+            var empTab = document.getElementById('table_NHACHUNGCU');
+            var index = button.parentNode.parentNode.rowIndex;
+            // alert(index);
+            var taisanid = empTab.rows[index].cells[0].innerHTML;
+            var dondk = $('#DONDANGKYID').val();
+            empTab.deleteRow(button.parentNode.parentNode.rowIndex);
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/XOA_NHACHUNGCU",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify({ nhaid: taisanid.trim(), dondangky_id: dondk.trim() }),
+                    success: function (data) {
+                        if (data === "true") {
+                            alert("Xóa thành công!");
+                        }
+                        else {
+                            alert("Có lỗi xảy ra!");
+                        }
+                    },
+                });
+            }
+
+
+        
+    }
+    $(function () {
+        $("#table_NHACHUNGCU tbody").on("click", "tr", function (e) {
+            $(this).addClass('activerow').siblings().removeClass('activerow');
+            var taisanid = $(this)[0].cells[0].innerHTML;
+            var dondk = $('#DONDANGKYID').val();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ChiTietNhaChungCu",
+                data: { idtaisan: taisanid.trim(), Loaitaisan: "3" },
+                datatype: "html",
+                success: function (data) {
+                    $('#tabNhaChungCu').html(data);
+                }
+            });
+        });
+
+    });
+</script>
+

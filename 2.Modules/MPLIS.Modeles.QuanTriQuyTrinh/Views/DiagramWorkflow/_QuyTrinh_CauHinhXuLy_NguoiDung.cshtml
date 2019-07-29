@@ -1,0 +1,87 @@
+﻿@model MPLIS.Libraries.Data.QuanTriQuyTrinh.Models.CauHinhXuLyVM
+
+<table id="Table_NGUOIDUNG_ID" class="table table-bordered">
+    <thead>
+        <tr>
+            <th></th>
+            <th>#</th>
+            <th></th>
+            <th>Tên đăng nhập</th>
+            <th>Họ và tên</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.DSNguoiDung != null && Model.DSNguoiDung.Count > 0)
+        {
+            int sTT = 0;
+            foreach (var item in Model.DSNguoiDung)
+            {
+                sTT++;
+                <tr>
+                    <td>
+                        @item.NGUOIDUNGID
+                    </td>
+                    <td>
+                        @sTT.
+                    </td>
+                    <td></td>
+                    <td>
+                        @item.TENDANGNHAP
+                    </td>
+                    <td>
+                        @item.HOTENNGUOIDUNG
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    var curNGUOIDUNGID = "";
+    $(document).ready(function () {
+        var columns = [
+            { "data": "NGUOIDUNGID" },
+            { "data": "STT" },
+            { "data": null },
+            { "data": "TENDANGNHAP" },
+            { "data": "HOTENNGUOIDUNG" }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": [1],
+                "className": "text-right"
+            },
+            {
+                "targets": [2],
+                "render": function () {
+                    return "<input type='checkbox'/>";
+                },
+                "className": "text-center"
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "lengthChange": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+            "autoWidth": false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+            },
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "<'row p-0'<'col-sm-12 p-0'tr>><'row p-0'<'col-sm-6 p-0'><'col-sm-6 p-0'p>>"
+        }
+
+        var Table_NGUOIDUNG_ID = $('#Table_NGUOIDUNG_ID').DataTable(options);
+
+    })
+</script>
+
+

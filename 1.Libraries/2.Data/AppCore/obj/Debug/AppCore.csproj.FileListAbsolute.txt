@@ -1,0 +1,13 @@
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\bin\Debug\AppCore.dll.config
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\bin\Debug\AppCore.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\bin\Debug\AppCore.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\bin\Debug\EntityFramework.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\bin\Debug\EntityFramework.SqlServer.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\bin\Debug\Newtonsoft.Json.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\bin\Debug\Oracle.ManagedDataAccess.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\bin\Debug\Oracle.ManagedDataAccess.EntityFramework.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\bin\Debug\EntityFramework.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\bin\Debug\EntityFramework.SqlServer.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\bin\Debug\Newtonsoft.Json.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\obj\Debug\AppCore.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\AppCore\obj\Debug\AppCore.pdb

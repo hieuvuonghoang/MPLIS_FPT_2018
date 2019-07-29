@@ -1,0 +1,80 @@
+﻿@using AppCore.Models
+@model AppCore.Models.DangKyTaiSan
+<form id="ThemMoiRung">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.CurRungTrong.RUNGTRONGID, new { @class = "form-control" })
+    @Html.HiddenFor(m => m.CurRungTrong.uId, new { @class = "form-control" })
+    <div class="row">
+        <div>
+            <div class="col-xs-3">
+                @Html.LabelFor(Model => Model.CurRungTrong.TENRUNG, "Tên rừng", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-7">
+                @Html.TextBoxFor(m => m.CurRungTrong.TENRUNG, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <div class="col-xs-3">
+                @Html.LabelFor(Model => Model.CurRungTrong.LOAICAYRUNG, "Loại rừng", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-7">
+                @Html.TextBoxFor(m => m.CurRungTrong.LOAICAYRUNG, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <div class="col-xs-3">
+                @Html.LabelFor(Model => Model.CurRungTrong.DIENTICH, "Diện tích", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-7">
+                @Html.TextBoxFor(m => m.CurRungTrong.DIENTICH, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <div class="col-xs-3">
+                @Html.LabelFor(Model => Model.CurRungTrong.HINHTHUCSOHUU, "Hình thức sở hữu", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-7">
+                @Html.TextBoxFor(m => m.CurRungTrong.HINHTHUCSOHUU, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <div class="col-xs-3">
+                @Html.LabelFor(Model => Model.CurRungTrong.THOIHANSOHUU, "Thời hạn sở hữu", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-7">
+                @Html.TextBoxFor(m => m.CurRungTrong.THOIHANSOHUU, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-3">
+            @Html.LabelFor(m => m.mota, "Mô tả", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-7">
+            @Html.TextBoxFor(m => m.mota, new { @class = "form-control input-sm " })
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <div class="col-xs-3">
+                @Html.LabelFor(Model => Model.CurRungTrong.DIACHI, "Dịa chỉ", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-7">
+                @Html.TextAreaFor(m => m.CurRungTrong.DIACHI, new { @class = "form-control input-sm",@row="2" })
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</form>
+   
+<script>
+
+</script>

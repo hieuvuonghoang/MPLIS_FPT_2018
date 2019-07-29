@@ -1,0 +1,31 @@
+﻿<div id="gcnnavtabID">
+    <ul class="nav nav-tabs nav-justified">
+        <li id="gcn-li1" class="active">
+            <a id="gcnopenTab1" data-toggle="tab" href="#gcn-tabID">Thông tin giấy chứng nhận</a>
+        </li>
+        <li id="gcn-li2">
+            <a id="gcnopenTab2" data-toggle="tab" href="#gcn-tabID">Thông tin nghĩa vụ tài chính</a>
+        </li>
+    </ul>
+    <div id="gcn-tabs-cont" class="tab-content">
+        <div id="gcn-tabID" class="tab-pane fade m-15 in active">
+        </div>
+    </div>
+</div>
+
+<div id="divPopup"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#xlhsnavtabID .nav-tabs li').removeClass('active');
+        $('#bhs-li4').removeClass('disabled');
+        $('#bhs-li4').addClass('active');
+        $('#gcnopenTab1').on('click', function () {
+            $('#gcn-tabID').load('/XLHSGiayChungNhan/GiayChungNhan_Main');
+        });
+        $('#gcnopenTab2').on("click", function () {
+            console.log('Tab2 Click!');
+        });
+        $('#gcnopenTab1').click();
+    })
+</script>

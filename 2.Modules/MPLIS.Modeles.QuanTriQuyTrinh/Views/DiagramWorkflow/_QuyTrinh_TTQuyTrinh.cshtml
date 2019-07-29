@@ -1,0 +1,67 @@
+﻿@model AppCore.Models.QT_QUYTRINH
+
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title">Quy trình</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-sm btn-default" onclick="SaveQuyTrinh_TTQuyTrinh()">Lưu vào CSDL</button>
+        </div>
+    </div>
+    <div class="box-body">
+        <form id="form_QTQUYTRINH_ID">
+            @Html.HiddenFor(model => model.QUYTRINHID)
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.TENQUYTRINH, "Tên quy trình", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.TENQUYTRINH, "", new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.KYHIEU, "Ký hiệu", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.KYHIEU, "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CAPQUYTRINH, "Cấp quy trình", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.CAPQUYTRINH, "", new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.THOIHANGIAIQUYETTOIDA, "Thời gian giải quyết tối đa", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.THOIHANGIAIQUYETTOIDA, "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.NHOMQUYTRINHID, "Nhóm quy trình", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.DropDownListFor(model => model.NHOMQUYTRINHID, new SelectList(ViewBag.dSNhomQuyTrinh, "NHOMQUYTRINHID", "TENNHOMQUYTRINH"), new { @class = "form-control input-sm", @disabled = "" })
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function SaveQuyTrinh_TTQuyTrinh() {
+        $('#NHOMQUYTRINHID').prop("disabled", false);
+        $.ajax({
+            type: "POST",
+            url: "/DiagramWorkflow/_Save_QuyTrinh_TTQuyTrinh",
+            data: $('#form_QTQUYTRINH_ID').serialize(),
+            dataType: "json",
+            success: function (result) {
+                alert("Lưu thông tin quy trình thành công!");
+            }
+        })
+        $('#NHOMQUYTRINHID').prop("disabled", true);
+    }
+</script>

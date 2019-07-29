@@ -1,0 +1,470 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.VM_XuLyHoSo_DK
+    <form id="IDformDonDangKy_DSTAISAN">
+        <input type="hidden" id="iddstaisan" />
+        <input id="CurTSID" name="CurTSID" type="hidden" value="" style="display:none">
+        <input id="CurCHID" name="CurCHID" type="hidden" value="" style="display:none">
+        <div class="row">
+            <div class="col-xs-7">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Chi tiết tài sản</h3>
+                        <input type="button" class="btn btn-primary btn-sm btn-heading pull-right" id="btndiachi" value="Địa chỉ" />
+                    </div>
+                    <div class="box-body" id="tabs">
+                        <div class="tab-pane fade in active" id="tabTaiSan">
+                            @{Html.RenderAction("_DonDangKy_TSNHARIENGLE", "XLHSDangKy");}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-5">
+                <div class="box box-primary">
+                    <div class="box-header with-border" >
+                        <h3 class="box-title" id="headerthuataisan">Nằm trên thửa</h3>
+                    </div>
+                    <div class="box-body" id="bodythuataisan">
+                        <div id="thuataisan">
+                            @{Html.RenderPartial("_lstThuaTaiSan"); }
+                        </div>
+                        <div  id="thuataisancanho" hidden>
+                            <div>
+                                <ul class="nav nav-tabs nav-justified">
+                                    <li class="active"> <a class="mauchu-tab" href="#tabThuaCanHo" id="openTabThuaCanHo" data-toggle="tab">Thông tin thửa</a></li>
+                                    <li>                <a class="mauchu-tab" href="#tabHangMucCanHo" id="openTabHangMucCanHo" data-toggle="tab" onclick="OpentabHM()">Hạng mục ngoài căn hộ</a></li>
+                                </ul>
+                                <div class="tab-content" id="tabs">
+                                    <div class="tab-pane fade in active" id="tabThuaCanHo">
+                                        @{Html.RenderPartial("_lstThuaTSCH"); }
+                                    </div>
+                                    <div class="tab-pane fade" id="tabHangMucCanHo">
+                                        @{Html.RenderPartial("_lstcheckhangmucNCH"); }
+                                    </div>
+                                </div>
+                            </div>      
+                         </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="box-footer" style="border-top: 1px solid #d2d6de;">
+                <div class="col-xs-5">
+                        <input type="button" class="btn btn-primary btn-sm btn-heading" style="margin-left:10px;"  id="btnthemmoitaisan" value="Lưu vào Danh sách" onclick="ThemMoiTS()" />
+                        <input type="button" class="btn btn-primary btn-sm btn-heading pull-right" id="btnlammoitaisan" value="Làm mới" />
+                </div>
+                <div class="col-xs-7">
+                        <div class="col-xs-4">
+                            @Html.Label("Chọn loại tài sản", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-8">
+                            <select class="form-control input-sm" title="chọn loại tài sản" id="drpchontaisan">
+                                <option value="1">Nhà ở riêng lẻ</option>
+                                <option value="2" hidden="true">khu nhà chung cư,nhà hỗn hợp</option>
+                                <option value="3" hidden="true">nhà chung cư</option>
+                                <option value="4">Căn hộ</option>
+                                <option value="5" hidden="true">Hạng mục sở hữu ngoài căn hộ</option>
+                                <option value="6">Công trình xây dựng</option>
+                                <option value="7">Công trình ngầm</option>
+                                <option value="8">Hạng mục của công trình xây dựng</option>
+                                <option value="9">Rừng sản xuất là rừng trồng</option>
+                                <option value="10">Cây lâu năm</option>
+                            </select>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div id="divTAISANDANGKY">
+            @{Html.RenderPartial("_lstTaiSanDK");}
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        var table_checkthuats;
+        var table_checkthuatsch;
+        var table_checkhmch;
+        var table_TS;
+        //tạo datatable cho bảng table_DSTAISAN
+        //xử lý chọn trong select list drpchontaisan
+        $('#drpchontaisan').change(function () {
+                $('#thuataisan').show();
+                $('#thuataisancanho').hide();
+                if ($(this).val() == "1") {
+                    $('#iddstaisan').val("0");
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/_DonDangKy_TSNHARIENGLE",
+                        success: function (response, startus, xhr) {
+                            $('#tabTaiSan').html(response);
+                        }
+                    });
+                }
+                else if ($(this).val() == "4") {
+                    $('#thuataisan').hide();
+                    $('#thuataisancanho').show();
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/LoadCanHo",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("3");
+                            $('#tabTaiSan').html(response);
+                            $('#openTabThuaCanHo').click();
+                        }
+                    });
+                }
+                else if ($(this).val() == "6") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/LoadCongTrinhXayDung",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("5");
+                            $('#tabTaiSan').html(response);
+                        }
+                    });
+                }
+                else if ($(this).val() == "7") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/LoadCongTrinhNgam",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("6");
+                            $('#tabTaiSan').html(response);
+                        }
+                    });
+                }
+                else if ($(this).val() == "8") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/LoadHangMucCongTrinh",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("7");
+                            $('#tabTaiSan').html(response);
+                        }
+                    });
+                }
+                else if ($(this).val() == "9") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/LoadRungTrong",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("8");
+                            $('#tabTaiSan').html(response);
+                        }
+                    });
+                }
+                else if ($(this).val() == "10") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/LoadCayLauNam",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("9");
+                            $('#tabTaiSan').html(response);
+                        }
+                    });
+                }
+            });
+        //làm mới
+        $("#btnlammoitaisan").on("click", function () {
+            $('#CurTSID').val("");
+            $('#CurCHID').val("");
+                if ($("#drpchontaisan").val() == "1") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/_DonDangKy_TSNHARIENGLE",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("0");
+                            $('#tabTaiSan').html(response);
+                        }
+                    });
+                }
+                else if ($("#drpchontaisan").val() == "4") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/LoadCanHo",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("3");
+                            $('#tabTaiSan').html(response);
+                            $('#openTabThuaCanHo').click();
+                            document.getElementById('CurCHID').value = "";
+                        }
+                    });
+                }
+                else if ($('#drpchontaisan').val() == "6") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/LoadCongTrinhXayDung",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("5");
+                            $('#tabTaiSan').html(response);
+                        }
+                    });
+                }
+                else if ($('#drpchontaisan').val() == "7") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/LoadCongTrinhNgam",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("6");
+                            $('#tabTaiSan').html(response);
+                        }
+                    });
+                }
+                else if ($('#drpchontaisan').val() == "8") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/LoadHangMucCongTrinh",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("7");
+                            $('#tabTaiSan').html(response);
+                        }
+                    });
+                }
+                else if ($('#drpchontaisan').val() == "9") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/LoadRungTrong",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("8");
+                            $('#tabTaiSan').html(response);
+                        }
+                    });
+                }
+                else if ($('#drpchontaisan').val() == "10") {
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/LoadCayLauNam",
+                        success: function (response, startus, xhr) {
+                            $('#iddstaisan').val("9");
+                            $('#tabTaiSan').html(response);
+                        }
+                    });
+                }
+            });
+        //xử lý nút thêm mới tài sản
+        //mở tab thửa căn hộ khi select list là căn hộ
+        $("#openTabThuaCanHo").on("click", function () {
+                document.getElementById('headerthuataisan').innerHTML = "Nằm trên thửa";
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/_lstThuaTSCH",     
+                    success: function (html) {
+                        if ($('#CurTSID').val().trim() != null && $('#CurTSID').val().trim() != "")
+                        CheckRowThuaTSCH($('#CurTSID').val().trim());
+                        console.log("OPENTAB");
+                        
+                    },
+                });
+        });
+        $("#btndiachi").on("click", function () {
+            var taisanid = $("#CurCHID").val();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/_DiaChiTaiSan",
+                data: { id: taisanid.trim() },
+                success: function (html) {
+                    $('#dialogformDIACHI').html(html);
+                    var options = {
+                        "backdrop": "static",
+                        "show": true
+                    }
+                    $("#modalformDiaChi").modal(options);
+                    }
+            });
+        });
+        });
+        $(function () {
+            $("#tabTaiSan").click();            
+        });
+        function OpentabHM() {
+            document.getElementById('headerthuataisan').innerHTML = "Danh sách hạng mục";
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/_lstcheckhangmucNCH",
+                success: function (html) {
+                    console.log("OPENTAB");
+                    if ($('#CurCHID').val().trim() != null && $('#CurCHID').val().trim() != "")
+                        CheckRowHM($('#CurCHID').val().trim());
+                    else
+                        $('#tabHangMucCanHo').html(html);
+                },
+            });
+        }
+
+        function removeRow(button) {
+            var ans = confirm("Bạn chắc chắn muốn xóa?");
+            //=== If user pressed Ok then delete the record else do nothing.
+            if (ans == true) {
+                var empTab = document.getElementById('table_DSTAISAN');
+                var index = button.parentNode.parentNode.rowIndex;
+                var taisanid = empTab.rows[index].cells[0].innerHTML;
+                var taisanchitietid = empTab.rows[index].cells[5].innerHTML;
+                var LoaitaisanID = empTab.rows[index].cells[7].innerHTML;
+                var dondk = $('#DONDANGKYID').val();
+                    $.ajax({
+                        type: "POST",
+                        url: "/XLHSDangKy/XoaTaiSanDK",
+                        dataType: "html",
+                        data: { taisanid: taisanid.trim(), dondangky_id: dondk.trim()},
+                        success: function (html) {
+                            console.log("SUCCES");
+                            alert("Xóa  thành công!");
+                            $('#divTAISANDANGKY').html(html);
+                        },
+                    });
+            }
+        }
+        function ThemMoiTS() {
+            var dondk = $('#DONDANGKYID').val();
+            var formdata;
+            if ($("#drpchontaisan").val() == "1") {
+                 formdata = $("#ThemMoiNhaRiengLe").serializeArray();
+                console.log("them moi nha rieng le" + formdata);
+                formdata.push({
+                    name: "LoaiTaiSan",
+                    value: 1
+                });
+                formdata.push({
+                    name: "dSSHTaiSan",
+                    value: GetDSCheck(table_checkthuats)
+                });
+            }
+            else if ($("#drpchontaisan").val() == "4") {
+                var formdata = $("#ThemMoiCanHo").serializeArray();
+                console.log("canho" + formdata)
+                formdata.push({
+                    name: "LoaiTaiSan",
+                    value: 4
+                });
+                if (table_checkhmch != null) {
+                    formdata.push({
+                        name: "dShmch",
+                        value: GetDSCheck(table_checkhmch)
+                    });
+                }
+                formdata.push({
+                    name: "dSSHTaiSan",
+                    value: GetDSCheck(table_checkthuatsch)
+                });
+            }
+            else if ($("#drpchontaisan").val() == "6") {
+                var formdata = $("#ThemMoiCongTrinhXayDung").serializeArray();
+                formdata.push({
+                    name: "LoaiTaiSan",
+                    value: 6
+                });
+                formdata.push({
+                    name: "dSSHTaiSan",
+                    value: GetDSCheck(table_checkthuats)
+                });
+            }
+            else if ($("#drpchontaisan").val() == "7") {
+                var formdata = $("#ThemMoiCongTrinhNgam").serializeArray();
+                console.log("cong trinh ngam them :" + formdata);
+                formdata.push({
+                    name: "LoaiTaiSan",
+                    value: 7
+                });
+                formdata.push({
+                    name: "dSSHTaiSan",
+                    value: GetDSCheck(table_checkthuats)
+                });
+            }
+            else if ($("#drpchontaisan").val() == "8") {
+                var formdata = $("#ThemMoiHangMucCongTrinh").serializeArray();
+                formdata.push({
+                    name: "LoaiTaiSan",
+                    value: 8
+                });
+                formdata.push({
+                    name: "dSSHTaiSan",
+                    value: GetDSCheck(table_checkthuats)
+                });
+            }
+            else if ($("#drpchontaisan").val() == "9") {
+                var formdata = $("#ThemMoiRung").serializeArray();
+                formdata.push({
+                    name: "LoaiTaiSan",
+                    value: 9
+                });
+                formdata.push({
+                    name: "dSSHTaiSan",
+                    value: GetDSCheck(table_checkthuats)
+                });
+            }
+            else if ($("#drpchontaisan").val() == "10") {
+                var formdata = $("#ThemMoiCayLauNam").serializeArray();
+                formdata.push({
+                    name: "LoaiTaiSan",
+                    value: 10
+                });
+                formdata.push({
+                    name: "dSSHTaiSan",
+                    value: GetDSCheck(table_checkthuats)
+                });
+            }
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ThemMoiTaiSanDK",
+                data: formdata,
+                success: function (html) {
+                    alert("Lưu thành công");
+                    $('#divTAISANDANGKY').html(html);
+                }
+            });
+        }
+        function CheckRow(TSID) {
+            var data = document.getElementById("JSONTSThua").value;
+            console.log("json value:" + data);
+            var obj = JSON.parse(data);
+            console.log("json array:" + obj[TSID]);
+            var arr = obj[TSID];
+            table_checkthuats.$("input", { "page": "all" }).each(function () {
+                var checked = false;
+                var id = this.id;
+                console.log("id row:" + id);
+                for (i = 0; i < arr.length; i++)
+                    if (id == arr[i]) {
+                        $(this).prop("checked", true);
+                        checked = true;
+                    }
+                if (!checked) $(this).prop("checked", false);
+            });
+
+        }
+        function CheckRowHM(TSID) {
+            var data = document.getElementById("JSONCanHoHM").value;
+            console.log("json value:" + data);
+            var obj = JSON.parse(data);
+            console.log("json array:" + obj[TSID]);
+            var arr = obj[TSID];
+            table_checkhmch.$("input", { "page": "all" }).each(function () {
+                var checked = false;
+                var id = this.id;
+                console.log("id row:" + id);
+                for (i = 0; i < arr.length; i++)
+                    if (id == arr[i]) {
+                        $(this).prop("checked", true);
+                        checked = true;
+                        console.log("check?");
+                    }
+                if (!checked) $(this).prop("checked", false);
+            });
+        }
+        function CheckRowThuaTSCH(TSID) {
+            var data = document.getElementById("JSONTSThua").value;
+            console.log("json value:" + data);
+            var obj = JSON.parse(data);
+            console.log("json array:" + obj[TSID]);
+            var arr = obj[TSID];
+            table_checkthuatsch.$("input", { "page": "all" }).each(function () {
+                var checked = false;
+                var id = this.id;
+                console.log("id row:" + id);
+                for (i = 0; i < arr.length; i++)
+                    if (id == arr[i]) {
+                        $(this).prop("checked", true);
+                        checked = true;
+                    }
+                if (!checked) $(this).prop("checked", false);
+            });
+        }
+</script>

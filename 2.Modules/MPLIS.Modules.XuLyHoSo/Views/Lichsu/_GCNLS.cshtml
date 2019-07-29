@@ -1,0 +1,245 @@
+﻿@*<script src="~/Scripts/knockout-3.4.2.js"></script>
+
+    <script src="~/Scripts/XuLyHoSo/knockout.mapping.min.js"></script>
+    <script src="~/Scripts/XuLyHoSo/ViewModel/require.js"></script>
+    <script src="~/Scripts/XuLyHoSo/ViewModel/modelBienDong.js"></script>*@
+
+@*<script src="~/Scripts/MplisScripts/WebGIS/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/MplisScripts/WebGIS/Scripts/jquery-ui-1.11.4.min.js"></script>
+
+<script src="http://js.arcgis.com/3.18/"></script>*@
+@*<script src="~/Scripts/XuLyHoSo/ViewModel/require.js"></script>*@
+@model  MPLIS.Libraries.Data.XuLyHoSo.Models.LichSu.HOSO_VM
+@Html.HiddenFor(model => model.dohoathua)
+<body>
+    <div class="panel-group" id="accordion3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="mauchu-trongtab">
+                    <a data-toggle="collapse" data-parent="#accordion3" href="#collapse_DSGCN">Thông tin giấy chứng nhận</a>
+                </div>
+            </div>
+            <div id="collapse_DSGCN" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div id="divThongTinGCN">
+                        <div id="divThongTinGCN">
+                            <table class="bordered" id="tablegcn">
+                                <thead>
+                                    <tr>
+                                        <th class="t100">Mã vạch</th>
+                                        <th class="t100">Số phát hành</th>
+                                        <th class="t100">Số vào sổ</th>
+                                        @*<th class="t100">Ngày quyết định</th>*@
+                                        <th class="t50">Chi tiết</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var d in Model.CurDC_BienDong.DC_BD_GCN)
+                                    {
+                                        <tr data-id="@d.GiayChungNhan.GIAYCHUNGNHANID">
+                                            <td> @d.GiayChungNhan.MAVACH</td>
+                                            <td>@d.GiayChungNhan.SOPHATHANH</td>
+                                            <td>@d.GiayChungNhan.SOVAOSO</td>
+                                            @*<td>@d.ngayquyetdinh</td>*@
+                                            <td>
+                                                @Html.ActionLink("Chi tiết", "Edit", "Edit", new { id = @d.GiayChungNhan.MAVACH })
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="mauchu-trongtab">
+                    <a data-toggle="collapse" data-parent="#accordion3" href="#collapse_DSTHUA">Thông tin thửa đất</a>
+                </div>
+            </div>
+            <div id="collapse_DSTHUA" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div id="divThongTinTHUA">
+
+                        <table class="bordered" id="tablethua">
+                            <thead>
+                                <tr>
+                                    <th class="t50">STT</th>
+                                    <th class="t100">Số tờ</th>
+                                    <th class="t100">Số thửa</th>
+                                    <th class="t100">Diện tích pháp lý(m2)</th>
+                                    <th class="t100">Địa chỉ thửa</th>
+                                    <th class="t50">Chi tiết</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <div class="col-xs-6 form-group">
+                            <fieldset>
+                                <legend>
+                                    Thông tin nhà
+                                </legend>
+                                <div class="form-group">
+                                    <div class="form-control-static">
+                                        <div>
+                                            <div class="collabel-xs-3">
+                                                @Html.Label("Loại nhà")
+                                            </div>
+                                            <div>
+                                                <input type="text" class="collabel-xs-3 text">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="collabel-xs-3">
+                                                @Html.Label("Số tầng")
+                                            </div>
+                                            <div>
+                                                <input type="text" class="collabel-xs-3 text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-control-static">
+                                        <div>
+                                            <div class="collabel-xs-3">
+                                                @Html.Label("kết cấu")
+                                            </div>
+                                            <div>
+                                                <input type="text" class="collabel-xs-3 text">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="collabel-xs-3">
+                                                @Html.Label("Diện tích xây dựng")
+                                            </div>
+                                            <div>
+                                                <input type="text" class="collabel-xs-3 text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-control-static">
+                                        <div>
+                                            <div class="collabel-xs-3">
+                                                @Html.Label("Diện tích sàn")
+                                            </div>
+                                            <div>
+                                                <input type="text" class="collabel-xs-3 text">
+                                            </div>
+                                        </div>
+                                        @*<div>
+                                                <div class="collabel-xs-3">
+                                                    @Html.Label("Diện tích xây dựng")
+                                                </div>
+                                                <div>
+                                                    <input type="text" class="collabel-xs-3 text">
+                                                </div>
+                                            </div>*@
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-xs-6 form-group">
+                            <fieldset>
+                                <legend>
+                                    Hình dạng thửa
+                                </legend>
+                                <div id="idhinhdangthua" style="height:200px; width:100%">
+
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="mauchu-trongtab">
+                    <a data-toggle="collapse" data-parent="#accordion3" href="#collapse_DSCHU">Thông tin chủ sử dụng</a>
+                </div>
+            </div>
+            <div id="collapse_DSCHU" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div id="divThongTinCHU">
+                        <table class="bordered" id="tablechu">
+                            <thead>
+                                <tr>
+                                    <th class="t50">STT</th>
+                                    <th class="t100">Loại chủ</th>
+                                    <th class="t100">Tên chủ</th>
+                                    <th class="t100">CMT/Hộ chiếu</th>
+                                    <th class="t100">Địa chỉ chủ</th>
+                                    <th class="t50">Chi tiết</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{int rowDSTHUARAID = 0;
+                                    if (Model.CurDC_BienDong.DC_BD_CHU != null)
+                                    {
+                                        foreach (var item in Model.CurDC_BienDong.DC_BD_CHU)
+                                        {
+
+                                            rowDSTHUARAID = rowDSTHUARAID + 1;
+                                            <tr data-id="@item.NGUOIID">
+                                                <td>
+                                                    @rowDSTHUARAID
+                                                </td>
+                                                <td>
+                                                    @item.Chu_TenLoaiChu
+                                                </td>
+                                                <td>
+                                                    @item.Chu_HoTen
+                                                </td>
+                                                <td>
+                                                    @item.Chu_CMT
+                                                </td>
+                                                <td>
+                                                    @item.Chu_DiaChi
+                                                </td>
+                                                <td>
+                                                    @Html.ActionLink("Chi tiết", "Edit", "Edit", new { id = "" })
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+
+    //require(['jquery', 'knockout', 'modelBienDong'], function ($, ko, modelBienDong) {
+    //$(document).ready(function () {
+    //    var obj = new modelBienDong();
+    //    alert('123');
+    //    ko.applyBindings(obj, document.getElementById("divLichSuID"));
+    //});
+    //});
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#tablegcn tbody tr').click(function () {
+            // alert('af');
+            $(this).addClass('active').siblings().removeClass('active');
+        });
+
+    });
+    function initMap() {
+       
+    }
+   
+</script>
+<script src="~/Scripts/MplisScripts/WebGIS/Tools/MapLS.js"></script>

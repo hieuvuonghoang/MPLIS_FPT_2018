@@ -1,0 +1,229 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hệ thống thông tin đất đai quốc gia - MPLIS</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="~/Content/normalize.css">
+    <!-- Bootstrap 3.3.7 -->
+    <link rel="stylesheet" href="~/Content/bootstrap.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Content/font-awesome.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="~/Content/ionicons.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Content/AdminLTE/AdminLTE.css">
+    <!-- AdminLTE skins -->
+    <link rel="stylesheet" href="~/Content/AdminLTE/skins/_all-skins.css">
+    <!-- Google fonts -->
+    @*<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">*@
+    <!-- Custom css -->
+    <link rel="stylesheet" href="~/Content/Site.css">
+</head>
+
+<body class="sidebar-mini skin-green-light layout-boxed">
+    <div class="wrapper">
+        <!-- Main Header -->
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="#" class="logo">
+                @*<span class="logo-mini"><b>Vi</b>L</span>*@
+                <span class="logo-lg"><b>ViLIS</b> 3.0</span>
+                @*<span><b>ViLIS 3.0</b></span>*@
+            </a>
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    @*<span> &nbsp; &nbsp;</span>*@
+                </a>
+                <div class="navbar-header">
+                    <div class="navbar-brand" style="font-family:'Times New Roman', Times, serif;padding-left:4px;padding-right:4px;"><b>Hệ thống thông tin đất đai quốc gia đa mục tiêu - MPLIS</b></div>
+                </div>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown messages-menu">
+                            <!-- Menu Home -->
+                            <a href="~/Home/Index" class="fa fa-home" data-toggle="tooltip" data-placement="bottom" title="Trang chủ"></a>
+                        </li>
+                        <!-- Notifications Menu -->
+                        <li class="dropdown notifications-menu">
+                            <!-- Menu Bản đồ -->
+                            <a href="#" class="fa fa-chain" data-toggle="tooltip" data-placement="bottom" title="Bản đồ"></a>
+                        </li>
+                        <li class="dropdown tasks-menu">
+                            <a href="#" class="tooltipx" data-placement="bottom" title="Đổi đơn vị hành chính làm việc" data-toggle="modal" data-target="#doiDVHC">
+                                <i class="fa fa-building-o"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown user user-menu">
+                            @Html.Action("GenerateAnhDaiDien", "Home")
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            <!-- sidebar: style can be found in sidebar.less -->
+            @*@Html.Partial("_LeftMenu")*@
+            @Html.Action("GenerateMenu", "Home")
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper" id="ContentSection">
+            <!-- Your Page Content Here -->
+            @RenderBody()
+            <!-- /.content -->
+            <!-- /.content-wrapper -->
+        </div>
+        <!-- Main Footer -->
+        @Html.Action("_MainFooter", "Home")
+    </div>
+    <div id="loading-img"></div>
+    <div class="control-sidebar-bg"></div>
+
+    <div class="container" id="GenerateDoiMatKhaudlg">
+        <!-- Modal -->
+        @Html.Action("GenerateDoiMatKhau", "Home")
+    </div>
+    <!--End Thay đổi mật khẩu-->
+    <!--Popup Thông tin cá nhân-->
+    <div class="container" id="GenerateThongTinCaNhandlg">
+        @Html.Action("GenerateThongTinCaNhan", "Home")
+    </div>
+    <!--End Thông tin cá nhân-->
+    <div class="container" id="genChonDonViHanhChinhdlg">
+        @Html.Action("genChonDonViHanhChinh", "Home")
+    </div>
+    @*<img id="image_loading" alt="" src="@Url.Content("~/Images/pHHzT.gif")" class="progress2" />*@
+
+    <!-- jQuery 3.3.1 -->
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="~/Scripts/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Scripts/AdminLTE/adminlte.js"></script>
+    <!-- Custom scripts -->
+    <script src="~/Scripts/MplisUtilities.js"></script>
+</body>
+</html>
+
+@*ham thay doi anh (images)*@
+<script language="javascript" type="text/javascript">
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#file')
+                    .attr('src', e.target.result)
+                    .width(80)
+                    .height(90);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    function thoatdmk() {
+        //alert("dfgdgdgdgfdgd");
+        document.ThoatDoiMatKhau.submit(); // Submit form co thuoc tinh 'name' là: ThoatDoiMatKhau (chu y: phuong thuc truyen du lieu là kieu POST - dung cho Form)
+
+    }
+
+    @*Kiem tra qua trinh nhap xac nhan mat khau*@
+    function KiemTraNhapXacNhanMatKhau() {
+        if ($("#txtMatKhauHienTai").val() == "") {
+            alert("Chưa nhập mật khẩu hiện tại !");
+            return false;
+        }
+        else {
+            if ($("#txtMatKhauMoi").val() == "") {
+                alert("Chưa nhập mật khẩu mới !");
+                return false;
+            }
+            else {
+                if ($("#txtXacNhanMatKhau").val() == "") {
+                    alert("Chưa nhập xác nhận mật khẩu !");
+                    return false;
+                }
+                else {
+                    if ($("#txtMatKhauMoi").val() == $("#txtXacNhanMatKhau").val()) {
+                        if ($("#txtMatKhauMoi").val() == $("#txtMatKhauHienTai").val()) {
+                            alert("Không nhập mật khẩu mới trùng với mật khẩu hiện tại !");
+                            return false;
+                        }
+                        else {
+                            return true;
+                        }
+                    }
+                    else {
+                        alert("Nhập xác nhận mật khẩu sai !");
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+
+    //--- Hàm thay đổi mật khẩu ---
+    function ThayDoiMatKhau() {
+        if (KiemTraNhapXacNhanMatKhau()) {
+            var matKhauHienTai = document.getElementById("txtMatKhauHienTai").value;
+            var matKhauMoi = document.getElementById("txtMatKhauMoi").value;
+            var xacNhanMatKhau = document.getElementById("txtXacNhanMatKhau").value;
+
+            if (confirm("Thay đổi mật khẩu hiện tại ?")) {
+                $.ajax({
+                    url: '/Home/ThayDoiMatKhau',
+                    data: {
+                        matKhauHienTai: matKhauHienTai,
+                        matKhauMoi: matKhauMoi,
+                        xacNhanMatKhau: xacNhanMatKhau
+                    },
+                }).done(function (data) {
+                    if (data && data != "")
+                        alert(data);
+                });
+            }
+        }
+    }
+
+    $(function () {
+        var $backdrop = null;
+        $('.mplis_menu').click(function (e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            var res = url.split("/");
+
+            $.ajax({
+                url: url,
+                //beforeSend: OnBeginWork,
+                beforeSend: function onBegin(vObject) {
+                    $backdrop = $('<div><div class="modal222"></div></div>').appendTo(document.body);
+                    $('#image_loading').show();
+                },
+                complete: function onComplete(vObject) {
+                    $($backdrop).fadeOut(100, function () {
+                        $('.modal222').parent().remove();
+                    });
+                    $('#image_loading').hide();
+                },
+                success: function (html) {
+                    $('#ContentSection').html(html);
+                }
+            });
+        });
+    });
+
+</script>

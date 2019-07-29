@@ -1,0 +1,145 @@
+﻿@using AppCore.Models
+@model DC_THUADAT
+    <div id="div_HanChe">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row" style="padding: 0;">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Danh sách hạn chế</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="div_DSHanChe">
+                                <table id="table_HANCHETHUA" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th hidden>ID</th>
+                                            <th>STT</th>
+                                            <th>Nội dung</th>
+                                            <th>Ngày ban hành</th>
+                                            <th>Còn hiệu lực</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int rdsgcntable = 0;
+                                            if (Model != null)
+                                            {
+                                                if (Model.DSHanCheThua != null)
+                                                {
+                                                    foreach (var item in Model.DSHanCheThua)
+                                                    {
+                                                        rdsgcntable = rdsgcntable + 1;
+                                                        <tr data-giadatid="@item.HANCHEID">
+                                                            <td hidden>@item.HANCHEID</td>
+                                                            <td class="text-right">
+                                                                @rdsgcntable.
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @item.NOIDUNGHANCHE
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @if (@item.NGAYBANHANH != null)
+                                                                {
+                                                                    @item.NGAYBANHANH.Value.ToString("dd/MM/yyyy")
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                @Html.CheckBoxFor(a=>item._ConHieuLuc, new { @disabled = "true" })
+                                                            </td>
+                                                            <td>
+                                                                <input type="button" class="btn btn-xs btn-heading" id="btnxoagiadat" value="Xóa" onclick="removeRowTC(this)" />
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-xs-6">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin chi tiết hạn chế</h3>
+                    </div>
+                    <div class="box-body">
+                        <div id="chitiettranhchapthua">
+                            @Html.Partial("DonDangKy_DSThua_ChiTietTranhChap")
+                        </div>
+                        <div class="row">
+                            <input type="button" class="btn-xs btn-heading pull-left" id="btncapnhattranhchap" value="Cập nhật" />
+                            <input type="button" class="btn-xs btn-heading pull-left" id="btnlammoitranhchap" value="Xóa trắng" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+<script>
+    $('#table_HANCHETHUA tbody').on("click", "tr", function (e) {
+        $(this).addClass('activerow').siblings().removeClass('activerow');
+        var idtranhchap = $(this)[0].cells[0].innerHTML;
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/ChiTietHanChe",
+            data: { idhanchethuadat: idtranhchap.trim() },
+            datatype: "html",
+            success: function (data) {
+                $('#chitiettranhchapthua').html(data);
+            }
+        })
+    });
+    $(document).ready(function () {
+        InitDataTableXLHS($('#table_HANCHETHUA'));
+        $('#btnlammoitranhchap').on("click", function () {
+            $.ajax({
+                type: "GET",
+                url: "/XLHSDangKy/ChiTietHanChe",
+                datatype: "html",
+                success: function (response) {
+                    $('#chitiettranhchapthua').html(response);
+                }
+            })
+        });
+        $('#btncapnhattranhchap').on("click", function () {
+            var formdata = $("#divHanCheThua").serializeArray();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ThemMoiHanChe",
+                data: formdata,
+                success: function (data) {
+                    $('#div_HanChe').html(data);
+                }
+            })
+        });
+    });
+    function removeRowTC(button) {
+        var ans = confirm("Bạn chắc chắn muốn xóa?");
+        //=== If user pressed Ok then delete the record else do nothing.
+        if (ans == true) {
+            var empTab = document.getElementById('table_HANCHETHUA');
+            var index = button.parentNode.parentNode.rowIndex;
+            var tranhchapid = empTab.rows[index].cells[0].innerHTML;
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/XoaHanChe",
+                dataType: "html",
+                data: { tranhchapid: tranhchapid.trim() },
+                success: function (html) {
+                    console.log("SUCCES");
+                    alert("Xóa  thành công!");
+                    $('#div_HanChe').html(html);
+                },
+            });
+        }
+    }
+</script>

@@ -1,0 +1,94 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSChuDonVM
+
+<div class='modal fade' id='modalformDSCHU'>
+    <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+            @using (Ajax.BeginForm("Add_DSCHUVAO_RTABLE", "TTBienDong", new AjaxOptions()
+            {
+                OnSuccess = "alert('Thêm chủ đầu vào thành công!')",
+                HttpMethod = "Post",
+                UpdateTargetId = "divBienDongID_DSCHUVAO_Table",
+                InsertionMode = InsertionMode.Replace
+            }))
+            {
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                    <h4 class='modal-title'>Danh sách chủ trong đăng ký</h4>
+                </div>
+                <div class='modal-body'>
+                    @Html.Hidden("VAITRO", "", new { id = "vaiTroID" })
+                    <table class="table table-bordered" id="popuptable_DSCHUVAOID" data-toggle="table">
+                        <thead>
+                            <tr>
+                                <th>Chọn chủ</th>
+                                <th>#</th>
+                                <th>Loại chủ</th>
+                                <th>Tên chủ</th>
+                                <th>Địa chỉ</th>
+                                <th>Chi tiết</th>
+                            </tr>
+                        </thead>
+                        @{int rchumoivao = 0;
+                            if (Model.DSDangKyChu != null)
+                            {
+                                foreach (var item in Model.DSDangKyChu)
+                                {
+                                    rchumoivao = rchumoivao + 1;
+                                    <tr data-id="@item.NGUOIID">
+                                        <td style="text-align: center;">
+                                            <input type="checkbox" name="DSCHUVAO_CHON" value="@item.NGUOIID" />
+                                        </td>
+                                        <td style="text-align: right;">
+                                            @rchumoivao.
+                                        </td>
+                                        <td>
+                                            @item.Chu_TenLoaiChu
+                                        </td>
+                                        <td>
+                                            @item.Chu_HoTen
+                                        </td>
+                                        <td>
+                                            @item.Chu_DiaChi
+                                        </td>
+                                        <td style="text-align: center;">
+                                            @Ajax.ActionLink("Chi tiết", "...", "TTBienDong", new { id = item.NGUOIID },
+                                                             new AjaxOptions
+                                                             {
+                                                                 HttpMethod = "POST",
+                                                                 //OnSuccess = "RemoveRow",
+                                                                 //UpdateTargetId = "divBienDongID_DSCHUVAO",
+                                                                 InsertionMode = InsertionMode.Replace
+                                                             }, new { @class = "btn btn-xs btn-heading", @title = "Chi tiết" })
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </table>
+                </div>
+                <div class='modal-footer' style='text-align:center;'>
+                    <button type='submit' class='btn btn-primary btn-sm pull-right'>Thêm vào GCN</button>
+                </div>
+                            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function toggleCheckeddschuvao(statusDSCHUVAO_CHON) {
+        $("#popuptable_DSCHUVAOID input").each(function () {
+            $(this).prop("checked", statusDSCHUVAO_CHON);
+        });
+    }
+    function closeDialogDSCHUVAO() {
+        $("#modalformDSCHU").modal('hide');
+        alert('Thêm chủ đầu vào thành công!');
+    }
+    $(document).ready(function () {
+        $("#checkall_DSCHUVAO_CHON").prop("checked", false);
+        $("#checkall_DSCHUVAO_CHON").click(function () {
+            var statusDSCHUVAO_CHON = $("#checkall_DSCHUVAO_CHON").prop("checked");
+            toggleCheckeddschuvao(statusDSCHUVAO_CHON);
+        });
+        $("#vaiTroID").val($("#listchovaitro_ttrieng").val());
+    });
+</script>

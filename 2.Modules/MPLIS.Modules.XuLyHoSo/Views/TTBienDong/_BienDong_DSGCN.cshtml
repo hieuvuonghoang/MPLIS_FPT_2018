@@ -1,0 +1,67 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSGCNBDVM
+
+<form id="IDformBienDong_DSGCN">
+        @Html.HiddenFor(model => model.JSONCha)
+        <input id="CurGCNRaID" name="CurGCNRaID" type="hidden" value="">
+        <div id="divBienDongID_DSGCNVAO">
+            @{Html.RenderPartial("_BienDong_DSGCNVAO");}
+        </div>
+        <div id="divBienDongID_DSGCNRA">
+            @{Html.RenderPartial("_BienDong_DSGCNRA");}
+        </div>
+</form>
+
+<script type="text/javascript">
+    $(function () {
+        addRowHandlersGCNRA("table_DSGCNRAID");
+        //addRowHandlers("table_DSGCNVAOID");
+        $('#table_DSGCNRAID tbody').on('click', 'tr', function (e) {
+            $(this).addClass('activerow').siblings().removeClass('activerow');
+            console.log('Click tr!');
+        });
+        function addRowHandlersGCNRA(tableid) {
+            var table = document.getElementById(tableid);
+            var rows = table.getElementsByTagName("tr");
+            for (i = 0; i < rows.length; i++) {
+                var currentRow = rows[i];
+                var createClickHandler =
+                    function (row) {
+                        return function () {
+                            var id = $(row).attr("data-id");//cell.innerHTML;
+                            document.getElementById("CurGCNRaID").value = id;
+                            CheckRow(id);
+                        };
+                    };
+                currentRow.onclick = createClickHandler(currentRow);
+            }
+        }
+        function CheckRow(GCNID) {
+            var data = document.getElementById("JSONCha").value;
+            console.log("json value:" + data);
+            var obj = JSON.parse(data);
+            console.log("json array:" + obj[GCNID]);
+            var arr = obj[GCNID];
+            $("#table_DSGCNVAOID input").each(function () {
+                var checked = false;
+                var id = this.id;
+                console.log("id row:" + id);
+                for (i = 0; i < arr.length; i++)
+                    if (id == arr[i]) {
+                        console.log("Trùng id:" + id);
+                        $(this).prop("checked", true);
+                        checked = true;
+                    }
+                if (!checked) $(this).prop("checked", false);
+            });
+        }
+    });
+
+    function Load_TTRIENG_THECHAP_CTQUYEN() {
+        if ($('#divBienDongID_TTRIENG_THECHAP_CTQUYEN').length) {
+            console.log('Tồn tại divBienDongID_TTRIENG_THECHAP_CTQUYEN!');
+            $('#divBienDongID_TTRIENG_THECHAP_CTQUYEN').load("/TTBienDong/_BienDong_TTRIENG_THECHAP_TTQUYEN", function (responseTxt, statusTxt, xhr) {
+                console.log('Load_TTRIENG_THECHAP_CTQUYEN thành công!');
+            });
+        }
+    }
+</script>

@@ -1,0 +1,82 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSThuaBDVM
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Danh sách thửa đầu ra</h3>
+    </div>
+    <div class="box-body">
+        <table id="table_DSTHUARAID" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Xã/phường</th>
+                    <th>SH tờ bản đồ</th>
+                    <th>STT thửa</th>
+                    <th>DT pháp lý (m2)</th>
+                    <th>Địa chỉ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DSThua != null && Model.DSThua.Count() > 0)
+                {
+                    int rowDSTHUARAID = 0;
+                    foreach (var item in Model.DSThua)
+                    {
+                        if (item.LOAITHUABD == "R")
+                        {
+                            rowDSTHUARAID = rowDSTHUARAID + 1;
+                            <tr data-id="@item.THUADATID">
+                                <td class="text-right">
+                                    @rowDSTHUARAID.
+                                </td>
+                                <td>
+                                    @item.XaPhuong
+                                </td>
+                                <td class="text-center">
+                                    @item.SHToBanDo
+                                </td>
+                                <td class="text-center">
+                                    @item.STTThua
+                                </td>
+                                <td class="text-center">
+                                    @item.DienTich
+                                </td>
+                                <td>
+                                    @item.DiaChi
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var W_DSTHUARAID;
+    $("#btn_dialog_DSTHUARAID").button().on("click", function () {
+        $.ajax({
+            type: "GET",
+            url: "/TTBienDong/_Popup_DSTHUARA",
+            success: function (html) {
+                $('#dialogformDSTHUARAID').html(html);
+                W_DSTHUARAID = $("#dialogformDSTHUARAID").dialog({
+                    autoOpen: false,
+                    height: 400,
+                    width: 800,
+                    modal: true,
+                    buttons: {
+                        Cancel: function () {
+                            W_DSTHUARAID.dialog("close");
+                        }
+                    },
+                });
+                W_DSTHUARAID.dialog("open");
+            },
+        });
+    });
+    $(document).ready(function () {
+        InitDataTableXLHS($('#table_DSTHUARAID'));
+    })
+</script>

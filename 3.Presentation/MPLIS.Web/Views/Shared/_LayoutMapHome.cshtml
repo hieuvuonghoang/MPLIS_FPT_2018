@@ -1,0 +1,451 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hệ thống thông tin đất đai quốc gia - MPLIS</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Content/AdminLTE/AdminLTE.css" />
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="~/Content/bootstrap/bootstrap.css">
+    @*<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">*@
+    <!-- Font Awesome -->
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.css">*@
+    <!-- Ionicons -->
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.css">*@
+    <!--Theme all-->
+    <link rel="stylesheet" href="~/Content/skins/_all-skins.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="~/Content/jquery/jqueryui/jquery-jvectormap-1.2.2.css">
+    <!--custome css-->
+    <link href="~/Content/MplisCSS/style.css" rel="stylesheet" />
+    <!--css dung chung ca he thong-->
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/fileinput.css">
+
+    <link href="~/Content/skins/skin-black-light.css" rel="stylesheet" />
+    <link href="~/Content/telerik/kendo.common.css" rel="stylesheet" />
+    <link href="~/Content/telerik/kendo.default.css" rel="stylesheet" />
+    @*<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />*@ <!-- bị xung dot với trang quan ly mau giay to -->
+    <link href="~/Content/bootstrap/bootstrapui/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/MplisScripts/WebGIS/Scripts/jquery-ui-1.11.4.min.js"></script>
+    <script src="~/Scripts/bootstrap/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap/bootstrapui/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/jquery/jqueryui/AdminLTE/app.min.js"></script>
+    <script src="~/Scripts/MplisScripts/function.js"></script>
+    <script src="~/Scripts/jquery.site.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/fileinput.min.js"></script>
+    <script src="~/Scripts/telerik/kendo.all.min.js"></script>
+
+    <!--Map Styles and Scripts-->
+    <script>
+        var dojoConfig = {
+            parseOnLoad: false,
+            isDebug: true,
+            packages: [
+                {
+                    name: "agsjs",
+                    location: location.pathname.replace(/\/[^/]+$/, "") + '/../Scripts/MplisScripts/WebGIS/agsjs'
+                }
+            ]
+        };
+    </script>
+    <!--Thư viện css của bản đồ-->
+    <!--Thư viện css của hãng esri-->
+    <link href="~/Content/MplisCSS/esri/esri.css" rel="stylesheet" />
+    <link href="~/Content/MplisCSS/WebGIS/mapgis.css" rel="stylesheet" />
+    <link href="~/Content/MplisCSS/WebGIS/dojo.css" rel="stylesheet" />
+    <link href="~/Content/MplisCSS/WebGIS/claro.css" rel="stylesheet" />
+    <link href="~/Content/MplisCSS/WebGIS/claroGrid.css" rel="stylesheet" />
+    <link href="~/Content/MplisCSS/WebGIS/EnhancedGrid.css" rel="stylesheet" />
+
+    <!--Thư viện css cho công cụ bản đồ-->
+    <link href="~/Content/MplisCSS/WebGIS/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/MplisCSS/WebGIS/ui.jqgrid.css" rel="stylesheet" />
+    <link href="~/Content/MplisCSS/WebGIS/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/Ace/ace.css" rel="stylesheet" />
+
+    <!--Thư viện cho cập nhật dữ liệu-->
+    @*<link rel="stylesheet" href="~/Content/fileinput.css">*@
+    <link rel="stylesheet" href="~/Content/plugins/fileupload/jquery.fileupload.css">
+    <link href="~/Content/MplisCSS/WebGIS/panels.css" rel="stylesheet" />
+
+    <!--Thư viện trực tuyến javascript api-->
+    <script src="~/Scripts/MplisScripts/WebGIS/Scripts/jquery-migrate-1.2.1.js"></script>
+    <script src="~/Scripts/MplisScripts/WebGIS/utilities.js"></script>
+    <script src="~/Scripts/plugins/fileupload/jquery.ui.widget.js"></script>
+    <script src="~/Scripts/plugins/fileupload/jquery.fileupload.js"></script>
+    <script src="~/Scripts/jquery/jquery.noty.packaged.min.js"></script>
+    <script src="~/Scripts/jquery/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/gis/terraformer.min.js"></script>
+    <script src="~/Scripts/gis/terraformer-arcgis-parser.min.js"></script>
+    <script src="~/Scripts/plugins/inputmask/inputmask.js"></script>
+    <script src="~/Scripts/plugins/inputmask/jquery.inputmask.js"></script>
+    <script src="~/Scripts/MplisScripts/WebGIS/Scripts/jquery.jqGrid.min.js"></script>
+    <script src="~/Scripts/MplisScripts/WebGIS/Scripts/grid.locale-en.js"></script>
+
+    <!--Thư viện javascript ArcGis JavaAPI-->
+    <script src="http://js.arcgis.com/3.18/"></script>
+    
+    @*<script src="~/Scripts/MplisScripts/WebGIS/Tools/mapbase_kvhc.js"></script>*@
+    <!--Load danh sách xã được phân quyền cho người dùng-->
+    <script src="~/Scripts/MplisScripts/WebGIS/Tools/loaddsXa.js"></script>
+    <!--Xuất dữ liệu-->
+    <script src="~/Scripts/MplisScripts/WebGIS/Tools/exportdata.js"></script>
+    <script src="~/Scripts/MplisScripts/WebGIS/MapUtilities.js"></script>
+    <script src="https://cdn.rawgit.com/Chaussette/esri.symbol.MultiLineTextSymbol/master/esri.symbol.MultiLineTextSymbol.js"></script>
+    <style>
+        .toppanel {
+            top: 20px !important;
+        }
+
+        .modeless {
+            top: 10%;
+            left: 50%;
+            bottom: auto;
+            right: auto;
+            margin-left: -300px;
+        }
+
+        .modal {
+            background: rgba(0,0,0,0);
+        }
+
+        .content {
+            min-height: unset;
+            padding: unset;
+            margin-right: auto;
+            margin-left: auto;
+            padding-left: unset;
+            padding-right: unset;
+        }
+
+        table {
+            white-space: nowrap;
+        }
+
+        .table-fixed thead {
+            width: 97%;
+        }
+
+        .table-fixed tbody {
+            height: 230px;
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+            display: block;
+        }
+
+            .table-fixed tbody td, .table-fixed thead > tr > th {
+                border-bottom-width: 0;
+                float: left;
+            }
+
+        #myProgress {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+        }
+
+        #myBar {
+            position: relative;
+            width: 0%;
+            height: 20px;
+            background-color: #3CB371;
+        }
+
+        #label {
+            text-align: center;
+            color: white;
+            height: 20px;
+            width: 100%;
+        }
+    </style>
+
+</head>
+<body class="hold-transition skin-black-light sidebar-mini">
+    <div class="wrapper">
+        <!-- Main Header -->
+        <header class="main-header">
+            <!-- Logo -->
+            <a href="#" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>ViLIS</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>ViLIS 3.0</b></span>
+            </a>
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="logo-mini " style="font-family:'Times New Roman', Times, serif; font-size:16px;"> &nbsp; &nbsp; Hệ thống thông tin đất đai quốc gia đa mục tiêu - MPLIS</span>
+                </a>
+
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+
+                    <ul class="nav navbar-nav">
+
+                        <li class="dropdown messages-menu">
+                            <!-- Menu Home -->
+                            <a href="~/Home/Index" class="fa fa-home" data-toggle="tooltip" data-placement="bottom" title="Trang chủ"></a>
+                        </li>
+                        <!-- Notifications Menu -->
+                        <li class="dropdown notifications-menu">
+                            <!-- Menu Bản đồ -->
+                            <a href="#" class="fa fa-chain" data-toggle="tooltip" data-placement="bottom" title="Bản đồ"></a>
+                        </li>
+                        <!-- Tasks Menu -->
+                        <li class="dropdown tasks-menu dvhc_home">
+                            <a href="#" class="tooltipx" data-placement="bottom" title="Đổi đơn vị hành chính làm việc" data-toggle="modal" data-target="#doiDVHC">
+                                <i class="fa fa-building-o"></i>
+                            </a>
+                        </li>
+                        <!-- User Account Menu -->
+                        <li class="dropdown user user-menu">
+                            <!-- Menu Toggle Button -->
+                            @*--- Bat dau cho vao PartialView (AnhDaiDien) ---*@
+                            @Html.Partial("_AnhDaiDien")
+                            @*--- Ket thuc cho vao PartialView (AnhDaiDien) ---*@
+                        </li>
+                    </ul>
+                    <!-- Control Sidebar Toggle Button -->
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+            @Html.Partial("_LeftMenu")
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+
+        <div class="content-wrapper">
+            <section class="content" id="ContentSection">
+                @RenderBody()
+                <div id="loading-img"></div>
+            </section>
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        @Html.Action("_MainFooter", "Home")
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+        </aside>
+        <div class="control-sidebar-bg"></div>
+    </div>
+    <!-- ./wrapper -->
+    <!--Popup thay đổi mật khẩu-->
+    @*Bat lai popup doi mat khau khi load lai trang Home*@
+    <script>
+        $('document').ready(function () {
+            $('#doimkbt').click(function () {
+                window.location.hash = '#doimk';
+            });
+            if (window.location.hash && window.location.hash == '#doimk') {
+                $('#DoiMatKhau').modal('show');
+            }
+            if ($("#HienThiPopUp").val() == "co") {
+                $('#DoiMatKhau').modal('show');
+            }
+            $("#txtDuongDanUrl").val(window.location.href);
+            $("#txtDuongDanUrl2").val(window.location.href);
+            $("#txtUrlThayDoiThongTinNguoiDung").val(window.location.href);
+        });
+    </script>
+    @*Kiem tra qua trinh nhap xac nhan mat khau*@
+    <script type="text/javascript">
+        function KiemTraNhapXacNhanMatKhau() {
+            if ($("#txtMatKhauMoi").val() == $("#txtXacNhanMatKhau").val()) {
+                if ($("#txtMatKhauMoi").val() == $("#txtMatKhauHienTai").val()) {
+                    alert("Không nhập mật khẩu mới trùng với mật khẩu hiện tại !");
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+            else {
+                alert("Nhập xác nhận mật khẩu sai !");
+                return false;
+            }
+        }
+    </script>
+    @*
+        <script type="text/javascript">
+                        function TaoIdMenuSession(idmenu) {
+                            document.cookie = "idmenu" + "=" + idmenu;
+                        }
+        </script>*@
+    <div class="container" id="GenerateDoiMatKhaudlg">
+        @Html.Action("GenerateDoiMatKhau", "Home")
+    </div>
+    @using (Html.BeginForm("ThoatDoiMatKhau", "Home", FormMethod.Post, new { @name = "ThoatDoiMatKhau" }))
+    {
+        <input type="hidden" class="text" name="txtDuongDanUrl2" id="txtDuongDanUrl2" value="" />
+    }
+    <!--End Thay đổi mật khẩu-->
+    <!--Popup Thông tin cá nhân-->
+    <div class="container" id="GenerateThongTinCaNhandlg">
+        @Html.Action("GenerateThongTinCaNhan", "Home")
+    </div>
+    <!--End Thông tin cá nhân-->
+    <div class="container" id="genChonDonViHanhChinhdlg">
+        @Html.Action("genChonDonViHanhChinh", "Home")
+    </div>
+</body>
+</html>
+
+@*Cac ham viet trong javaScrip*@
+@*ham thay doi anh (images)*@
+<script language="javascript" type="text/javascript">
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#file')
+                    .attr('src', e.target.result)
+                    .width(80)
+                    .height(90);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    function thoatdmk() {
+        //alert("dfgdgdgdgfdgd");
+        document.ThoatDoiMatKhau.submit(); // Submit form co thuoc tinh 'name' là: ThoatDoiMatKhau (chu y: phuong thuc truyen du lieu là kieu POST - dung cho Form)
+
+    }
+    // ham MenuMauBanhMy
+    //function MenuMauBanhMy() {
+    //    debugger
+    //    var abc = $(this).attr('menuId');
+    //    alert(abc);
+    //    document.cookie = "MenuMauBanhMy = " + abc;
+    //}
+    // chon ung dung khi refresh ai trang
+    window.onbeforeunload = function (e) {
+        // xoa cookie xac dinh UngDung duoc chon
+        document.cookie = "UngDungDuocChon=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+        // Khoi tao UngDung duoc chon
+        var ungDung = $("#UngDungDuocChon").attr('ThuTuXapSep');
+        document.cookie = "UngDungDuocChon =" + ungDung + "; path=/";
+    }
+    $(document).on('click', '.MenuMauBanhMyId', function () {
+        // xoa cookie xac dinh UngDung duoc chon
+        document.cookie = "UngDungDuocChon=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+        // Khoi tao UngDung duoc chon
+        var ungDung = $("#UngDungDuocChon").attr('ThuTuXapSep');
+        document.cookie = "UngDungDuocChon =" + ungDung + "; path=/";
+
+        // xoa cookie MenuMauBanhMy
+        document.cookie = "MenuMauBanhMy=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+        // khoi tao cookie luu controller trong url
+        var chuoiUrl = $(this).attr('href');
+        if (chuoiUrl != "") {
+            chuoiUrl = chuoiUrl.substring(chuoiUrl.indexOf("/") + 1);
+            chuoiUrl = chuoiUrl.substring(0, chuoiUrl.indexOf("/"));
+        }
+        document.cookie = "ControllerTrongUrl =" + chuoiUrl + "; path=/";
+        // khoi tao cookie luu ten chuoi menu
+        document.cookie = "MenuMauBanhMy =" + encodeURIComponent($(this).text() + "~^") + getCookie("MenuMauBanhMy") + "; path=/";
+        TimChaCuaNode($(this).attr('khoachaid'))
+    });
+
+    function TimChaCuaNode(khoaChaIdCuaNode) {
+        $(".MenuMauBanhMyId").each(function () {
+            if ($(this).attr('menuid') == khoaChaIdCuaNode) {
+                document.cookie = "MenuMauBanhMy =" + encodeURIComponent($(this).text() + "~^") + getCookie("MenuMauBanhMy") + "; path=/";
+                TimChaCuaNode($(this).attr('khoachaid'))
+                return false;
+            }
+        })
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    //$(document).ready(function () {
+    //    debugger
+    //    var controllerTrongUrl = getCookie("ControllerTrongUrl");
+    //    var urlHienTai = window.location.pathname;
+    //    if (urlHienTai != "") {
+    //        urlHienTai = urlHienTai.substring(urlHienTai.indexOf("/") + 1);
+    //        urlHienTai = urlHienTai.substring(0, urlHienTai.indexOf("/"));
+    //    }
+    //    if(controllerTrongUrl != urlHienTai){
+    //        // xoa cookie
+    //        document.cookie = "MenuMauBanhMy=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
+    //    }
+    //});
+
+    // duy tri session de ket noi voi server (khong dung cach nay)
+
+    //function heartBeat() {
+    //    $.get("/Home/ThongBaoQuyenNguoiDung?", function (data) { });
+    //}
+
+    //$(function () {
+    //    setInterval("heartBeat()", 1000 * 30); // 30s gửi request một lần
+    //});
+
+    $(function () {
+        var $backdrop = null;
+        $('.mplis_menu').click(function (e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            var res = url.split("/");
+
+            $.ajax({
+                url: url,
+                //beforeSend: OnBeginWork,
+                beforeSend: function onBegin(vObject) {
+                    $backdrop = $('<div><div class="modal222"></div></div>').appendTo(document.body);
+                    $('#image_loading').show();
+                },
+                complete: function onComplete(vObject) {
+                    $($backdrop).fadeOut(100, function () {
+                        $('.modal222').parent().remove();
+                    });
+                    $('#image_loading').hide();
+                },
+                success: function (html) {
+                    $('#ContentSection').html(html);
+                }
+            });
+
+        });
+
+    });
+
+</script>

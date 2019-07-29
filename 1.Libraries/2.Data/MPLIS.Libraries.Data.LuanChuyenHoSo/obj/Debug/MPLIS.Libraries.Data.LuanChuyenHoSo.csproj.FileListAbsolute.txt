@@ -1,0 +1,9 @@
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.LuanChuyenHoSo\bin\Debug\MPLIS.Libraries.Data.LuanChuyenHoSo.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.LuanChuyenHoSo\bin\Debug\MPLIS.Libraries.Data.LuanChuyenHoSo.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.LuanChuyenHoSo\bin\Debug\AppCore.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.LuanChuyenHoSo\bin\Debug\EntityFramework.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.LuanChuyenHoSo\bin\Debug\AppCore.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.LuanChuyenHoSo\bin\Debug\EntityFramework.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.LuanChuyenHoSo\obj\Debug\MPLIS.Libraries.Data.LuanChuyenHoSo.csprojResolveAssemblyReference.cache
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.LuanChuyenHoSo\obj\Debug\MPLIS.Libraries.Data.LuanChuyenHoSo.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Data.LuanChuyenHoSo\obj\Debug\MPLIS.Libraries.Data.LuanChuyenHoSo.pdb

@@ -1,0 +1,217 @@
+﻿@model MPLIS.Libraries.Data.QuanTriQuyTrinh.Models.DSQuyTrinhVM
+
+<table id="Table_QUYTRINH_ID" class="table table-bordered">
+    <thead>
+        <tr>
+            <th></th>
+            <th>#</th>
+            <th>Tên quy trình</th>
+            <th>Tên nhóm quy trình</th>
+            <th>Cấp quy trình</th>
+            <th>Thời gian tối đa</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.DSQuyTrinh != null && Model.DSQuyTrinh.Count > 0)
+        {
+            int sTT = 0;
+            foreach (var item in Model.DSQuyTrinh)
+            {
+                sTT++;
+                <tr>
+                    <td>
+                        @item.QUYTRINHID
+                    </td>
+                    <td>
+                        @sTT.
+                    </td>
+                    <td>
+                        @item.TENQUYTRINH
+                    </td>
+                    <td>
+                        @item.TENNHOMQUYTRINH
+                    </td>
+                    <td>
+                        @item.CAPQUYTRINH
+                    </td>
+                    <td>
+                        @item.THOIHANGIAIQUYETTOIDA
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    var curQUYTRINHID = "";
+    $(document).ready(function () {
+        var columns = [
+            { "data": "QUYTRINHID" },
+            { "data": "STT" },
+            { "data": "TENQUYTRINH" },
+            { "data": "TENNHOMQUYTRINH" },
+            { "data": "CAPQUYTRINH" },
+            { "data": "THOIHANGIAIQUYETTOIDA" },
+            { "data": null }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnCoppy'>Sao chép</button><button type='button' class='btn btn-xs btn-heading btnDel'>Xóa</button>";
+                },
+                "className": "text-center"
+            },
+            {
+                "targets": 1,
+                "className": "text-right"
+            },
+            {
+                "targets": [4, 5],
+                "className": "text-center"
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "lengthChange": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+            "autoWidth": false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+            },
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "buttons": [
+				{
+				    text: 'Thêm mới',
+				    className: 'btn btn-sm btn-default',
+				    action: ThemMoiQuyTrinh
+				}
+            ],
+            "dom": "<'row p-0'<'col-sm-12 p-0'tr>><'row p-0'<'col-sm-6 p-0'B><'col-sm-6 p-0'p>>"
+        }
+
+        var Table_QUYTRINH_ID = $('#Table_QUYTRINH_ID').DataTable(options);
+
+        Table_QUYTRINH_ID.rows().nodes().on('click', 'tbody tr', function () {
+            if (Table_QUYTRINH_ID.rows().nodes().length > 0) {
+                XemTTChiTietQuyTrinh(Table_QUYTRINH_ID.row($(this)).data());
+                if ($(Table_QUYTRINH_ID.row(this).node()).attr('class').indexOf('activerow') != -1) {
+                    $(Table_QUYTRINH_ID.row(this).node()).removeClass('activerow');
+                } else {
+                    $(Table_QUYTRINH_ID.rows().nodes()).removeClass('activerow');
+                    $(Table_QUYTRINH_ID.row(this).node()).addClass('activerow');
+                }
+            }
+        })
+
+        Table_QUYTRINH_ID.rows().nodes().on('click', 'tbody tr button', function (event) {
+            event.stopPropagation();
+        })
+
+        Table_QUYTRINH_ID.rows().nodes().on('click', 'tbody tr .btnDel', function (event) {
+            XoaQuyTrinh(Table_QUYTRINH_ID, Table_QUYTRINH_ID.row($(this).parents('tr')).data(), Table_QUYTRINH_ID.row($(this).parents('tr')));
+        })
+
+        Table_QUYTRINH_ID.rows().nodes().on('click', 'tbody tr .btnCoppy', function (event) {
+            SaoChepQuyTrinh(Table_QUYTRINH_ID.row($(this).parents('tr')).data());
+        })
+
+        function XemTTChiTietQuyTrinh(rowData) {
+            console.log(rowData);
+            if (rowData.QUYTRINHID != curQUYTRINHID) {
+                curQUYTRINHID = rowData.QUYTRINHID;
+                $.ajax({
+                    type: "POST",
+                    url: "/DiagramWorkflow/_QuyTrinh_ChiTietQuyTrinh",
+                    data: { quyTrinhID: rowData.QUYTRINHID },
+                    dataType: "html",
+                    success: function (html) {
+                        $('#divTTChiTietQuyTrinhID')
+                            .html(html)
+                            .ready(function () {
+                                $('#divTTChiTietQuyTrinhID').collapse('show');
+                            })
+                    }
+                })
+            } else {
+                curQUYTRINHID = "";
+                $('#divTTChiTietQuyTrinhID').collapse('hide');
+            }
+        }
+
+        function XoaQuyTrinh(table, rowData, rowDel) {
+            if (confirm("Xác nhận xóa quy trình và dữ liệu liên quan?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/DiagramWorkflow/_QuyTrinh_XoaQuyTrinh",
+                    data: { quyTrinhID: rowData.QUYTRINHID },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+                            //Remove row in dataTable
+                            table
+                                .row(rowDel)
+                                .remove();
+                            var i = 1;
+                            table.rows().every(function () {
+                                var d = this.data();
+                                d.STT = i++;
+                                d.STT += ".";
+                                table.row(this).data(d);
+                            })
+                            table.draw();
+                        }
+                        alert(result.mes);
+                    }
+                })
+            }
+        }
+
+        function SaoChepQuyTrinh(rowData) {
+            $.ajax({
+                type: "POST",
+                url: "/DiagramWorkflow/_QuyTrinh_SaoChep",
+                data: { quyTrinhID: rowData.QUYTRINHID },
+                dataType: "json",
+                success: function (result) {
+                    console.log(result);
+                    if (result.success) {
+                        result.quyTrinh.STT = Table_QUYTRINH_ID.rows().count() + 1;
+                        result.quyTrinh.STT += ".";
+                        var row = Table_QUYTRINH_ID.row.add(result.quyTrinh).node();
+                        Table_QUYTRINH_ID.draw();
+                        //Table_QUYTRINH_ID.page(Table_QUYTRINH_ID.page.info().pages - 1).draw(false);
+                        //row.click();
+                    }
+                    alert(result.mes);
+                }
+            })
+        }
+
+        function ThemMoiQuyTrinh() {
+            $.ajax({
+                type: "POST",
+                url: "/DiagramWorkflow/_QuyTrinh_ThemMoi",
+                dataType: "html",
+                success: function (html) {
+                    $('#divTTChiTietQuyTrinhID')
+                        .html(html)
+                        .ready(function () {
+                            $('#divTTChiTietQuyTrinhID').collapse('show');
+                        })
+                }
+            })
+        }
+
+    })
+</script>

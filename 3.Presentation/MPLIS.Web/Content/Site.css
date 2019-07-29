@@ -1,0 +1,199 @@
+﻿/* Set padding to keep content from hitting the edges */
+.header .navbar-brand {
+    color: #fff;
+}
+
+.dvhc_ {
+    padding: 10px;
+    margin-bottom: 0;
+    /*background-color: #ECF0F5;*/
+    border: 1px solid #f4f4f4;
+    /*border-top: 1px solid #f4f4f4;*/
+    text-align: center;
+}
+
+.box-header button,
+.tab-doc button {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+.nav > li > a.con_tab_doc {
+    padding: 6px;
+}
+
+/*Giảm padding giữa các cột và các hàng*/
+.box-body .row,
+.modal-body .row {
+    padding: 5px;
+    margin: 0px;
+}
+
+.modal-footer .row {
+    padding: 5px;
+    margin: 0px;
+}
+
+.box-body table {
+    margin-bottom: 0;
+}
+
+.box-body .row .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10 {
+    padding: 0px 5px;
+}
+
+.modal-body .row .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10 {
+    padding: 0px 5px;
+}
+
+/*Kích cỡ các cell trong table*/
+.t50 {
+    width: 50px !important;
+}
+
+.t75 {
+    width: 50px !important;
+}
+
+.t100 {
+    width: 100px !important;
+}
+
+.t200 {
+    width: 200px !important;
+}
+
+.t300 {
+    width: 300px !important;
+}
+
+.t250 {
+    width: 250px !important;
+}
+
+.t150 {
+    width: 150px !important;
+}
+
+/* style cho header row */
+tr > th {
+    text-align: center;
+}
+
+.row .row {
+    margin: 0px;
+}
+
+.row > .form-group {
+    margin: 0px;
+}
+
+.activerow {
+    background: #d5f4e6;
+}
+
+.ui-tabs-active {
+    font-weight: 700;
+}
+
+/* style cho .dataTable*/
+table.dataTable {
+    margin-top: 0px !important;
+}
+
+.p-15 {
+    padding: 15px;
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+.m-10 {
+    margin: 10px;
+    width: auto;
+}
+
+.m-15 {
+    margin: 15px;
+}
+
+.m-r-5 {
+    margin-right: 5px !important;
+}
+
+.m-0 {
+    margin: 0px !important;
+}
+
+.m-bt-0 {
+	margin-bottom: 0px !important;
+}
+
+.p-0 {
+    padding: 0px !important;
+}
+
+.p-r-5 {
+    padding-right: 0 !important;
+}
+
+.p-l-5 {
+    padding-left: 0 !important;
+}
+
+.d-inline-block-combobox {
+	display: inline-block;
+	width: 250px;
+}
+
+/**/
+#btnSave, #btnZoomFitID {
+	position: absolute;
+	right: 15px;
+	top: 20px;
+}
+
+/**/
+.box-body {
+	position: relative !important;
+}
+.box-body .overlay {
+	z-index: 50;
+	background: rgba(255, 255, 255, 0.7);
+	border-radius: 3px;
+}
+.box-body > .overlay, .box-body > .loading-img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.pagination {
+	margin: 0px !important;
+}
+.table {
+	margin-bottom: 10px !important;
+	user-select: none !important;
+}
+.dataTables_paginate {
+	height: 30px !important;
+}
+.pagination > li > a, .pagination > li > span {
+	padding: 5px 12px !important;
+	font-size: 12px !important;
+	line-height: 1.5 !important;
+}
+
+.d-none {
+	display: none;
+}
+
+.error {
+	border-color: red;
+}
+
+.form-control[readonly] {
+    background-color: #fff !important;
+}

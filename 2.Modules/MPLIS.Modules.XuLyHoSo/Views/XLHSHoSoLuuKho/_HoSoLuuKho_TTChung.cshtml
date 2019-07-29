@@ -1,0 +1,226 @@
+﻿@using AppCore.Models
+@model HS_HOSO
+<form class="row" id="div_HSLK_TTCHUNG">
+        <div class="row" style="padding: 0;">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Thông tin hồ sơ lưu kho</h3>
+                </div>
+                <div class="box-body">
+                    @Html.HiddenFor(m => m.HOSOID, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.HOSOTIEPNHANID, new { @class = "form-control" })
+                    <div class="row">
+                        <div>
+                            <div class="col-xs-2">
+                                @Html.LabelFor(Model => Model.XAID, "Tên xã", new { @class = "pull-right control-label" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.DropDownListFor(m => m.XAID, new SelectList(ViewBag.listxaHSLuuKho, "KVHCID", "TENKVHC"), new { @class = "form-control input-sm", @id = "drpxaHSLuuKho", @disabled = "true" })
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-xs-2">
+                                @Html.LabelFor(Model => Model.TENHOSO, "Tên hồ sơ", new { @class = "pull-right control-label" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.TextBoxFor(m => m.TENHOSO, new { @class = "form-control input-sm" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <div class="col-xs-2">
+                                @Html.LabelFor(Model => Model.NGAYHOSO, "Ngày lưu kho", new { @class = "pull-right control-label" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.TextBoxFor(m => m.NGAYHOSO, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-xs-2">
+                                @Html.LabelFor(Model => Model.MAHOSO_ST, "Trích từ mã vạch", new { @class = "pull-right control-label" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.TextBoxFor(m => m.MAHOSO_ST, new { @class = "form-control input-sm" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <div class="col-xs-2">
+                                @Html.LabelFor(Model => Model.MAHOSO_MB, "Mã biến động", new { @class = "pull-right control-label" })
+                            </div>
+                            <div class="col-xs-10">
+                                @Html.DropDownListFor(m => m.MAHOSO_MB, new SelectList(ViewBag.listmabiendong, "MABIENDONG", "TENLOAIBIENDONG"),"", new { @class = "form-control input-sm", @id = "drpMABD_HSLK" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <div class="col-xs-2">
+                                @Html.LabelFor(Model => Model.MAHOSO_TB, "Số lần biến động", new { @class = "pull-right control-label" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.TextBoxFor(m => m.MAHOSO_TB, new { @class = "form-control input-sm" })
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-xs-2">
+                                @Html.LabelFor(Model => Model.MAHOSO, "Mã hồ sơ", new { @class = "pull-right control-label" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.TextAreaFor(m => m.MAHOSO, new { @class = "form-control input-sm" ,@disabled = "true", @rows = "1" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding: 0;">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Thông tin vị trí</h3>
+                </div>
+                <div class="box-body">
+                    <div id="Div_HSLK_ViTri">
+                        <div class="row">
+                            <div>
+                                <div class="col-xs-2">
+                                    @Html.LabelFor(Model => Model.PHONG, "Phòng", new { @class = "pull-right control-label" })
+                                </div>
+                                <div class="col-xs-3">
+                                    @Html.DropDownListFor(m => m.PHONG, new SelectList(ViewBag.listPhongHSLuuKho, "VITRILUUTRUID", "TENVITRILUUTRU"),"", new { @class = "form-control input-sm", @id = "drpPhongHSLuuKho" })
+                                </div>
+                                <div class="col-xs-1">
+                                    <input type="button" class="btn-sm btn-inform" id="btnphong" value="Thêm" />
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-xs-2">
+                                    @Html.LabelFor(Model => Model.KE, "Kệ", new { @class = "pull-right control-label" })
+                                </div>
+                                <div class="col-xs-3">
+                                    @Html.DropDownListFor(m => m.KE, new SelectList(ViewBag.listKeHSLuuKho, "VITRILUUTRUID", "TENVITRILUUTRU"),"", new { @class = "form-control input-sm", @id = "drpKeHSLuuKho" })
+                                </div>
+                                <div class="col-xs-1">
+                                    <input type="button" id="btnke" class="btn-sm btn-inform" value="Thêm" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div>
+                                <div class="col-xs-2">
+                                    @Html.LabelFor(Model => Model.NGAN, "Ngăn", new { @class = "pull-right control-label" })
+                                </div>
+                                <div class="col-xs-3">
+                                    @Html.DropDownListFor(m => m.NGAN, new SelectList(ViewBag.listNganHSLuuKho, "VITRILUUTRUID", "TENVITRILUUTRU"),"", new { @class = "form-control input-sm", @id = "drpNganHSLuuKho" })
+                                </div>
+                                <div class="col-xs-1">
+                                    <input type="button" id="btnngan" class="btn-sm btn-inform" value="Thêm" />
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-xs-2">
+                                    @Html.LabelFor(Model => Model.HOP, "Hộp", new { @class = "pull-right control-label" })
+                                </div>
+                                <div class="col-xs-3">
+                                    @Html.DropDownListFor(m => m.HOP, new SelectList(ViewBag.listHopHSLuuKho, "VITRILUUTRUID", "TENVITRILUUTRU"),"", new { @class = "form-control input-sm", @id = "drpHopHSLuuKho" })
+                                </div>
+                                <div class="col-xs-1">
+                                    <input type="button" id="btnhop" class="btn-sm btn-inform" value="Thêm" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div>
+                                <div class="col-xs-2">
+                                    @Html.LabelFor(Model => Model.TENHOP, "Tên hộp", new { @class = "pull-right control-label" })
+                                </div>
+                                <div class="col-xs-10">
+                                    @Html.TextBoxFor(m => m.TENHOP, new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div>
+                                <div class="col-xs-2">
+                                    @Html.LabelFor(Model => Model.GHICHU, "Ghi chú", new { @class = "pull-right control-label" })
+                                </div>
+                                <div class="col-xs-10">
+                                    @Html.TextAreaFor(m => m.GHICHU, new { @class = "form-control input-sm", @row = "2" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+</form>
+<script>
+    $(document).ready(function () {
+        $('#MAHOSO_TB').focusout(function () {
+            var formdata = $("#div_HSLK_TTCHUNG").serializeArray();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSHoSoLuuKho/TaoMaHS",
+                    data:formdata,
+                    success: function (data) {
+                        console.log(data);
+                        $('#MAHOSO').html(data);
+                    }
+                });
+        });
+        $("#btnphong").on("click", function () {
+            var drpPhongHSLuuKho = document.getElementById('drpPhongHSLuuKho');
+            var r = "";
+            if ($('#drpPhongHSLuuKho').val() != null) {
+                r = drpPhongHSLuuKho.options[drpPhongHSLuuKho.selectedIndex].innerHTML;
+            }
+            var t = $('#drpPhongHSLuuKho').val();
+            popup_themvitri(t, "001", r);
+        });
+        $("#btnke").on("click", function () {
+            var drpPhongHSLuuKho = document.getElementById('drpKeHSLuuKho');
+            var r = "";
+            if ($('#drpKeHSLuuKho').val() != null) {
+                r = drpPhongHSLuuKho.options[drpPhongHSLuuKho.selectedIndex].innerHTML;
+            } var t = $('#drpKeHSLuuKho').val();
+            popup_themvitri(t, "002", r);
+        });
+        $("#btnngan").on("click", function () {
+            var drpPhongHSLuuKho = document.getElementById('drpNganHSLuuKho');
+            var r = "";
+            if ($('#drpNganHSLuuKho').val() != null) {
+                r = drpPhongHSLuuKho.options[drpPhongHSLuuKho.selectedIndex].innerHTML;
+            } var t = $('#drpNganHSLuuKho').val();
+            popup_themvitri(t, "003", r);
+        });
+        $("#btnhop").on("click", function () {
+            var drpPhongHSLuuKho = document.getElementById('drpHopHSLuuKho');
+            var r = "";
+            if ($('#drpHopHSLuuKho').val() != null) {
+                r = drpPhongHSLuuKho.options[drpPhongHSLuuKho.selectedIndex].innerHTML;
+            } var t = $('#drpHopHSLuuKho').val();
+            popup_themvitri(t, "004", r);
+        });
+    });
+    function popup_themvitri(mavitri,loai,ten) {
+        $.ajax({
+            type: "GET",
+            url: "/XLHSHoSoLuuKho/_PopUp_ViTriLuu",
+            data: { id: mavitri,Loaivitri:loai,ten:ten},
+            success: function (html) {
+
+                $('#dialogformViTriLuu').html(html);
+                var options = {
+                    "backdrop": "static",
+                    "show": true
+                }
+                $("#modalformViTriLuu").modal(options);
+            }
+        });
+
+    }
+</script>

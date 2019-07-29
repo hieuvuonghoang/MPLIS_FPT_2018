@@ -1,0 +1,137 @@
+﻿@using AppCore.Models
+@model HS_HOSO
+<div id="divHoSoTiepNhanID" class="m-15">
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divHoSoTiepNhanID" href="#collapse_HoSoLuuKho_TTChung">
+                Thông tin lưu kho
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuKho_TTchung()">Lưu</button>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuKho_Xoa()" hidden>Xóa</button>
+        </div>
+        <div id="collapse_HoSoLuuKho_TTChung" class="panel-collapse collapse in">
+            <div id="divHoSoTiepNhanID_TTChung">
+                @{Html.RenderPartial("_HoSoLuuKho_TTChung", Model);}
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divHoSoTiepNhanID" href="#collapse_HoSoLuuKho_DSFile">
+                Danh sách file đính kèm
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuKho_DSFile()">Lưu</button>
+        </div>
+        <div id="collapse_HoSoLuuKho_DSFile" class="panel-collapse collapse">
+            <div id="divHoSoTiepNhanID_DSFile">
+                @Html.Partial("_HoSoLuuKho_DSFile")
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divHoSoTiepNhanID" href="#collapse_HoSoLuuKho_GCN">
+                Thông tin phục vụ tìm kiếm theo giấy chứng nhận
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuKho_GCN()">Lưu</button>
+        </div>
+        <div id="collapse_HoSoLuuKho_GCN" class="panel-collapse collapse">
+            <div id="divHoSoTiepNhanID_GCN">
+                @Html.Partial("_HoSoLuuKho_GCN")
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divHoSoTiepNhanID" href="#collapse_HoSoLuuKho_Thua">
+                Thông tin phục vụ tìm kiếm theo thửa đất
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuKho_Thua()">Lưu</button>
+        </div>
+        <div id="collapse_HoSoLuuKho_Thua" class="panel-collapse collapse">
+            <div id="divHoSoTiepNhanID_Thua">
+                @Html.Partial("_HoSoLuuKho_Thua")
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divHoSoTiepNhanID" href="#collapse_HoSoLuuKho_Chu">
+                Thông tin phục vụ tìm kiếm theo chủ sử dụng
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuKho_Chu()">Lưu</button>
+        </div>
+        <div id="collapse_HoSoLuuKho_Chu" class="panel-collapse collapse">
+            <div id="divHoSoTiepNhanID_Chu">
+                @Html.Partial("_HoSoLuuKho_Chu")
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="dialogformViTriLuu">
+</div>
+<script>
+    $(document).ready(function () {
+        trigger_tab_doc();
+    });
+    function LuuKho_TTchung() {
+        $('#drpxaHSLuuKho').prop("disabled", false);
+        $('#MAHOSO').prop("disabled", false);
+        var formdata = $("#div_HSLK_TTCHUNG").serializeArray();
+        $.ajax({
+            type: "POST",
+            url: "/XLHSHoSoLuuKho/Save_formDonDangKy_HSLK",
+            //  data: formDonDangKy_DSTAISAN.serialize(),
+            data: formdata,
+            success: function (data) {
+                alert(data);
+                $('#drpxaHSLuuKho').prop("disabled", true);
+                $('#MAHOSO').prop("disabled", true);
+            },
+        });
+    }
+    function LuuKho_Xoa() {
+      var  id = $('#HOSOID').val();
+        $.ajax({
+            type: "POST",
+            url: "/XLHSHoSoLuuKho/Xoa_formDonDangKy_HSLK",
+            //  data: formDonDangKy_DSTAISAN.serialize(),
+            data: { id: id.trim() },
+            success: function (data) {
+                alert(data);
+            },
+        });
+    }
+    function LuuKho_GCN() {
+        $.ajax({
+            type: "POST",
+            url: "/XLHSHoSoLuuKho/Save_DSGCN",
+            //  data: formDonDangKy_DSTAISAN.serialize(),
+            success: function (data) {
+                alert(data);
+            },
+        });
+    }
+    function LuuKho_Thua() {
+        $.ajax({
+            type: "POST",
+            url: "/XLHSHoSoLuuKho/Save_HSLK_DSTHUA",
+            //  data: formDonDangKy_DSTAISAN.serialize(),
+            success: function (data) {
+                alert(data);
+            },
+        });
+    }
+    function LuuKho_Chu() {
+        $.ajax({
+            type: "POST",
+            url: "/XLHSHoSoLuuKho/Save_HSLK_DSCHU",
+            //  data: formDonDangKy_DSTAISAN.serialize(),
+            success: function (data) {
+                alert(data);
+            },
+        });
+    }
+
+</script>

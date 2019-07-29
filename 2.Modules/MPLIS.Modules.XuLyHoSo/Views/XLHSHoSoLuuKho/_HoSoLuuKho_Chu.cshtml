@@ -1,0 +1,71 @@
+﻿@using AppCore.Models
+@model HS_HOSO
+    <div id="divHSLK_CHU">
+        <div class="box box-primary" >
+            <div class="box-header with-border">
+                <h3 class="box-title">Danh sách thông tin chủ</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <input type="button" class="btn-sm btn-inform" id="btncapnhatchu" value="Cập nhật từ dữ liệu hồ sơ" />
+                </div>
+                <div class="row">
+                    <table id="table_HoSoLK_CHU" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="t50" hidden>hschuid</th>
+                                <th class="t50">STT</th>
+                                <th class="t100">Tên chủ</th>
+                                <th class="t100">Số giấy tờ</th>
+                                <th class="t100">Địa chỉ</th>
+                            </tr>
+                        </thead>
+                        @{
+                            int rtdtable = 0;
+                            if (Model != null)
+                            {
+                                if (Model.DSChu != null)
+                                {
+                                    foreach (var itemtd in Model.DSChu)
+                                    {
+                                        rtdtable = rtdtable + 1;
+                                        <tr data-id="@itemtd.TCCHUID">
+                                            <td align="center" hidden>
+                                                @itemtd.TCCHUID
+                                            </td>
+                                            <td align="center">@rtdtable</td>
+                                            <td align="center">@itemtd.TENCHU</td>
+                                            <td align="center">@itemtd.SOGIAYTOXM</td>
+                                            <td align="center">@itemtd.DIACHI</td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    $(document).ready(function () {
+        table_checkthuats = InitDataTableXLHS($('#table_HoSoLK_CHU'));
+        $('#btncapnhatchu').on("click", function () {
+            $.ajax({
+                type: "POST",
+                url: "/XLHSHoSoLuuKho/CapNhatCHU",
+                success: function (data) {
+                    console.log(data);
+                    $('#divHoSoTiepNhanID_Chu').html(data);
+                }
+            });
+
+        });
+    });
+
+
+</script>
+
+
+

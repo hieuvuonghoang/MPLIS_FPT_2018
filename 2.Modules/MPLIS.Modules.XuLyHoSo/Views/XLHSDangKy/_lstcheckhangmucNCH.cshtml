@@ -1,0 +1,40 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.VM_XuLyHoSo_DK
+<table id="table_CHECKHMNCH" class="table table-bordered">
+    <thead>
+        <tr>
+            <th class="t100"><input type="checkbox" id="checkall_HMNCH"/></th>
+            <th class="t50">STT</th>
+            <th class="t100">Tên Hạng Mục</th>
+            <th class="t100">Diện tích</th>
+        </tr>
+    </thead>
+    @{
+        int rtdtable = 0;
+        if (Model != null)
+        {
+            if (Model.TAISAN_DANGKY != null)
+            {
+                foreach (var item in Model.TAISAN_DANGKY)
+                {
+                    if (item.trangthaitaisan != 3 && item.TaiSanGanLienVoiDat.HangMucNgoaiCanHo != null)
+                    {
+                        rtdtable = rtdtable + 1;
+                    <tr data-id="@item.TaiSanGanLienVoiDat.HangMucNgoaiCanHo.HANGMUCSOHUUCHUNGID">
+                        <td align="center"><input type="checkbox" name="Array_HangMuc" id="@item.TaiSanGanLienVoiDat.HangMucNgoaiCanHo.HANGMUCSOHUUCHUNGID" value="@item.TaiSanGanLienVoiDat.HangMucNgoaiCanHo.HANGMUCSOHUUCHUNGID"
+       onclick="cacl(@item.TaiSanGanLienVoiDat.HangMucNgoaiCanHo.HANGMUCSOHUUCHUNGID);" /></td>
+                        <td align="center">@rtdtable</td>
+                        <td align="center">@item.TaiSanGanLienVoiDat.HangMucNgoaiCanHo.TENHANGMUC</td>
+                        <td align="center">@item.TaiSanGanLienVoiDat.HangMucNgoaiCanHo.DIENTICH</td>
+                    </tr>
+                        }
+                    }
+                }
+            }
+        }
+</table>
+<script>
+    $(function () {
+        table_checkhmch = InitDataTableXLHS($('#table_CHECKHMNCH'));
+        ProcessCheckBox(table_checkhmch, $('#checkall_HMNCH'));
+    });
+</script>

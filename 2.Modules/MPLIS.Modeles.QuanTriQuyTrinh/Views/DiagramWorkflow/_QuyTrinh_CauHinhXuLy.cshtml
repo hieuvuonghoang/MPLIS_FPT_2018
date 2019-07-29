@@ -1,0 +1,243 @@
+﻿@model MPLIS.Libraries.Data.QuanTriQuyTrinh.Models.CauHinhXuLyVM
+
+<input id="JSONCauHinhXuLy" type="hidden" value="@Model.JSONCauHinhXuLy" name="JSONCauHinhXuLy" />
+
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title">Danh sước bước quy trình</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-sm btn-default" onclick="SaveQuyTrinh_CauHinhXuLy()">Lưu vào CSDL</button>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="row p-0">
+            <div class="col-xs-12 p-0">
+                @Html.Partial("_QuyTrinh_CauHinhXuLy_BuocQuyTrinh")
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="box box-default">
+    <div class="box-header with-border">
+        <h3 class="box-title">Cấu hình xử lý cho bước trong quy trình</h3>
+        @*<div class="box-tools pull-right">
+            <button id="btnSaveCauHinhChoTungBuoc" type="button" class="btn btn-sm btn-default">Lưu thông tin</button>
+        </div>*@
+    </div>
+    <div class="box-body">
+        <div class="row p-0">
+            <div class="col-xs-6 p-r-5">
+                @Html.Partial("_QuyTrinh_CauHinhXuLy_NguoiDung")
+            </div>
+            <div class="col-xs-6 p-l-5">
+                @Html.Partial("_QuyTrinh_CauHinhXuLy_KhuVucHanhChinh")
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //Get 3 table đã được load lên trên partialView tương ứng
+        var Table_BUOCQUYTRINH_ID = $('#Table_BUOCQUYTRINH_ID').DataTable();
+        var Table_NGUOIDUNG_ID = $('#Table_NGUOIDUNG_ID').DataTable();
+        var Table_KVHanhChinh_ID = $('#Table_KVHanhChinh_ID').DataTable();
+
+        var objXuLyCauHinh = {};
+
+        Table_BUOCQUYTRINH_ID.rows().nodes().on('click', 'tbody tr', function () {
+            objXuLyCauHinh = JSON.parse($('#JSONCauHinhXuLy').val());
+            if (Table_BUOCQUYTRINH_ID.rows().nodes().length > 0) {
+                curNGUOIDUNGID = "";
+                ResetTable_NGUOIDUNG_ID();
+                ResetTable_KVHanhChinh_ID();
+                var buocQuyTrinhID = Table_BUOCQUYTRINH_ID.row(this).data().BUOCQUYTRINHID;
+                if (curBUOCQUYTRINHID != buocQuyTrinhID) {
+                    curBUOCQUYTRINHID = buocQuyTrinhID;
+                    console.log(objXuLyCauHinh[buocQuyTrinhID]);
+                    var obj = objXuLyCauHinh[buocQuyTrinhID];
+                    for (var temp in obj) {
+                        $.each(Table_NGUOIDUNG_ID.rows().nodes(), function () {
+                            if (Table_NGUOIDUNG_ID.row(this).data().NGUOIDUNGID == temp) {
+                                $('[type="checkbox"]', this).prop('checked', true);
+                            }
+                        })
+                    }
+                } else {
+                    curBUOCQUYTRINHID = "";
+                }
+                ActiveRow(Table_BUOCQUYTRINH_ID, this)
+            }
+        })
+
+        Table_BUOCQUYTRINH_ID.rows().nodes().on('click', 'tbody tr .btnEdit', function (event) {
+            var buocQuyTrinhID = Table_BUOCQUYTRINH_ID.row($(this).parents('tr')).data().BUOCQUYTRINHID;
+            $.ajax({
+                type: "POST",
+                url: "/DiagramWorkflow/_Popup_QuyTrinh_CauHinhXuLy_ChinhSuaBuoc",
+                data: { buocQuyTrinhID: buocQuyTrinhID },
+                dataType: "html",
+                success: function (html) {
+                    $('#dialogformTTBuocQuyTrinhID')
+                        .html(html)
+                        .ready(function () {
+                            var options = {
+                                backdrop: "static",
+                                show: true
+                            }
+                            $('#modalChiTietBuocQuyTrinh').modal(options);
+                        })
+                }
+            })
+            if (curBUOCQUYTRINHID == buocQuyTrinhID) {
+                event.stopPropagation();
+            }
+        })
+
+        function ResetTable_NGUOIDUNG_ID() {
+            $.each(Table_NGUOIDUNG_ID.rows().nodes(), function () {
+                $('[type="checkbox"]', this).prop('checked', false);
+                $(this).removeClass('activerow');
+            })
+        }
+
+        function ResetTable_KVHanhChinh_ID() {
+            $.each(Table_KVHanhChinh_ID.rows().nodes(), function () {
+                $('[type="checkbox"]', this).prop('checked', false);
+            })
+        }
+
+        Table_NGUOIDUNG_ID.rows().nodes().on('click', 'tbody tr', function () {
+            if (curBUOCQUYTRINHID == "") {
+                alert("Bạn chưa chọn bước quy trình?");
+            } else {
+                ResetTable_KVHanhChinh_ID();
+                var nguoiDungID = Table_NGUOIDUNG_ID.row(this).data().NGUOIDUNGID;
+                if (curNGUOIDUNGID != nguoiDungID) {
+                    curNGUOIDUNGID = nguoiDungID;
+                    var objA = objXuLyCauHinh[curBUOCQUYTRINHID];
+                    var objB = objA[nguoiDungID];
+                    console.log(objB);
+                    for (var temp in objB) {
+                        $.each(Table_KVHanhChinh_ID.rows().nodes(), function () {
+                            if (Table_KVHanhChinh_ID.row(this).data().KVHCID == objB[temp]) {
+                                $('[type="checkbox"]', this).prop('checked', true);
+                            }
+                        })
+                    }
+                } else {
+                    curNGUOIDUNGID = "";
+                }
+                ActiveRow(Table_NGUOIDUNG_ID, this);
+            }
+        })
+
+        Table_NGUOIDUNG_ID.rows().nodes().on('click', 'tbody tr input', function (event) {
+            if (curBUOCQUYTRINHID == "") {
+                $(this).prop('checked', false);
+            } else {
+                ResetTable_KVHanhChinh_ID();
+                var nguoiDungID = Table_NGUOIDUNG_ID.row($(this).parents('tr')).data().NGUOIDUNGID;
+                var objA = objXuLyCauHinh[curBUOCQUYTRINHID];
+                if ($(this).is(':checked')) {
+                    var objC = {};
+                    var foundNguoiDungID = false;
+                    for (var temp in objA) {
+                        if (temp == nguoiDungID) {
+                            objC = objA[temp];
+                            foundNguoiDungID = true;
+                            break;
+                        }
+                    }
+                    if (!foundNguoiDungID) {
+                        objA[nguoiDungID] = [];
+                    } else {
+                        objC.push(nguoiDungID);
+                    }
+                } else {
+                    delete objA[nguoiDungID];
+                }
+                $('#JSONCauHinhXuLy').val(JSON.stringify(objXuLyCauHinh));
+                if (nguoiDungID == curNGUOIDUNGID) {
+                    event.stopPropagation();
+                }
+            }
+        })
+
+        Table_KVHanhChinh_ID.rows().nodes().on('click', 'tbody tr input', function () {
+            if (curNGUOIDUNGID == "") {
+                $(this).prop('checked', false);
+                alert("Vui lòng chọn một cán bộ trước?");
+            } else {
+                var flagCheck = false;
+                var objA = {};
+                $.each(Table_NGUOIDUNG_ID.rows().nodes(), function () {
+                    if (Table_NGUOIDUNG_ID.row(this).data().NGUOIDUNGID == curNGUOIDUNGID) {
+                        objA = Table_NGUOIDUNG_ID.row(this).data();
+                        if ($('[type="checkbox"]', this).is(':checked')) {
+                            flagCheck = true;
+                            return false;
+                        }
+                    }
+                })
+                if (!flagCheck) {
+                    $(this).prop('checked', false);
+                    alert('"' + objA["HOTENNGUOIDUNG"] + '" cần được thêm vào danh sách cán bộ xử lý trước!');
+                } else {
+                    var kvhcID = Table_KVHanhChinh_ID.row($(this).parents('tr')).data().KVHCID;
+                    var objB = objXuLyCauHinh[curBUOCQUYTRINHID];
+                    var objC = objB[curNGUOIDUNGID];
+                    if ($(this).is(':checked')) {
+                        objC.push(kvhcID);
+                    } else {
+                        var index = -1;
+                        for (var temp in objC) {
+                            if (objC[temp] == kvhcID) {
+                                index = temp;
+                                break;
+                            }
+                        }
+                        objC.splice(index, 1);
+                    }
+                    $('#JSONCauHinhXuLy').val(JSON.stringify(objXuLyCauHinh));
+                }
+            }
+        })
+
+        function ActiveRow(table, curRow) {
+            if ($(table.row(curRow).node()).attr('class').indexOf('activerow') != -1) {
+                $(table.row(curRow).node()).removeClass('activerow');
+            } else {
+                $(table.rows().nodes()).removeClass('activerow');
+                $(table.row(curRow).node()).addClass('activerow');
+            }
+        }
+
+        //$('#btnSaveCauHinhChoTungBuoc').on('click', function () {
+        //    var obj = "";
+        //    $.each(Table_BUOCQUYTRINH_ID.rows().nodes(), function () {
+        //        if (Table_BUOCQUYTRINH_ID.row(this).data().BUOCQUYTRINHID == curBUOCQUYTRINHID) {
+        //            obj = Table_BUOCQUYTRINH_ID.row(this).data();
+        //            return false;
+        //        }
+        //    })
+        //    $('#JSONCauHinhXuLy').val(JSON.stringify(objXuLyCauHinh));
+        //    alert('Lưu cấu hình xử lý cho bước "' + obj["TENBUOC"] +  '" thành công!');
+        //})
+
+    })
+
+    function SaveQuyTrinh_CauHinhXuLy() {
+        $.ajax({
+            type: "POST",
+            url: "/DiagramWorkflow/_Save_QuyTrinh_CauHinhXuLy",
+            data: { jsonCauHinhXuLy: $('#JSONCauHinhXuLy').val() },
+            dataType: "json",
+            success: function (result) {
+                alert("Lưu thông tin và cấu hình xử lý cho từng bước trong quy trình thành công!");
+            }
+        })
+    }
+</script>

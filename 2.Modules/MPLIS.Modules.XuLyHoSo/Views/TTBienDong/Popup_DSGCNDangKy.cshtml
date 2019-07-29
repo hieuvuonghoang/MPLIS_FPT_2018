@@ -1,0 +1,139 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSGCNDonVM
+
+<div class='modal fade' id='modalDSDangKyGCNID'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'>Danh sách GCN trong đăng ký</h4>
+            </div>
+            <div class='modal-body p-10'>
+                <table id="TableDangKyGCNID" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                <input type="checkbox" id="checkall_DSGCNDangKyID" />
+                            </th>
+                            <th>#</th>
+                            <th>Số phát hành</th>
+                            <th>Mã vạch</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DSDangKyGCN != null && Model.DSDangKyGCN.Count() > 0)
+                        {
+                            int stt = 0;
+                            foreach (var item in Model.DSDangKyGCN)
+                            {
+                                stt = stt + 1;
+                                <tr>
+                                    <td>
+                                        @item.DANGKYGCNID
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        @stt.
+                                    </td>
+                                    <td>
+                                        @item.SoPhatHanh
+                                    </td>
+                                    <td>
+                                        @item.MaVach
+                                    </td>
+                                    <td>
+                                        @item.TrangThai
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <button id="btnSaveFormID" type='button' class='btn btn-default btn-sm pull-left'><i class='fa fa-check'></i> Xong</button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var columns = [
+            { "data": "DANGKYGCNID" },
+            { "data": null },
+            { "data": "STT" },
+            { "data": "SoPhatHanh" },
+            { "data": "MaVach" },
+            { "data": "TrangThai" }
+        ]
+
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": 1,
+                "render": function () {
+                    return "<input type='checkbox'/>";
+                }
+            },
+            {
+                "targets": 2,
+                "className": "text-right"
+            },
+            {
+                "targets": [1, 3, 4, 5],
+                "className": "text-center"
+            }
+        ]
+
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "t<'row p-0'<'col-xs-6 p-0'<'row p-0'<'col-xs-6 p-0'<'#divBTSuccess'>><'col-xs-6 p-0' >>><'col-xs-6 p-0'<'pull-right'p>>>",
+            "initComplete": function () {
+                initComplete();
+            }
+        }
+
+        function initComplete() {
+            $('#btnSaveFormID').appendTo($('#divBTSuccess'));
+        }
+
+        var TableDangKyGCNID = $('#TableDangKyGCNID').DataTable(options);
+
+        ProcessCheckBox(TableDangKyGCNID, $('#checkall_DSGCNDangKyID'));
+
+        $('#btnSaveFormID').on('click', function () {
+            var arrSel = [];
+            $.each(TableDangKyGCNID.rows().nodes(), function () {
+                if ($('[type=checkbox]', this).is(':checked')) {
+                    arrSel.push(TableDangKyGCNID.row(this).data().DANGKYGCNID);
+                }
+            });
+            if (arrSel.length == 0) {
+                alert('Vui lòng chọn một GCN trước?')
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/TTBienDong/SaveForm_Popup_DSGCNDangKy",
+                    data: { data: JSON.stringify(arrSel) },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+                            $("#modalDSDangKyGCNID").modal('hide');
+                            $('#divBienDongID_DSGCN').load('/TTBienDong/BienDong_DSGCN');
+                        }
+                        alert(result.message);
+                    }
+                })
+                console.log(JSON.stringify(arrSel));
+            }
+        })
+
+    })
+</script>

@@ -1,0 +1,252 @@
+﻿@*@model MPLIS.Libraries.Data.XuLyHoSo.Models.DanhSachThuaVM*@
+
+@*<div class='modal fade' id='modalformDSThua'>
+    <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                @if (Model.IsQuyen == "QQL")
+                {
+                    <h4 class='modal-title'>Thêm quyền quản lý đất</h4>
+                }
+                else
+                {
+                    <h4 class='modal-title'>Thêm quyền sử dụng đất</h4>
+                }
+            </div>
+            <div class='modal-body p-0'>
+                <ul class="nav nav-tabs nav-justified">
+                    <li class="active" id="gcn-popup-li1">
+                        <a data-toggle="tab" href="#gcn-popup-qd-tab1">Thêm quyền theo thửa đất</a>
+                    </li>
+                    <li id="gcn-popup-li2">
+                        <a data-toggle="tab" href="#gcn-popup-qd-tab2">Thêm quyền theo mục đích sử dụng</a>
+                    </li>
+                </ul>
+                <div id="gcn-popup-qd-cont" class="tab-content p-15">
+                    @Html.HiddenFor(Model => Model.GiayChungNhanID)
+                    <div id="gcn-popup-qd-tab1" class="tab-pane fade in active">
+                        <table class="table table-bordered" id="popuptableSDDAT_THUAID" data-toggle="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="checkall_QuyenSDDATThua" />
+                                    </th>
+                                    <th>#</th>
+                                    <th>Xã phường</th>
+                                    <th>SH tờ bản đồ</th>
+                                    <th>STT thửa</th>
+                                    <th>Mục đích sử dụng</th>
+                                    <th>Diện tích (m<sup>2</sup>)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.DSThuaTheoThuaDatID != null && Model.DSThuaTheoThuaDatID.Count() > 0)
+                                {
+                                    int stt = 0;
+                                    foreach (var item in Model.DSThuaTheoThuaDatID)
+                                    {
+                                        stt++;
+                                        <tr data-id="@item.ThuaDatID">
+                                            <td class="text-center">
+                                                <input type="checkbox" name="DSSDDATTHUA_CHON" value="@item.ThuaDatID" />
+                                            </td>
+                                            <td class="text-right">
+                                                @stt.
+                                            </td>
+                                            <td>
+                                                @item.TenXaPhuong
+                                            </td>
+                                            <td class="text-center">
+                                                @item.SHToBanDo
+                                            </td>
+                                            <td class="text-center">
+                                                @item.STTThua
+                                            </td>
+                                            <td class="text-center">
+                                                @item.MDSD
+                                            </td>
+                                            <td class="text-center">
+                                                @item.DienTich
+                                            </td>
+                                            <td class="text-center">
+                                                @Ajax.ActionLink("Chi tiết", "", "", new { id = item.ThuaDatID },
+                                                        new AjaxOptions
+                                                        {
+                                                            HttpMethod = "POST",
+                                                            //OnSuccess = "RemoveRow",
+                                                            //UpdateTargetId = "divBienDongID_DSCHUVAO",
+                                                            InsertionMode = InsertionMode.Replace
+                                                        }, new { @class = "btn btn-xs btn-heading", @title = "Chi tiết" })
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="gcn-popup-qd-tab2" class="tab-pane fade">
+                        <table class="table table-bordered" id="popuptableSDDAT_MUCDICHID" data-toggle="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" id="checkall_QuyenSDDATMucDich" />
+                                    </th>
+                                    <th>#</th>
+                                    <th>Xã phường</th>
+                                    <th>SH tờ bản đồ</th>
+                                    <th>STT thửa</th>
+                                    <th>Mục đích sử dụng</th>
+                                    <th>Diện tích (m<sup>2</sup>)</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.DSThuaTheoMDSDDatID != null && Model.DSThuaTheoMDSDDatID.Count() > 0)
+                                {
+                                    int stt = 0;
+                                    foreach (var item in Model.DSThuaTheoMDSDDatID)
+                                    {
+                                        stt++;
+                                        <tr data-id="@item.MucDichSuDungID">
+                                            <td class="text-center">
+                                                <input type="checkbox" name="DSSDDATMUCDICH_CHON" value="@item.MucDichSuDungID" />
+                                            </td>
+                                            <td class="text-right">
+                                                @stt.
+                                            </td>
+                                            <td>
+                                                @item.TenXaPhuong
+                                            </td>
+                                            <td class="text-center">
+                                                @item.SHToBanDo
+                                            </td>
+                                            <td class="text-center">
+                                                @item.STTThua
+                                            </td>
+                                            <td class="text-center">
+                                                @item.MDSD
+                                            </td>
+                                            <td class="text-center">
+                                                @item.DienTich
+                                            </td>
+                                            <td class="text-center">
+                                                @Ajax.ActionLink("Chi tiết", "", "", new { id = item.MucDichSuDungID },
+                                                        new AjaxOptions
+                                                        {
+                                                            HttpMethod = "POST",
+                                                            //OnSuccess = "RemoveRow",
+                                                            //UpdateTargetId = "divBienDongID_DSCHUVAO",
+                                                            InsertionMode = InsertionMode.Replace
+                                                        }, new { @class = "btn btn-xs btn-heading", @title = "Chi tiết" })
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class='modal-footer' style='text-align:center;'>
+                @if (Model.IsQuyen == "QQL")
+                {
+                    <button type='button' class='btn btn-primary btn-sm pull-right' onclick="GCN_QQLD_ThemGCN()">Thêm vào GCN</button>
+                }
+                else
+                {
+                    <button type='button' class='btn btn-primary btn-sm pull-right' onclick="GCN_QSDD_ThemGCN()">Thêm vào GCN</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@*<script type="text/javascript">
+
+    var selectTab;
+
+    var tableSDDAT_THUA;
+
+    var tableSDDAT_MUCDICH;
+
+    function GCN_QSDD_ThemGCN() {
+        switch (selectTab) {
+            case "tab1":
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSGiayChungNhan/Add_DSSDDAT_RTABLE_THUA",
+                    data: { dSThuaID: GetDSCheck(tableSDDAT_THUA), GiayChungNhanID: $('#GiayChungNhanID').attr('value') },
+                    success: function (html) {
+                        $('#divGCN_Main_SDDATID').html(html);
+                        alert("Thêm quyền sử dụng đất theo thửa đất thành công!");
+                    },
+                });
+                break;
+            case "tab2":
+                console.log(GetDSCheck(tableSDDAT_MUCDICH));
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSGiayChungNhan/Add_DSSDDAT_RTABLE_MUCDICH",
+                    data: { dSMDSDID: GetDSCheck(tableSDDAT_MUCDICH), GiayChungNhanID: $('#GiayChungNhanID').attr('value') },
+                    success: function (html) {
+                        $('#divGCN_Main_SDDATID').html(html);
+                        alert("Thêm quyền sử dụng đất theo MDSD thành công!");
+                    },
+                });
+                break;
+            default:
+                break;
+        }
+    }
+
+    function GCN_QQLD_ThemGCN() {
+        switch (selectTab) {
+            case "tab1":
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSGiayChungNhan/Add_DSQLDAT_RTABLE_THUA",
+                    data: { dSThuaID: GetDSCheck(tableSDDAT_THUA), GiayChungNhanID: $('#GiayChungNhanID').attr('value') },
+                    success: function (html) {
+                        $('#divGCN_Main_QLDATID').html(html);
+                        alert("Thêm quyền quản lý đất theo thửa đất thành công!");
+                    },
+                });
+                break;
+            case "tab2":
+                console.log(GetDSCheck(tableSDDAT_MUCDICH));
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSGiayChungNhan/Add_DSQLDAT_RTABLE_MUCDICH",
+                    data: { dSMDSDID: GetDSCheck(tableSDDAT_MUCDICH), GiayChungNhanID: $('#GiayChungNhanID').attr('value') },
+                    success: function (html) {
+                        $('#divGCN_Main_QLDATID').html(html);
+                        alert("Thêm quyền quản lý đất theo MDSD thành công!");
+                    },
+                });
+                break;
+            default:
+                break;
+        }
+    }
+
+    $(document).ready(function () {
+        $("#gcn-popup-li1").on("click", function () {
+            selectTab = "tab1";
+        });
+        $("#gcn-popup-li2").on("click", function () {
+            selectTab = "tab2";
+        });
+        $("#gcn-popup-li1").click();
+        //Draw DataTable cho Thua
+        tableSDDAT_THUA = InitDataTableXLHS($('#popuptableSDDAT_THUAID'));
+        //Draw DataTable cho MDSD
+        tableSDDAT_MUCDICH = InitDataTableXLHS($('#popuptableSDDAT_MUCDICHID'));
+        //Xử lý checkBox cho tableSDDAT_THUA
+        ProcessCheckBox(tableSDDAT_THUA, $('#checkall_QuyenSDDATThua'));
+        //Xử lý checkBox cho tableSDDAT_MUCDICH
+        ProcessCheckBox(tableSDDAT_MUCDICH, $('#checkall_QuyenSDDATMucDich'));
+    });
+
+</script>*@

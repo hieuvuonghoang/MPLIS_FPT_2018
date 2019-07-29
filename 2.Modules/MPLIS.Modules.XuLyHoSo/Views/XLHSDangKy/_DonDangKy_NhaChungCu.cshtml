@@ -1,0 +1,155 @@
+﻿@using AppCore.Models
+@model AppCore.Models.DangKyTaiSan
+@{using (Html.BeginForm("_DonDangKy_TSNHARIENGLE", "XLHSDangKy", FormMethod.Post, new { @id = "ThemMoiNhaChungCu" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.CurNhaChungCu.NHACHUNGCUID, new { @class = "form-control" })
+        @Html.HiddenFor(m => m.CurNhaChungCu.uId, new { @class = "form-control" })
+
+        <div class="row" id="khuchungcuncc" hidden>
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model => Model.CurNhaChungCu.KHUCHUNGCUID, "Khu chung cư", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-7">
+                    @Html.DropDownListFor(m => m.CurNhaChungCu.KHUCHUNGCUID, new SelectList(ViewBag.listkhuchungcu, "KHUCHUNGCUID", "TENKHU"), "---- Lựa chọn ----", new { @class = "form-control input-sm", @id = "drpkhuchungcuncc" })
+                </div>
+                <div class="col-xs-2">
+                    <input type="button" id="btnthemkhuchungcuncc" value="Thêm mới" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurNhaChungCu.TENCHUNGCU,"Tên chung cư", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-9">
+                    @Html.TextBoxFor(m => m.CurNhaChungCu.TENCHUNGCU, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurNhaChungCu.NAMHOANTHANH,"Năm hoàn thành", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurNhaChungCu.NAMHOANTHANH, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurNhaChungCu.NAMXAYDUNG,"Năm xây dựng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurNhaChungCu.NAMXAYDUNG, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurNhaChungCu.SOTANG,"Số tầng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurNhaChungCu.SOTANG, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurNhaChungCu.DIENTICHSAN,"Diện tích sàn", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurNhaChungCu.DIENTICHSAN, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurNhaChungCu.SOTANGHAM,"Số tầng hầm", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurNhaChungCu.SOTANGHAM, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurNhaChungCu.THOIHANSOHUU,"Thời hạn sử dụng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurNhaChungCu.THOIHANSOHUU, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurNhaChungCu.TONGSOCAN,"Tổng số căn hộ", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurNhaChungCu.TONGSOCAN, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurNhaChungCu.DIENTICHXAYDUNG,"Diện tích xây dựng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurNhaChungCu.DIENTICHXAYDUNG, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurNhaChungCu.CAPHANG, "Cấp hạng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurNhaChungCu.CAPHANG, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model => Model.tenxats, "Tên xã", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.tenxats, new { @class = "form-control input-sm", @readonly = "true" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model => Model.CurNhaChungCu.DIACHI, "Địa chỉ", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-9">
+                    @Html.TextAreaFor(m => m.CurNhaChungCu.DIACHI, new { @class = "form-control input-sm", @row = "2" })
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+
+            }
+            }
+            <script>
+                $("#btnthemkhuchungcuncc").on("click", function () {
+                    console.log("click button");
+                    $.ajax({
+                        type: "GET",
+                        url: "/XLHSDangKy/_DonDangKy_KhuChungCu",
+                        success: function (html) {
+                            $('#dialogformKHUCHUNGCU').html(html);
+                            var options = {
+                                "backdrop": "static",
+                                "show": true
+                            }
+                            $("#modalformKhuChungCu").modal(options);
+                        }
+                    });
+                });
+
+            </script>

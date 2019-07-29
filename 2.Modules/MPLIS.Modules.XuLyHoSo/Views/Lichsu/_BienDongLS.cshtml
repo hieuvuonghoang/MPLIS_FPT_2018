@@ -1,0 +1,192 @@
+﻿
+@model MPLIS.Libraries.Data.XuLyHoSo.Models.LichSu.BienDong_VM
+<div class="panel-group" id="accordion3">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="mauchu-trongtab">
+                <a data-toggle="collapse" data-parent="#accordion3" href="#collapse_BienDong">Thông tin biến động</a>
+            </div>
+        </div>
+        <div id="collapse_BienDong" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <div id="divThongTinBD">
+                    <fieldset>
+                        <legend>Chỉ số biến động</legend>
+                        <div class="form-group">
+                            <div class="form-control-static">
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Số thứ tự hồ sơ thủ tục đăng ký")
+                                    </div>
+                                    <div>
+                                        <input type="text" class="form-control input-sm" value="@Model.CurDC_BienDong.MAHOSOTHUTUCDANGKY">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Loại biến động")
+                                    </div>
+                                    <div>
+                                        <input type="text" class="form-control input-sm">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Thời điểm biến động")
+                                    </div>
+                                    <div>
+                                        @Html.TextBoxFor(model => model.CurDC_BienDong.THOIDIEMBIENDONG, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-control-static">
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Mã biến động")
+                                    </div>
+                                    <div>
+                                        <input type="text" class="col-xs-2" value="@Model.CurDC_BienDong.MABIENDONG">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("STT biến động")
+                                    </div>
+                                    <div>
+                                        <input type="text" class="col-xs-2" value="@Model.CurDC_BienDong.SOTHUTU">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Mã hồ sơ thủ tục đăng ký")
+                                    </div>
+                                    <div>
+                                        <input type="text" class="col-xs-2" value="@Model.CurDC_BienDong.MAHSTTDANGKY">
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-control-static">
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Quyết định liên quan")
+                                    </div>
+                                    <div>
+                                        <input type="text" class="col-xs-2" value="@Model.CurDC_BienDong.CurDC_QUYETDINH.SOQUYETDINH">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Thông tin hợp đồng, công chứng</legend>
+                        <div class="form-group">
+                            <div class="form-control-static">
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Số hợp đồng")
+                                    </div>
+                                    <div>
+                                        <input type="text" class="form-control input-sm" value="@Model.CurDC_BienDong.SOHOPDONG">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Ngày hợp đồng")
+                                    </div>
+                                    <div>
+                                        @Html.TextBoxFor(model => model.CurDC_BienDong.NGAYHOPDONG, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm" })
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Số công chứng")
+                                    </div>
+                                    <div>
+                                        <input type="text" class="form-control input-sm" value="@Model.CurDC_BienDong.SOCONGCHUNG">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-control-static">
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Ngày công chứng")
+                                    </div>
+                                    <div>
+                                        @Html.TextBoxFor(model => model.CurDC_BienDong.NGAYCONGCHUNG, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm" })
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Nơi công chứng")
+                                    </div>
+                                    <div>
+                                        <input type="text" class="collabel-xs-6 text" value="@Model.CurDC_BienDong.NOICONGCHUNG">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="form-control-static">
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Quyển công chứng")
+                                    </div>
+                                    <div>
+                                        <input type="text" class="form-control input-sm" value="@Model.CurDC_BienDong.QUYENCONGCHUNG">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-xs-2">
+                                        @Html.Label("Ngày trước bạ")
+                                    </div>
+                                    <div>
+                                        @Html.TextBoxFor(model => model.CurDC_BienDong.NGAYTRUOCBA, "{0:dd/MM/yyyy}", new { @class = "form-control input-sm" })
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Thông tin biến động</legend>
+                        <div class="form-control-static">
+                            <div class="col-xs-2">
+                                @Html.Label("Lý do biến động")
+                            </div>
+                            <div>
+                                <div>
+                                    <textarea type="text" class="collabel-xs-10 textarea"> @Model.CurDC_BienDong.LYDOBIENDONG</textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-control-static">
+                            <div class="col-xs-2">
+                                @Html.Label("Nội dung biến động")
+                            </div>
+                            <div>
+                                <textarea type="text" class="collabel-xs-10 textarea">@Model.CurDC_BienDong.NOIDUNGBIENDONG </textarea>
+                            </div>
+
+                        </div>
+                        <div class="form-control-static">
+                            <div class="col-xs-2">
+                                @Html.Label("Nội dung hợp đồng")
+                            </div>
+                            <div>
+                                <textarea type="text" class="collabel-xs-10 textarea"> @Model.CurDC_BienDong.NOIDUNGHOPDONG </textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

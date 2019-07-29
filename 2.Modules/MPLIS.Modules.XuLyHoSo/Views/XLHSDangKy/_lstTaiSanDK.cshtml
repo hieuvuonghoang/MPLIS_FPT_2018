@@ -1,0 +1,204 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.VM_XuLyHoSo_DK
+@Html.HiddenFor(model => model.JSONTSThua)
+@Html.HiddenFor(model => model.JSONCanHoHM)
+<div class="box box-primary" style="margin:0px;">
+    <div class="box-header with-border">
+        <h3 class="box-title">Tài sản đăng ký</h3>
+    </div>
+    <div id="divDSTAISAN_TABLEID" class="box-body">
+        <table id="table_DSTAISAN" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="t100" hidden>TAISAN _ID</th>
+                    <th class="t50">STT</th>
+                    <th class="t100">Loại tài sản</th>
+                    <th class="t100">Diện tích</th>
+                    <th class="t100">Mô tả</th>
+                    <th hidden>IDGOC</th>
+                    <th class="t100">Hành động</th>
+                    <th class="t50" hidden>LOAITAISAN</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int rdststable = 0;
+                    if (Model != null)
+                    {
+                        if (Model.TAISAN_DANGKY != null)
+                        {
+                            foreach (var item in Model.TAISAN_DANGKY)
+                            {
+                                if (item.TaiSanGanLienVoiDat.LOAITAISAN != "3" && item.TaiSanGanLienVoiDat.LOAITAISAN != "5" && item.TaiSanGanLienVoiDat.LOAITAISAN != "2" && item.trangthaitaisan != 3)
+                                {
+                                    rdststable = rdststable + 1;
+                                    <tr data-id="@item.TAISANID">
+                                        <td align="center" hidden>
+                                            @item.TAISANID
+                                        </td>
+                                        <td align="center">
+                                            @rdststable
+                                        </td>
+                                        <td align="center">
+                                            @item.LoaiTaiSan
+                                        </td>
+                                        <td align="center">
+                                            @item.DienTich
+                                        </td>
+                                        <td align="center">
+                                            @item.MOTATOMTAT
+                                        </td>
+                                        <td align="center" hidden>
+                                            @item.TaiSanGanLienVoiDat.TAISANID
+                                        </td>
+                                        <td align="center">
+                                            <input type="button" class="btn btn-xs btn-heading" id="btnxoataisan" value="Xóa" onclick="removeRow(this)" />
+                                        </td>
+                                        <td align="center" hidden>
+                                            @(item.TaiSanGanLienVoiDat != null ? item.TaiSanGanLienVoiDat.LOAITAISAN : "")
+
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                }
+            </tbody>           
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+     table_TS=  InitDataTableXLHS($('#table_DSTAISAN'));
+     $("#table_DSTAISAN tbody").on("click","tr", function (e) {
+            $('#thuataisan').show();
+            $('#thuataisancanho').hide();
+            document.getElementById('headerthuataisan').innerHTML = "Nằm trên thửa";
+            $(this).addClass('activerow').siblings().removeClass('activerow');
+            var taisanid = $(this)[0].cells[0].innerHTML;
+            var LoaitaisanID = $(this)[0].cells[7].innerHTML;
+            var taisanchitietid = $(this)[0].cells[5].innerHTML;
+            document.getElementById("CurTSID").value = taisanid;
+            document.getElementById("CurCHID").value = taisanchitietid;
+            var dondk = $('#DONDANGKYID').val();
+            if (LoaitaisanID.trim() == "1") {
+                $('#iddstaisan').val("0");
+                $('#drpchontaisan').val(1);
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChiTietNhaRiengLe",
+                    data: { idtaisan: taisanid.trim(), Loaitaisan: LoaitaisanID.trim() },
+                    datatype: "html",
+                    success: function (data) {
+                        $('#tabTaiSan').html(data);
+                        CheckRow(taisanid.trim());
+                    }
+                });
+            }
+            else if (LoaitaisanID.trim() == "4") {
+                $('#iddstaisan').val("3");
+                $('#drpchontaisan').val(4);
+                $('#thuataisan').hide();
+                $('#thuataisancanho').show();
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChiTietCanHo",
+                    data: { idtaisan: taisanid.trim(), Loaitaisan: LoaitaisanID.trim() },
+                    datatype: "html",
+                    success: function (data) {
+                        $('#tabTaiSan').html(data);
+                        $('#openTabThuaCanHo').click();
+                        document.getElementById("CurCHID").value = taisanchitietid.trim();
+                        CheckRowThuaTSCH(taisanid.trim());
+                        if ($('#drpnhachungcu').val() != null) {
+                            document.getElementById("btnthemnhachungcuch").value = "" + "  Sửa  " + "";
+                        }
+                        else {
+                            document.getElementById("btnthemnhachungcuch").value = "Thêm mới";
+                        }
+                        if ($('#drpkhuchungcu').val() != null) {
+                            document.getElementById("btnthemkhuchungcu").value = "" + "  Sửa  " + "";
+                        }
+                        else {
+                            document.getElementById("btnthemkhuchungcu").value = "Thêm mới";
+                        }
+                        CheckRowHM(taisanchitietid.trim());
+                    }
+                });
+            }
+            else if (LoaitaisanID.trim() == "6") {
+                $('#iddstaisan').val("5");
+                $('#drpchontaisan').val(6);
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChiTietCongTrinhXayDung",
+                    data: { idtaisan: taisanid.trim(), Loaitaisan: LoaitaisanID.trim() },
+                    datatype: "html",
+                    success: function (data) {
+                        $('#tabTaiSan').html(data);
+                        CheckRow(taisanid.trim());
+                    }
+                });
+            }
+            else if (LoaitaisanID.trim() == "7") {
+                $('#iddstaisan').val("6");
+                $('#drpchontaisan').val(7);
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChiTietCongTrinhNgam",
+                    data: { idtaisan: taisanid.trim(), Loaitaisan: LoaitaisanID.trim() },
+                    datatype: "html",
+                    success: function (data) {
+                        $('#tabTaiSan').html(data);
+                        CheckRow(taisanid.trim());
+                    }
+                });
+            }
+            else if (LoaitaisanID.trim() == "8") {
+                $('#iddstaisan').val("7");
+                $('#drpchontaisan').val(8);
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChiTietHangMucCongTrinh",
+                    data: { idtaisan: taisanid.trim(), Loaitaisan: LoaitaisanID.trim() },
+                    datatype: "html",
+                    success: function (data) {
+                        $('#tabTaiSan').html(data);
+                        CheckRow(taisanid.trim());
+                    }
+                });
+            }
+            else if (LoaitaisanID.trim() == "9") {
+                $('#iddstaisan').val("8");
+                $('#drpchontaisan').val(9);
+                $.ajax({
+                    type: "POST",
+                    url: ("/XLHSDangKy/ChiTietRungTrong"),
+                    data: { idtaisan: taisanid.trim(), Loaitaisan: LoaitaisanID.trim() },
+                    datatype: "html",
+                    success: function (data) {
+                        $('#tabTaiSan').html(data);
+                        CheckRow(taisanid.trim());
+                    }
+                });
+            }
+            else if (LoaitaisanID.trim() == "10") {
+                $('#iddstaisan').val("9");
+                $('#drpchontaisan').val(10);
+                $.ajax({
+                    type: "POST",
+                    url: ("/XLHSDangKy/ChiTietCayLauNam"),
+                    data: { idtaisan: taisanid.trim(), Loaitaisan: LoaitaisanID.trim() },
+                    datatype: "html",
+                    success: function (data) {
+                        $('#tabTaiSan').html(data);
+                        CheckRow(taisanid.trim());
+                    },
+                    error: function (xhr) {
+                        console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);
+                    }
+                });
+            }           
+        });
+    });
+
+</script>

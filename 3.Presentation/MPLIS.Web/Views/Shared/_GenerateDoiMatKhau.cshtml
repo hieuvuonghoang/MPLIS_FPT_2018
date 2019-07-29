@@ -1,0 +1,43 @@
+﻿@model string
+@*@Html.Raw(Model)*@
+
+<div class='modal fade' id='DoiMatKhau'>
+    <div class='modal-dialog' style="width:350px;">
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'>Thay đổi mật khẩu</h4>
+            </div>
+            <div class='modal-body'>
+                @{ if (Model != null && !Model.Equals(""))
+                    {
+                        <div class='row' style='text-align:center;'>
+                            <div class="col-xs-12">
+                                <b style='color:red;'>@Model</b>
+                            </div>
+                        </div>
+                    }
+                }
+
+                <div class='row'>
+                    <div class='col-xs-5'><label class='pull-right control-label' style='text-align:left;'>Mật khẩu hiện tại</label></div>
+                    <div class='col-xs-7'><input type='password' class='form-control input-sm' name='txtMatKhauHienTai' id='txtMatKhauHienTai' /></div>
+                </div>
+                <div class='row'>
+                    <div class='col-xs-5'><label class='pull-right control-label' style='text-align:left;'>Mật khẩu mới</label></div>
+                    <div class='col-xs-7'><input type='password' class='form-control input-sm' name='txtMatKhauMoi' id='txtMatKhauMoi' /></div>
+                </div>
+                <div class='row'>
+                    <div class='col-xs-5'><label class='pull-right control-label' style='text-align:left;'>Xác nhận mật khẩu</label></div>
+                    <div class='col-xs-7'><input type='password' class='form-control input-sm' name='txtXacNhanMatKhau' id='txtXacNhanMatKhau' /></div>
+                </div>
+                <input type='hidden' class='form-control input-sm' name='txtDuongDanUrl' id='txtDuongDanUrl' value='' />
+                <input type='hidden' class='form-control input-sm' name='HienThiPopUp' id='HienThiPopUp' value='' />
+            </div>
+            <div class='modal-footer' style='text-align:center;'>
+                <button type='button' class='t100 btn btn-default btn-sm pull-left' data-dismiss='modal'>Thoát</button>
+                <button type='submit' class='t100 btn btn-primary btn-sm pull-right' onclick='ThayDoiMatKhau()'>Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

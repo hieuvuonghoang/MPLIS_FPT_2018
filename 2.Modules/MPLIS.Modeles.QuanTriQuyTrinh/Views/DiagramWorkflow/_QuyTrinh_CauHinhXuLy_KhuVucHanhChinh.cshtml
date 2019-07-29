@@ -1,0 +1,86 @@
+﻿@model MPLIS.Libraries.Data.QuanTriQuyTrinh.Models.CauHinhXuLyVM
+
+<table id="Table_KVHanhChinh_ID" class="table table-bordered">
+    <thead>
+        <tr>
+            <th></th>
+            <th>#</th>
+            <th></th>
+            <th>Mã KVHC</th>
+            <th>Tên KVHC</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.DSKhuVucHanhChinh != null && Model.DSKhuVucHanhChinh.Count > 0)
+        {
+            int sTT = 0;
+            foreach (var item in Model.DSKhuVucHanhChinh)
+            {
+                sTT++;
+                <tr>
+                    <td>
+                        @item.KVHCID
+                    </td>
+                    <td>
+                        @sTT.
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        @item.MAKVHC
+                    </td>
+                    <td>
+                        @item.TENKVHC
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var columns = [
+            { "data": "KVHCID" },
+            { "data": "STT" },
+            { "data": null },
+            { "data": "MAKVHC" },
+            { "data": "TENKVHC" }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": [1],
+                "className": "text-right"
+            },
+            {
+                "targets": [2],
+                "render": function () {
+                    return "<input type='checkbox'/>";
+                },
+                "className": "text-center"
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "lengthChange": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+            "autoWidth": false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+            },
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "<'row p-0'<'col-sm-12 p-0'tr>><'row p-0'<'col-sm-6 p-0'><'col-sm-6 p-0'p>>"
+        }
+
+        var Table_KVHanhChinh_ID = $('#Table_KVHanhChinh_ID').DataTable(options);
+
+    })
+</script>
+

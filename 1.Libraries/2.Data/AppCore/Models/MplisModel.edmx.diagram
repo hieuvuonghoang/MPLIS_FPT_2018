@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5ca97c0497a3498e84e2ca69ca6414b9" Name="Diagram1" ZoomLevel="79">
+        <EntityTypeShape EntityType="MplisModel.CS_CHUKYSO" Width="1.5" PointX="18" PointY="15" />
+        <EntityTypeShape EntityType="MplisModel.CS_GIAYTOXACMINH" Width="1.5" PointX="20.25" PointY="18.625" />
+        <EntityTypeShape EntityType="MplisModel.CS_LICHSUGIAHAN" Width="1.5" PointX="20.25" PointY="13.75" />
+        <EntityTypeShape EntityType="MplisModel.CS_NHACUNGCAP" Width="1.5" PointX="15.75" PointY="10.375" />
+        <EntityTypeShape EntityType="MplisModel.DC_BD_CHU" Width="1.5" PointX="5.25" PointY="37" />
+        <EntityTypeShape EntityType="MplisModel.DC_BD_CHUYENHTSDD" Width="1.5" PointX="5.25" PointY="31" />
+        <EntityTypeShape EntityType="MplisModel.DC_BD_CHUYENMDSDD" Width="1.5" PointX="8.25" PointY="29.875" />
+        <EntityTypeShape EntityType="MplisModel.DC_BD_GCN" Width="1.5" PointX="8.25" PointY="38" />
+        <EntityTypeShape EntityType="MplisModel.DC_BD_GCN_GCN" Width="1.5" PointX="7.5" PointY="41.125" />
+        <EntityTypeShape EntityType="MplisModel.DC_BD_THECHAP" Width="1.5" PointX="5.25" PointY="23.125" />
+        <EntityTypeShape EntityType="MplisModel.DC_BD_THUA" Width="1.5" PointX="5.25" PointY="33.875" />
+        <EntityTypeShape EntityType="MplisModel.DC_BD_THUA_THUA" Width="1.5" PointX="5.25" PointY="46.375" />
+        <EntityTypeShape EntityType="MplisModel.DC_BD_TREN_GCN" Width="1.5" PointX="5.25" PointY="40" />
+        <EntityTypeShape EntityType="MplisModel.DC_BIENDONG" Width="1.5" PointX="3" PointY="30.625" />
+        <EntityTypeShape EntityType="MplisModel.DC_CANHAN" Width="1.5" PointX="30" PointY="27.375" />
+        <EntityTypeShape EntityType="MplisModel.DC_CANHO" Width="1.5" PointX="37.25" PointY="7.25" />
+        <EntityTypeShape EntityType="MplisModel.DC_CANHO_HANGMUCNCH" Width="1.5" PointX="39.5" PointY="6.75" />
+        <EntityTypeShape EntityType="MplisModel.DC_CAYLAUNAM" Width="1.5" PointX="0.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.DC_CHITIETCONGKHAI" Width="1.5" PointX="35" PointY="14.5" />
+        <EntityTypeShape EntityType="MplisModel.DC_CONGDONG" Width="1.5" PointX="9.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.DC_CONGTRINHNGAM" Width="1.5" PointX="19.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.DC_CONGTRINHXAYDUNG" Width="1.5" PointX="37.75" PointY="34.375" />
+        <EntityTypeShape EntityType="MplisModel.DC_DANGKY_GCN" Width="1.5" PointX="30" PointY="18.25" />
+        <EntityTypeShape EntityType="MplisModel.DC_DANGKY_NGUOI" Width="1.5" PointX="30" PointY="22.5" />
+        <EntityTypeShape EntityType="MplisModel.DC_DANGKY_TAISAN" Width="1.5" PointX="11.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.DC_DANGKY_THUA" Width="1.5" PointX="30" PointY="36.375" />
+        <EntityTypeShape EntityType="MplisModel.DC_DANHSACHCONGKHAI" Width="1.5" PointX="32.75" PointY="17.125" />
+        <EntityTypeShape EntityType="MplisModel.DC_DIACHI" Width="1.5" PointX="5.25" PointY="16" />
+        <EntityTypeShape EntityType="MplisModel.DC_DOANDUONG" Width="1.5" PointX="0.75" PointY="45.75" />
+        <EntityTypeShape EntityType="MplisModel.DC_DONDANGKY" Width="1.5" PointX="27.75" PointY="34.375" />
+        <EntityTypeShape EntityType="MplisModel.DC_DONKIENNGHI" Width="1.5" PointX="35" PointY="20.75" />
+        <EntityTypeShape EntityType="MplisModel.DC_GCN_TILESH" Width="1.5" PointX="30.25" PointY="6.75" />
+        <EntityTypeShape EntityType="MplisModel.DC_GIAYCHUNGNHAN" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="MplisModel.DC_GIAYTOTUYTHAN" Width="1.5" PointX="0.75" PointY="22" />
+        <EntityTypeShape EntityType="MplisModel.DC_GTKEMTHEO" Width="1.5" PointX="27.25" PointY="23.375" />
+        <EntityTypeShape EntityType="MplisModel.DC_HANCHE" Width="1.5" PointX="40" PointY="28.25" />
+        <EntityTypeShape EntityType="MplisModel.DC_HANGMUCCONGTRINH" Width="1.5" PointX="40" PointY="34.25" />
+        <EntityTypeShape EntityType="MplisModel.DC_HANGMUCNGOAICANHO" Width="1.5" PointX="37.25" PointY="3.5" />
+        <EntityTypeShape EntityType="MplisModel.DC_HOGIADINH" Width="1.5" PointX="19.75" PointY="8" />
+        <EntityTypeShape EntityType="MplisModel.DC_HOGIADINH_THANHVIEN" Width="1.5" PointX="23" PointY="40.25" />
+        <EntityTypeShape EntityType="MplisModel.DC_KHOANDUOCTRU" Width="1.5" PointX="27.25" PointY="11" />
+        <EntityTypeShape EntityType="MplisModel.DC_KHUCHUNGCU" Width="1.5" PointX="32.75" PointY="6.625" />
+        <EntityTypeShape EntityType="MplisModel.DC_KHUVUC" Width="1.5" PointX="0.75" PointY="59" />
+        <EntityTypeShape EntityType="MplisModel.DC_LOAIBIENDONG" Width="1.5" PointX="0.75" PointY="29.75" />
+        <EntityTypeShape EntityType="MplisModel.DC_LOAICHEDOMIENGIAM" Width="1.5" PointX="21.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.DC_LOAICHEDONO" Width="1.5" PointX="21.75" PointY="6" />
+        <EntityTypeShape EntityType="MplisModel.DC_LOAIHANCHE" Width="1.5" PointX="37.75" PointY="29.5" />
+        <EntityTypeShape EntityType="MplisModel.DC_LOAINGHIAVUTAICHINH" Width="1.5" PointX="22.75" PointY="10.25" />
+        <EntityTypeShape EntityType="MplisModel.DC_MIENGIAMNVTC" Width="1.5" PointX="27.25" PointY="4.75" />
+        <EntityTypeShape EntityType="MplisModel.DC_MUCDICHSUDUNGDAT" Width="1.5" PointX="8.25" PointY="72.5" />
+        <EntityTypeShape EntityType="MplisModel.DC_MUCDICHSUDUNGDATLS" Width="1.5" PointX="22.75" PointY="15" />
+        <EntityTypeShape EntityType="MplisModel.DC_NGANCHANGIAYCHUNGNHAN" Width="1.5" PointX="24.75" PointY="15" />
+        <EntityTypeShape EntityType="MplisModel.DC_NGANCHANNGUOI" Width="1.5" PointX="17.75" PointY="30" />
+        <EntityTypeShape EntityType="MplisModel.DC_NGANCHANTAISAN" Width="1.5" PointX="22.75" PointY="35" />
+        <EntityTypeShape EntityType="MplisModel.DC_NGANCHANTHUADAT" Width="1.5" PointX="24.75" PointY="35" />
+        <EntityTypeShape EntityType="MplisModel.DC_NGHIAVUTAICHINH" Width="1.5" PointX="25" PointY="9.125" />
+        <EntityTypeShape EntityType="MplisModel.DC_NGUOI" Width="1.5" PointX="3" PointY="10.125" />
+        <EntityTypeShape EntityType="MplisModel.DC_NGUOI_DIACHI" Width="1.5" PointX="7.5" PointY="4.625" />
+        <EntityTypeShape EntityType="MplisModel.DC_NGUOILS" Width="1.5" PointX="0.75" PointY="26" />
+        <EntityTypeShape EntityType="MplisModel.DC_NGUONGOCSUDUNG" Width="1.5" PointX="10.5" PointY="74.5" />
+        <EntityTypeShape EntityType="MplisModel.DC_NHACHUNGCU" Width="1.5" PointX="35" PointY="5.5" />
+        <EntityTypeShape EntityType="MplisModel.DC_NHARIENGLE" Width="1.5" PointX="17" PointY="3.375" />
+        <EntityTypeShape EntityType="MplisModel.DC_NHOMNGUOI" Width="1.5" PointX="37.75" PointY="24.25" />
+        <EntityTypeShape EntityType="MplisModel.DC_NHOMNGUOI_THANHVIEN" Width="1.5" PointX="40" PointY="24.25" />
+        <EntityTypeShape EntityType="MplisModel.DC_NOICONGCHUNG" Width="1.5" PointX="0.75" PointY="33.75" />
+        <EntityTypeShape EntityType="MplisModel.DC_NONVTC" Width="1.5" PointX="30.25" PointY="10.625" />
+        <EntityTypeShape EntityType="MplisModel.DC_QUYENQUANLYDAT" Width="1.5" PointX="10.5" PointY="22.625" />
+        <EntityTypeShape EntityType="MplisModel.DC_QUYENSOHUUTAISAN" Width="1.5" PointX="7.5" PointY="16.625" />
+        <EntityTypeShape EntityType="MplisModel.DC_QUYENSOHUUTAISANLS" Width="1.5" PointX="25.75" PointY="40" />
+        <EntityTypeShape EntityType="MplisModel.DC_QUYENSUDUNGDAT" Width="1.5" PointX="7.5" PointY="22.625" />
+        <EntityTypeShape EntityType="MplisModel.DC_QUYENSUDUNGDATLS" Width="1.5" PointX="37.75" PointY="40" />
+        <EntityTypeShape EntityType="MplisModel.DC_QUYENSUDUNGDATSAUBD" Width="1.5" PointX="34.75" PointY="42" />
+        <EntityTypeShape EntityType="MplisModel.DC_QUYETDINH" Width="1.5" PointX="39.75" PointY="40" />
+        <EntityTypeShape EntityType="MplisModel.DC_RUNGTRONG" Width="1.5" PointX="26.75" PointY="15" />
+        <EntityTypeShape EntityType="MplisModel.DC_SODIACHINHDIENTU_CANHO" Width="1.5" PointX="41.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.DC_SODIACHINHDIENTU_THUADAT" Width="1.5" PointX="41.75" PointY="8" />
+        <EntityTypeShape EntityType="MplisModel.DC_TAILIEUDODAC" Width="1.5" PointX="0.75" PointY="40.5" />
+        <EntityTypeShape EntityType="MplisModel.DC_TAISAN_DIACHI" Width="1.5" PointX="7.5" PointY="12.5" />
+        <EntityTypeShape EntityType="MplisModel.DC_TAISANGANLIENVOIDAT" Width="1.5" PointX="5.25" PointY="11.125" />
+        <EntityTypeShape EntityType="MplisModel.DC_TAISANGANLIENVOIDATLS" Width="1.5" PointX="28.75" PointY="15" />
+        <EntityTypeShape EntityType="MplisModel.DC_TENDUONG" Width="1.5" PointX="20.75" PointY="44" />
+        <EntityTypeShape EntityType="MplisModel.DC_THONGTINNGANCHAN" Width="1.5" PointX="22.75" PointY="44" />
+        <EntityTypeShape EntityType="MplisModel.DC_THUADAT" Width="1.5" PointX="3" PointY="44" />
+        <EntityTypeShape EntityType="MplisModel.DC_THUADAT_TAILIEUDODAC" Width="1.5" PointX="5.25" PointY="43" />
+        <EntityTypeShape EntityType="MplisModel.DC_THUADAT_TAISAN" Width="1.5" PointX="5.25" PointY="57.875" />
+        <EntityTypeShape EntityType="MplisModel.DC_THUADATLS" Width="1.5" PointX="41.75" PointY="40" />
+        <EntityTypeShape EntityType="MplisModel.DC_THUATAISAN" Width="1.5" PointX="10.5" PointY="30.25" />
+        <EntityTypeShape EntityType="MplisModel.DC_THUEDAT" Width="1.5" PointX="8.25" PointY="33" />
+        <EntityTypeShape EntityType="MplisModel.DC_TOCHUC" Width="1.5" PointX="42.75" PointY="13" />
+        <EntityTypeShape EntityType="MplisModel.DC_TRANHCHAP" Width="1.5" PointX="5.25" PointY="61.125" />
+        <EntityTypeShape EntityType="MplisModel.DC_VITRITHUADAT" Width="1.5" PointX="10.5" PointY="78.25" />
+        <EntityTypeShape EntityType="MplisModel.DC_VOCHONG" Width="1.5" PointX="29.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.DC_XA_TENDUONG" Width="1.5" PointX="31.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.DC_XACNHANDONDANGKY" Width="1.5" PointX="30" PointY="41.75" />
+        <EntityTypeShape EntityType="MplisModel.DC_YKIENXACNHAN" Width="1.5" PointX="32.25" PointY="42.25" />
+        <EntityTypeShape EntityType="MplisModel.DM_BOTHUTUCHANHCHINH" Width="1.5" PointX="6" PointY="86" />
+        <EntityTypeShape EntityType="MplisModel.DM_DANTOC" Width="1.5" PointX="27.75" PointY="18.875" />
+        <EntityTypeShape EntityType="MplisModel.DM_DOITUONGSUDUNG" Width="1.5" PointX="0.75" PointY="11.375" />
+        <EntityTypeShape EntityType="MplisModel.DM_GIAYTOKEMTHEOHS" Width="1.5" PointX="10.75" PointY="38" />
+        <EntityTypeShape EntityType="MplisModel.DM_HINHTHUCSUDUNGDAT" Width="1.5" PointX="6" PointY="70.25" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIBANDODIACHINH" Width="1.5" PointX="1.5" PointY="53.5" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIBIENDONG" Width="1.5" PointX="42.75" PointY="19" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAICAPHANG" Width="1.5" PointX="14.75" PointY="28.75" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIDIADANH" Width="1.5" PointX="12.75" PointY="38" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIDIEMDOCAO" Width="1.5" PointX="14.75" PointY="38" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIDIEMTOADO" Width="1.5" PointX="42.75" PointY="24" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIDTMIENGIAM" Width="1.5" PointX="25" PointY="4.875" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIDUONG" Width="1.5" PointX="24.75" PointY="45" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIDUONGTHUYHE" Width="1.5" PointX="42.75" PointY="28" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIGIAYTOTUYTHAN" Width="1.5" PointX="26.75" PointY="45" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIHANHDONG" Width="1.5" PointX="42.75" PointY="32" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIHANHLANGANTOANBAOVE" Width="1.5" PointX="42.75" PointY="36" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIKETCAU" Width="1.5" PointX="36.75" PointY="45" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIKHUCHUCNANGCAPHUYEN" Width="1.5" PointX="38.75" PointY="45" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIKHUCHUCNANGCAPTINH" Width="1.5" PointX="40.75" PointY="45" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIKHUVUCTONGHOP" Width="1.5" PointX="42.75" PointY="45" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIMOC" Width="1.5" PointX="43.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIMOCBIENGIOIDIAGIOI" Width="1.5" PointX="43.75" PointY="7" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAINGHIAVUTAICHINH" Width="1.5" PointX="25" PointY="1.625" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAINGUONGOCSUDUNG" Width="1.5" PointX="8.25" PointY="68.5" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAINHA" Width="1.5" PointX="14.75" PointY="5" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIQUYHOACH" Width="1.5" PointX="17.75" PointY="46" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAITAISANGANLIENVOIDAT" Width="1.5" PointX="43.75" PointY="40" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAITOCHUC" Width="1.5" PointX="44.75" PointY="11" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAITRANGTHAIDANGKYCAPGCN" Width="1.5" PointX="44.75" PointY="15" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIVUNGTHUYHE" Width="1.5" PointX="44.75" PointY="19" />
+        <EntityTypeShape EntityType="MplisModel.DM_MUCDICHSUDUNG" Width="1.5" PointX="6" PointY="73.25" />
+        <EntityTypeShape EntityType="MplisModel.DM_MUCDICHSUDUNGQH" Width="1.5" PointX="6" PointY="78" />
+        <EntityTypeShape EntityType="MplisModel.DM_QHVOICHUHO" Width="1.5" PointX="20.75" PointY="40.625" />
+        <EntityTypeShape EntityType="MplisModel.DM_QUOCTICH" Width="1.5" PointX="27.75" PointY="28.75" />
+        <EntityTypeShape EntityType="MplisModel.DM_SEQUENCE" Width="1.5" PointX="44.75" PointY="23" />
+        <EntityTypeShape EntityType="MplisModel.DM_TRANGTHAIHOSO" Width="1.5" PointX="44.75" PointY="27" />
+        <EntityTypeShape EntityType="MplisModel.GD_BANDOGIADAT" Width="1.5" PointX="44.75" PointY="30" />
+        <EntityTypeShape EntityType="MplisModel.GD_BANGGIADAT" Width="1.5" PointX="40" PointY="19.25" />
+        <EntityTypeShape EntityType="MplisModel.GD_DMLOAIGIADAT" Width="1.5" PointX="8" PointY="58.75" />
+        <EntityTypeShape EntityType="MplisModel.GD_GIATHUADAT" Width="1.5" PointX="10.25" PointY="46.125" />
+        <EntityTypeShape EntityType="MplisModel.GD_HSDCGIADAT" Width="1.5" PointX="28.75" PointY="47" />
+        <EntityTypeShape EntityType="MplisModel.GD_KHUNGGIADAT" Width="1.5" PointX="30.75" PointY="47" />
+        <EntityTypeShape EntityType="MplisModel.GD_QDGIADAT" Width="1.5" PointX="37.75" PointY="19.375" />
+        <EntityTypeShape EntityType="MplisModel.HC_DMKVHC" Width="1.5" PointX="1.5" PointY="62.5" />
+        <EntityTypeShape EntityType="MplisModel.HC_HUYEN" Width="1.5" PointX="1.5" PointY="69.25" />
+        <EntityTypeShape EntityType="MplisModel.HC_TINH" Width="1.5" PointX="1.5" PointY="74.25" />
+        <EntityTypeShape EntityType="MplisModel.HC_TINHTHAMSO" Width="1.5" PointX="3.75" PointY="71.375" />
+        <EntityTypeShape EntityType="MplisModel.HS_HOSO" Width="1.5" PointX="12.75" PointY="73.625" />
+        <EntityTypeShape EntityType="MplisModel.HS_LICHSU" Width="1.5" PointX="15" PointY="67.875" />
+        <EntityTypeShape EntityType="MplisModel.HS_LIENKETTHUADAT" Width="1.5" PointX="18" PointY="69.875" />
+        <EntityTypeShape EntityType="MplisModel.HS_TC_CHU" Width="1.5" PointX="15" PointY="87.875" />
+        <EntityTypeShape EntityType="MplisModel.HS_TC_GCN" Width="1.5" PointX="15" PointY="80.5" />
+        <EntityTypeShape EntityType="MplisModel.HS_THANHPHANHOSO" Width="1.5" PointX="15" PointY="72.125" />
+        <EntityTypeShape EntityType="MplisModel.HS_VITRILUUTRU" Width="1.5" PointX="44.75" PointY="35" />
+        <EntityTypeShape EntityType="MplisModel.HT_CAUHINH" Width="1.5" PointX="32.75" PointY="47" />
+        <EntityTypeShape EntityType="MplisModel.HT_CAUHINHNGUOIDUNG" Width="1.5" PointX="15" PointY="51.875" />
+        <EntityTypeShape EntityType="MplisModel.HT_CHUCNANG" Width="1.5" PointX="10.5" PointY="14.25" />
+        <EntityTypeShape EntityType="MplisModel.HT_CHUCNANG_NHOMCHUCNANG" Width="1.5" PointX="25.25" PointY="19.875" />
+        <EntityTypeShape EntityType="MplisModel.HT_LICHSUTRUYCAP" Width="1.5" PointX="15" PointY="44.875" />
+        <EntityTypeShape EntityType="MplisModel.HT_MAUGIAYTOKEMTHEOHS" Width="1.5" PointX="44.75" PointY="44" />
+        <EntityTypeShape EntityType="MplisModel.HT_MENU" Width="1.5" PointX="23" PointY="24.75" />
+        <EntityTypeShape EntityType="MplisModel.HT_NGUOIDUNG" Width="1.5" PointX="12.75" PointY="20" />
+        <EntityTypeShape EntityType="MplisModel.HT_NGUOIDUNG_QUYEN" Width="1.5" PointX="15" PointY="18.25" />
+        <EntityTypeShape EntityType="MplisModel.HT_NHOMCHUCNANG" Width="1.5" PointX="23" PointY="30.25" />
+        <EntityTypeShape EntityType="MplisModel.HT_NHOMCHUCNANG_MENU" Width="1.5" PointX="25.25" PointY="30.875" />
+        <EntityTypeShape EntityType="MplisModel.HT_QUYEN" Width="1.5" PointX="12.75" PointY="14.875" />
+        <EntityTypeShape EntityType="MplisModel.HT_THONGBAO" Width="1.5" PointX="45.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.HT_TOCHUC" Width="1.5" PointX="3" PointY="16.125" />
+        <EntityTypeShape EntityType="MplisModel.HT_TOCHUC_NGUOIDUNG" Width="1.5" PointX="15" PointY="14.25" />
+        <EntityTypeShape EntityType="MplisModel.HT_TOCHUC_NHOMCHUCNANG" Width="1.5" PointX="25.25" PointY="26.75" />
+        <EntityTypeShape EntityType="MplisModel.HT_UNGDUNG" Width="1.5" PointX="20.75" PointY="30.375" />
+        <EntityTypeShape EntityType="MplisModel.HT_XA_NGUOIDUNG" Width="1.5" PointX="15" PointY="41.5" />
+        <EntityTypeShape EntityType="MplisModel.HT_XA_TOCHUC" Width="1.5" PointX="10.25" PointY="41.5" />
+        <EntityTypeShape EntityType="MplisModel.LOAIHOSO_DONVIAPDUNG" Width="1.5" PointX="19.75" PointY="48" />
+        <EntityTypeShape EntityType="MplisModel.LS_BD_GCN" Width="1.5" PointX="5.25" PointY="27.375" />
+        <EntityTypeShape EntityType="MplisModel.LS_BD_THUA" Width="1.5" PointX="5.25" PointY="66.875" />
+        <EntityTypeShape EntityType="MplisModel.LS_BOHOSO" Width="1.5" PointX="5.25" PointY="49.5" />
+        <EntityTypeShape EntityType="MplisModel.LS_TC_CHU" Width="1.5" PointX="7.5" PointY="44.5" />
+        <EntityTypeShape EntityType="MplisModel.LS_TC_GCN" Width="1.5" PointX="7.5" PointY="54.875" />
+        <EntityTypeShape EntityType="MplisModel.LS_TC_HOSO" Width="1.5" PointX="7.5" PointY="51.125" />
+        <EntityTypeShape EntityType="MplisModel.LS_TC_THUA" Width="1.5" PointX="7.5" PointY="47.875" />
+        <EntityTypeShape EntityType="MplisModel.MT_CHATLUONG" Width="1.5" PointX="45.75" PointY="39" />
+        <EntityTypeShape EntityType="MplisModel.MT_DONVI" Width="1.5" PointX="44.75" PointY="48" />
+        <EntityTypeShape EntityType="MplisModel.MT_GIOIHAN" Width="1.5" PointX="46.75" PointY="8" />
+        <EntityTypeShape EntityType="MplisModel.MT_HEQUYCHIEU" Width="1.5" PointX="46.75" PointY="13" />
+        <EntityTypeShape EntityType="MplisModel.MT_LANDDATA" Width="1.5" PointX="46.75" PointY="17" />
+        <EntityTypeShape EntityType="MplisModel.MT_METADATA" Width="1.5" PointX="46.75" PointY="23" />
+        <EntityTypeShape EntityType="MplisModel.MT_PHANPHOI" Width="1.5" PointX="24.75" PointY="49" />
+        <EntityTypeShape EntityType="MplisModel.QH_BIEUBANG" Width="1.5" PointX="46.75" PointY="28" />
+        <EntityTypeShape EntityType="MplisModel.QH_BIEUBANGCAPHUYEN" Width="1.5" PointX="14.75" PointY="49" />
+        <EntityTypeShape EntityType="MplisModel.QH_CAPHUYEN" Width="1.5" PointX="46.75" PointY="31" />
+        <EntityTypeShape EntityType="MplisModel.QH_CAPTINH" Width="1.5" PointX="46.75" PointY="35" />
+        <EntityTypeShape EntityType="MplisModel.QH_DINHKEMKCNCAPHUYEN" Width="1.5" PointX="40" PointY="14.875" />
+        <EntityTypeShape EntityType="MplisModel.QH_DINHKEMKCNCAPTINH" Width="1.5" PointX="35" PointY="37.75" />
+        <EntityTypeShape EntityType="MplisModel.QH_DINHKEMQUYHOACHCAPHUYEN" Width="1.5" PointX="35" PointY="32" />
+        <EntityTypeShape EntityType="MplisModel.QH_DINHKEMQUYHOACHCAPTINH" Width="1.5" PointX="35" PointY="25.875" />
+        <EntityTypeShape EntityType="MplisModel.QH_DINHKEMQUYHOACHCAPTW" Width="1.5" PointX="20" PointY="35.875" />
+        <EntityTypeShape EntityType="MplisModel.QH_DINHKEMQUYHOACHQPAN" Width="1.5" PointX="15" PointY="33.75" />
+        <EntityTypeShape EntityType="MplisModel.QH_KHUCHUCNANGCAPHUYEN" Width="1.5" PointX="37.75" PointY="14.25" />
+        <EntityTypeShape EntityType="MplisModel.QH_KHUCHUCNANGCAPTINH" Width="1.5" PointX="32.75" PointY="37.25" />
+        <EntityTypeShape EntityType="MplisModel.QH_KHUCHUCNANGCAPTINHGEO" Width="1.5" PointX="34.75" PointY="49" />
+        <EntityTypeShape EntityType="MplisModel.QH_MDSD" Width="1.5" PointX="9.75" PointY="20" />
+        <EntityTypeShape EntityType="MplisModel.QH_MDSD_CT" Width="1.5" PointX="33.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.QH_QUYHOACHCAPHUYEN" Width="1.5" PointX="32.75" PointY="31.25" />
+        <EntityTypeShape EntityType="MplisModel.QH_QUYHOACHCAPTINH" Width="1.5" PointX="32.75" PointY="25.25" />
+        <EntityTypeShape EntityType="MplisModel.QH_QUYHOACHCAPTW" Width="1.5" PointX="17.75" PointY="35.25" />
+        <EntityTypeShape EntityType="MplisModel.QH_QUYHOACHQPAN" Width="1.5" PointX="12.75" PointY="33.25" />
+        <EntityTypeShape EntityType="MplisModel.QH_VUNGQUYHOACHCAPTINH" Width="1.5" PointX="36.75" PointY="49" />
+        <EntityTypeShape EntityType="MplisModel.QT_BUOCQT_CAUHINH" Width="1.5" PointX="18" PointY="42.625" />
+        <EntityTypeShape EntityType="MplisModel.QT_BUOCQUYTRINH" Width="1.5" PointX="12.75" PointY="7.625" />
+        <EntityTypeShape EntityType="MplisModel.QT_CONGVIECTHEOBUOC" Width="1.5" PointX="18" PointY="26.5" />
+        <EntityTypeShape EntityType="MplisModel.QT_CONGVIECTHUCHIEN" Width="1.5" PointX="20.25" PointY="23.25" />
+        <EntityTypeShape EntityType="MplisModel.QT_FILEDINHKEMHOSO" Width="1.5" PointX="12.75" PointY="89.875" />
+        <EntityTypeShape EntityType="MplisModel.QT_GHICHUXULY" Width="1.5" PointX="15" PointY="21.875" />
+        <EntityTypeShape EntityType="MplisModel.QT_GIAYTOTHEOTTHC" Width="1.5" PointX="10.5" PointY="93.375" />
+        <EntityTypeShape EntityType="MplisModel.QT_HOSO_LANXULY" Width="1.5" PointX="12.75" PointY="85.875" />
+        <EntityTypeShape EntityType="MplisModel.QT_HOSOTIEPNHAN" Width="1.5" PointX="10.5" PointY="83" />
+        <EntityTypeShape EntityType="MplisModel.QT_LUANCHUYEN_HOSO" Width="1.5" PointX="18" PointY="21.625" />
+        <EntityTypeShape EntityType="MplisModel.QT_NGAYNGHI" Width="1.5" PointX="38.75" PointY="49" />
+        <EntityTypeShape EntityType="MplisModel.QT_NHOMQUYTRINH" Width="1.5" PointX="8.25" PointY="9" />
+        <EntityTypeShape EntityType="MplisModel.QT_QUYTRINH" Width="1.5" PointX="10.5" PointY="8" />
+        <EntityTypeShape EntityType="MplisModel.QT_THUTUCHANHCHINH" Width="1.5" PointX="8.25" PointY="85" />
+        <EntityTypeShape EntityType="MplisModel.QT_TTHC_QUYTRINH" Width="1.5" PointX="12.75" PointY="47.375" />
+        <EntityTypeShape EntityType="MplisModel.DC_TAISANGANLIENVOIDATLICHSU" Width="1.5" PointX="40.75" PointY="49" />
+        <EntityTypeShape EntityType="MplisModel.DM_LOAIDATHIENTRANG" Width="1.5" PointX="46.75" PointY="44" />
+        <EntityTypeShape EntityType="MplisModel.QH_KHUCHUCNANGCAPHUYENGEO" Width="1.5" PointX="46.75" PointY="49" />
+        <EntityTypeShape EntityType="MplisModel.HSV_HUYEN_NGUOIDUNG" Width="1.5" PointX="17.75" PointY="40" />
+        <EntityTypeShape EntityType="MplisModel.HSV_LICHSU" Width="1.5" PointX="47.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.HSV_TINH_NGUOIDUNG" Width="1.5" PointX="21.75" PointY="50" />
+        <EntityTypeShape EntityType="MplisModel.HSV_XA_NGUOIDUNG" Width="1.5" PointX="47.75" PointY="38" />
+        <EntityTypeShape EntityType="MplisModel.HTV_MAUGIAYTO" Width="1.5" PointX="48.75" PointY="7" />
+        <EntityTypeShape EntityType="MplisModel.HTV_NGUOIDUNG_CHUCNANG" Width="1.5" PointX="29.75" PointY="34" />
+        <EntityTypeShape EntityType="MplisModel.HTV_NGUOIDUNG_CHUCVU" Width="1.5" PointX="47.75" PointY="41" />
+        <EntityTypeShape EntityType="MplisModel.HTV_NGUOIDUNG_MENU" Width="1.5" PointX="9.75" PointY="51" />
+        <EntityTypeShape EntityType="MplisModel.HTV_NGUOIDUNG_UNGDUNG" Width="1.5" PointX="48.75" PointY="13" />
+        <EntityTypeShape EntityType="MplisModel.LCHSV_TAILIEUDODAC_LOAIBDDC" Width="1.5" PointX="48.75" PointY="17" />
+        <EntityTypeShape EntityType="MplisModel.VIEW_DONDK" Width="1.5" PointX="48.75" PointY="21" />
+        <EntityTypeShape EntityType="MplisModel.VIEW_NGUOIDUNG_HTXA" Width="1.5" PointX="48.75" PointY="26" />
+        <EntityTypeShape EntityType="MplisModel.VIEW_NGUONGOCTHUA" Width="1.5" PointX="48.75" PointY="29" />
+        <EntityTypeShape EntityType="MplisModel.VIEW_QT_NGUOIDUNG" Width="1.5" PointX="48.75" PointY="32" />
+        <EntityTypeShape EntityType="MplisModel.VIEW_QT_TTHC" Width="1.5" PointX="48.75" PointY="44" />
+        <EntityTypeShape EntityType="MplisModel.VIEW_TLDD_BDDC_XA" Width="1.5" PointX="48.75" PointY="50" />
+        <EntityTypeShape EntityType="MplisModel.VIEW_TOCHUC_DONVIHANHCHINH" Width="1.5" PointX="11.75" PointY="52" />
+        <EntityTypeShape EntityType="MplisModel.VIEWNG_HOGIADINH" Width="1.5" PointX="49.75" PointY="3" />
+        <EntityTypeShape EntityType="MplisModel.VIEWNG_NHOM" Width="1.5" PointX="17.75" PointY="52" />
+        <AssociationConnector Association="MplisModel.CS_CKS_CKS_NCC_FK" />
+        <AssociationConnector Association="MplisModel.CS_CKS_HT_ND_FK" />
+        <AssociationConnector Association="MplisModel.CS_CKS_HT_TC_FK" />
+        <AssociationConnector Association="MplisModel.CS_GTXM_CKS_CKS_FK" />
+        <AssociationConnector Association="MplisModel.CS_GTXM_CKS_CKS_FKV1" />
+        <AssociationConnector Association="MplisModel.DC_BIENDONG_DC_BD_CHU" />
+        <AssociationConnector Association="MplisModel.DC_NGUOI_DC_BD_CHU" />
+        <AssociationConnector Association="MplisModel.DC_BIENDONG_DC_BD_CHUYENHTSDD" />
+        <AssociationConnector Association="MplisModel.HTSDD_CHUYENHTSDD" />
+        <AssociationConnector Association="MplisModel.DCBDBD_DC_BD_CHUYENMDSDD" />
+        <AssociationConnector Association="MplisModel.MDSD_BD_DC_BD_CHUYENMDSDD" />
+        <AssociationConnector Association="MplisModel.DC_BIENDONG_DC_BD_GCN" />
+        <AssociationConnector Association="MplisModel.DC_GIAYCHUNGNHAN_DC_BD_GCN" />
+        <AssociationConnector Association="MplisModel.GCN_CHA" />
+        <AssociationConnector Association="MplisModel.GCN_CON" />
+        <AssociationConnector Association="MplisModel.DC_BD_TC_DC_QUYENQUANLYDAT" />
+        <AssociationConnector Association="MplisModel.DC_BIENDONG_DC_BD_THECHAP" />
+        <AssociationConnector Association="MplisModel.DCBDTC_DC_QUYENSOHUUTAISAN" />
+        <AssociationConnector Association="MplisModel.DCBDTC_DC_QUYENSUDUNGDAT" />
+        <AssociationConnector Association="MplisModel.DC_BIENDONG_DC_BD_THUA" />
+        <AssociationConnector Association="MplisModel.DC_THUADAT_DC_BD_THUA" />
+        <AssociationConnector Association="MplisModel.THUA_CHA" />
+        <AssociationConnector Association="MplisModel.THUA_CON" />
+        <AssociationConnector Association="MplisModel.DC_BD_DC_BD_TREN_GCN" />
+        <AssociationConnector Association="MplisModel.DC_GCN_DC_BD_TREN_GCN" />
+        <AssociationConnector Association="MplisModel.DC_BIENDONG_DC_LOAIBIENDONG_FK" />
+        <AssociationConnector Association="MplisModel.DC_BIENDONG_DC_NOICONGCHUNG_FK" />
+        <AssociationConnector Association="MplisModel.DC_BIENDONG_DC_THUEDAT" />
+        <AssociationConnector Association="MplisModel.DC_BIENDONG_LS_BD_GCN" />
+        <AssociationConnector Association="MplisModel.DC_BIENDONG_LS_BD_THUA" />
+        <AssociationConnector Association="MplisModel.DC_BIENDONG_LS_BOHOSO" />
+        <AssociationConnector Association="MplisModel.DC_CN_DC_FK" />
+        <AssociationConnector Association="MplisModel.DC_CN_DC_QT_FK" />
+        <AssociationConnector Association="MplisModel.DC_CANHO_DC_NHACHUNGCU_FK" />
+        <AssociationConnector Association="MplisModel.DC_CANHO_HANGMUCNCH_FK" />
+        <AssociationConnector Association="MplisModel.DC_HANGMUCNGOAICANHO_FK" />
+        <AssociationConnector Association="MplisModel.DC_CTCK_DC_DSCK_FK" />
+        <AssociationConnector Association="MplisModel.DC_CONGTRINHXAYDUNG_FK" />
+        <AssociationConnector Association="MplisModel.DC_DONDANGKY_DC_DANGKY_GCN" />
+        <AssociationConnector Association="MplisModel.DC_GIAYCHUNGNHAN_DC_DANGKY_GCN" />
+        <AssociationConnector Association="MplisModel.DC_DK_N_DC_DDK_FK" />
+        <AssociationConnector Association="MplisModel.DC_DK_N_DC_N_FK" />
+        <AssociationConnector Association="MplisModel.DK_T_DC_DDK_FK" />
+        <AssociationConnector Association="MplisModel.DC_DKN_DC_DSCK_FK" />
+        <AssociationConnector Association="MplisModel.DC_N_DC_DC_DC_FK1" />
+        <AssociationConnector Association="MplisModel.DC_TS_DC_DC_DC_FK" />
+        <AssociationConnector Association="MplisModel.DC_DOANDUONG_DC_THUADAT" />
+        <AssociationConnector Association="MplisModel.DC_XNDDK_DC_DDK_FK" />
+        <AssociationConnector Association="MplisModel.DC_GIAYCHUNGNHAN_DC_GCN_TILESH" />
+        <AssociationConnector Association="MplisModel.DC_NGUOI_DC_GCN_TILESH" />
+        <AssociationConnector Association="MplisModel.DM_LOAIDTMG_DC_GCN_TILESH" />
+        <AssociationConnector Association="MplisModel.DC_GCN_DC_QUYENQUANLYDAT" />
+        <AssociationConnector Association="MplisModel.DC_NGUOI_FKV4" />
+        <AssociationConnector Association="MplisModel.GIAYCHUNGNHAN_FK" />
+        <AssociationConnector Association="MplisModel.HT_TOCHUC_DC_GIAYCHUNGNHAN" />
+        <AssociationConnector Association="MplisModel.DC_NVTC_GTKEMTHEO" />
+        <AssociationConnector Association="MplisModel.DC_HANCHE_DC_LOAIHANCHE_FK" />
+        <AssociationConnector Association="MplisModel.DC_NHACHUNGCU_FK" />
+        <AssociationConnector Association="MplisModel.QHVCH_DC_HOGIADINH_THANHVIEN" />
+        <AssociationConnector Association="MplisModel.DC_NGUOI_DC_KHOANDUOCTRU" />
+        <AssociationConnector Association="MplisModel.DC_NVTC_DC_KHOANDUOCTRU" />
+        <AssociationConnector Association="MplisModel.DC_KHUCHUNGCU_FK" />
+        <AssociationConnector Association="MplisModel.DC_KHUVUC_DC_THUADAT" />
+        <AssociationConnector Association="MplisModel.HC_XA_DC_KHUVUC" />
+        <AssociationConnector Association="MplisModel.DC_NVTC_DC_LoaiNVTC_FK_" />
+        <AssociationConnector Association="MplisModel.DC_NGUOI_MGNVTC" />
+        <AssociationConnector Association="MplisModel.DMLOAINVTC_MGNVTC" />
+        <AssociationConnector Association="MplisModel.LOAIDTMG_MGNVTC" />
+        <AssociationConnector Association="MplisModel.NGHIAVUTAICHINH_FK" />
+        <AssociationConnector Association="MplisModel.DC_MDSD_DM_MDSDQH_FK" />
+        <AssociationConnector Association="MplisModel.DC_MDSDD_VTTD" />
+        <AssociationConnector Association="MplisModel.DC_MUCDICHSUDUNGDAT_DM_MDSD_FK" />
+        <AssociationConnector Association="MplisModel.DC_MUCDICHSUDUNGDAT_FK" />
+        <AssociationConnector Association="MplisModel.DC_MUCDICHSUDUNGDAT_FKV2" />
+        <AssociationConnector Association="MplisModel.DC_MUCDICHSUDUNGDAT_FKV3" />
+        <AssociationConnector Association="MplisModel.DM_HTSDD_DC_MUCDICHSUDUNGDAT" />
+        <AssociationConnector Association="MplisModel.DC_NGHIAVUTAICHINH_DC_NONVTC" />
+        <AssociationConnector Association="MplisModel.DC_N_DC_DC_FK" />
+        <AssociationConnector Association="MplisModel.DC_N_DM_DTSD_FK" />
+        <AssociationConnector Association="MplisModel.DC_NGUOI_DC_NONVTC" />
+        <AssociationConnector Association="MplisModel.DC_NGUOI_FK" />
+        <AssociationConnector Association="MplisModel.DC_NGUOI_FKV2" />
+        <AssociationConnector Association="MplisModel.DC_NGUOI_FKV3" />
+        <AssociationConnector Association="MplisModel.DC_NGUONGOCSUDUNG_FK" />
+        <AssociationConnector Association="MplisModel.DM_LOAICAPHANG_DC_NHARIENGLE" />
+        <AssociationConnector Association="MplisModel.DM_LOAINHA_DC_NHARIENGLE" />
+        <AssociationConnector Association="MplisModel.DC_NHOMNGUOI_FK" />
+        <AssociationConnector Association="MplisModel.DM_LOAINVTC_DC_NONVTC" />
+        <AssociationConnector Association="MplisModel.DC_TAISANGANLIENVOIDAT_FK" />
+        <AssociationConnector Association="MplisModel.DC_TD_TLDD_DC_TLDD_FK" />
+        <AssociationConnector Association="MplisModel.DC_THUADAT_DC_TAILIEUDODAC_FK" />
+        <AssociationConnector Association="MplisModel.DC_TLDD_DM_LBDDC_FK" />
+        <AssociationConnector Association="MplisModel.DC_TLDD_HC_X_FK" />
+        <AssociationConnector Association="MplisModel.DC_TSGLVD_DC_TAISAN_DIACHI" />
+        <AssociationConnector Association="MplisModel.DC_TAISANGANLIENVOIDAT_FKV2" />
+        <AssociationConnector Association="MplisModel.DC_TD_HC_X_FK" />
+        <AssociationConnector Association="MplisModel.DC_TD_TLDD_DC_TD_FK" />
+        <AssociationConnector Association="MplisModel.DC_TD_TS_DC_TD_FK" />
+        <AssociationConnector Association="MplisModel.DC_THUADAT_DC_TRANHCHAP" />
+        <AssociationConnector Association="MplisModel.DC_THUADAT_GD_GIATHUADAT" />
+        <AssociationConnector Association="MplisModel.DC_THUATAISAN_DC_THUADAT_FK" />
+        <AssociationConnector Association="MplisModel.DM_MUCDICHSUDUNG_DC_THUEDAT" />
+        <AssociationConnector Association="MplisModel.DC_YKXN_DC_XNDDK_FK" />
+        <AssociationConnector Association="MplisModel.QT_TTHC_QT_BTTHC_FK" />
+        <AssociationConnector Association="MplisModel.GD_QDGIADAT_GD_BANGGIADAT" />
+        <AssociationConnector Association="MplisModel.GD_DMLOAIGIADAT_GD_GIATHUADAT" />
+        <AssociationConnector Association="MplisModel.HC_XA_HC_HUYEN_FK" />
+        <AssociationConnector Association="MplisModel.HC_XA_QT_BUOCQT_CAUHINH" />
+        <AssociationConnector Association="MplisModel.HS_HOSO_HC_XA_FK" />
+        <AssociationConnector Association="MplisModel.HS_LIENKETTHUADAT_FK1" />
+        <AssociationConnector Association="MplisModel.HS_LS_HC_XA_FK" />
+        <AssociationConnector Association="MplisModel.HT_XA_NGUOIDUNG_HC_XA_FK" />
+        <AssociationConnector Association="MplisModel.HT_XA_TOCHUC_HC_XA_FK" />
+        <AssociationConnector Association="MplisModel.HC_HUYEN_HC_TINH_FK1" />
+        <AssociationConnector Association="MplisModel.HC_TINH_HC_TINHTHAMSO" />
+        <AssociationConnector Association="MplisModel.HS_HOSO_HC_TC_CHU" />
+        <AssociationConnector Association="MplisModel.HS_HOSO_HS_TC_GCN" />
+        <AssociationConnector Association="MplisModel.HS_LST_HS_HS_FK" />
+        <AssociationConnector Association="MplisModel.HS_THANHPHANHOSO_HS_HOSO_FK1" />
+        <AssociationConnector Association="MplisModel.HS_TOTHUA_FK1" />
+        <AssociationConnector Association="MplisModel.QT_HOSOTIEPNHAN_HS_HOSO" />
+        <AssociationConnector Association="MplisModel.HT_ND_HT_CHND_FK" />
+        <AssociationConnector Association="MplisModel.HT_CHUCNANG_HT_CHUCNANG_FK" />
+        <AssociationConnector Association="MplisModel.HT_CN_NCN_HT_CN_FK" />
+        <AssociationConnector Association="MplisModel.HT_QUYEN_HT_CHUCNANG_FK1" />
+        <AssociationConnector Association="MplisModel.HT_CN_NCN_HT_NCN_FK" />
+        <AssociationConnector Association="MplisModel.HT_LSTC_HT_ND_FK" />
+        <AssociationConnector Association="MplisModel.HT_MENU_HT_MENU_FK" />
+        <AssociationConnector Association="MplisModel.HT_NCN_M_HT_M_FK" />
+        <AssociationConnector Association="MplisModel.HT_NGUOIDUNG_QT_BQT_CAUHINH" />
+        <AssociationConnector Association="MplisModel.HT_NGUOIDUNG_QT_GCXL" />
+        <AssociationConnector Association="MplisModel.HT_NGUOIDUNG_QT_LCHS" />
+        <AssociationConnector Association="MplisModel.HT_NGUOIDUNG_QUYEN_HT_NGU_FK1" />
+        <AssociationConnector Association="MplisModel.HT_TC_ND_HT_ND_FK" />
+        <AssociationConnector Association="MplisModel.HT_X_ND_HT_ND_FK" />
+        <AssociationConnector Association="MplisModel.HT_NGUOIDUNG_QUYEN_HT_QUY_FK1" />
+        <AssociationConnector Association="MplisModel.HT_NCN_HT_UD_FK" />
+        <AssociationConnector Association="MplisModel.HT_NCN_M_HT_NCN_FK" />
+        <AssociationConnector Association="MplisModel.HT_TC_NCN_HT_NCN_FK" />
+        <AssociationConnector Association="MplisModel.HT_TC_NCN_HT_TC_FK" />
+        <AssociationConnector Association="MplisModel.HT_TC_ND_HT_TC_FK" />
+        <AssociationConnector Association="MplisModel.HT_TOCHUC_HT_TOCHUC_FK" />
+        <AssociationConnector Association="MplisModel.HT_TOCHUC_QT_HOSOTIEPNHAN" />
+        <AssociationConnector Association="MplisModel.HT_TOCHUC_QT_THUTUCHANHCHINH" />
+        <AssociationConnector Association="MplisModel.HT_XA_TOCHUC_HT_TOCHUC_FK" />
+        <AssociationConnector Association="MplisModel.LS_BOHOSO_LS_TC_CHU" />
+        <AssociationConnector Association="MplisModel.LS_BOHOSO_LS_TC_GCN" />
+        <AssociationConnector Association="MplisModel.LS_BOHOSO_LS_TC_HOSO" />
+        <AssociationConnector Association="MplisModel.LS_BOHOSO_LS_TC_THUA" />
+        <AssociationConnector Association="MplisModel.FK_DINHKEM_KCNCAPHUYEN" />
+        <AssociationConnector Association="MplisModel.FK_DINHKEM_KCNCAPTINH" />
+        <AssociationConnector Association="MplisModel.FK_DINHKEM_QUYHOACH_CH" />
+        <AssociationConnector Association="MplisModel.FK_DINHKEM_QUYHOACH" />
+        <AssociationConnector Association="MplisModel.FK_DINHKEM_QUYHOACH_TW" />
+        <AssociationConnector Association="MplisModel.FK_DINHKEM_QUYHOACH_QPAN" />
+        <AssociationConnector Association="MplisModel.QT_BQT_QT_BUOCQT_CAUHINH" />
+        <AssociationConnector Association="MplisModel.FK_BUOCQUYTRINH_SODOQUYTRINH" />
+        <AssociationConnector Association="MplisModel.QT_BQT_QT_CONGVIECTHEOBUOC" />
+        <AssociationConnector Association="MplisModel.QT_BQT_QT_GHICHUXULY" />
+        <AssociationConnector Association="MplisModel.QT_BQT_QT_LUANCHUYEN_HOSO" />
+        <AssociationConnector Association="MplisModel.QT_CVTB_QT_CVTH" />
+        <AssociationConnector Association="MplisModel.QT_LCHS_QT_CVTH" />
+        <AssociationConnector Association="MplisModel.QT_FDKHS_QT_HSTN_FK" />
+        <AssociationConnector Association="MplisModel.QT_GTT_TTHC_QT_FILEDINHKEMHOSO" />
+        <AssociationConnector Association="MplisModel.QT_HOSO_LANXULY_QT_GCXL" />
+        <AssociationConnector Association="MplisModel.QT_HSTN_QT_GHICHUXULY" />
+        <AssociationConnector Association="MplisModel.QT_QUYTRINH_QT_GHICHUXULY" />
+        <AssociationConnector Association="MplisModel.QT_TTHC_QT_GIAYTOTHEOTTHC" />
+        <AssociationConnector Association="MplisModel.QT_HSLXL_QT_LCHS" />
+        <AssociationConnector Association="MplisModel.QT_HSTN_QT_HOSO_LANXULY" />
+        <AssociationConnector Association="MplisModel.QT_QUYTRINH_QT_HOSO_LANXULY" />
+        <AssociationConnector Association="MplisModel.QT_HSTN_QT_LUANCHUYEN_HOSO" />
+        <AssociationConnector Association="MplisModel.QT_HSTN_QT_TTHC_FK" />
+        <AssociationConnector Association="MplisModel.QT_QUYTRINH_QT_LCHS" />
+        <AssociationConnector Association="MplisModel.QT_SDQT_QT_NQT_FK" />
+        <AssociationConnector Association="MplisModel.QT_TTHC_QT_QT_SDQT_FK" />
+        <AssociationConnector Association="MplisModel.QT_TTHC_QT_QT_TTHC_FK" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

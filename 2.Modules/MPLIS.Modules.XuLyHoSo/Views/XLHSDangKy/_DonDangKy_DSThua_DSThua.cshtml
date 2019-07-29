@@ -1,0 +1,137 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.VM_XuLyHoSo_DK
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Danh sách thửa</h3>
+    </div>
+    <div class="box-body">
+        <input type="hidden" id="hi_ThuaID" />
+        @{
+            if (Model != null && Model.THUA_DANGKY != null && Model.THUA_DANGKY.Count > 0)
+            {
+                <table class="table table-bordered" id="table_DSTHUA_DANGKYID">
+                    <thead>
+                        <tr>
+                            <th hidden></th>
+                            <th hidden></th>
+                            <th>#</th>
+                            <th>Xã/Phường</th>
+                            <th>SH tờ bản đồ</th>
+                            <th>STT thửa</th>
+                            <th>DT pháp lý (m<sup>2</sup>)</th>
+                            <th>MĐSD</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int rdsgcntable = 0;
+                            foreach (var item in Model.THUA_DANGKY)
+                            {
+                                if (item.TRANGTHAITHUA != "3")
+                                {
+                                    rdsgcntable = rdsgcntable + 1;
+                                    <tr>
+                                        <td hidden>@item.DANGKYTHUAID</td>
+                                        <td hidden>@item.THUADATID</td>
+                                        <td class="text-right">
+                                            @rdsgcntable.
+                                        </td>
+                                        <td>
+                                            @item.TenXaPhuong
+                                        </td>
+                                        <td class="text-center">
+                                            @item.SHToBanDo
+                                        </td>
+                                        <td class="text-center">
+                                            @item.STTThua
+                                        </td>
+                                        <td class="text-center">
+                                            @item.DienTich
+                                        </td>
+                                        <td class="text-center">
+                                            @item.mdsd
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="button" class="btn btn-xs btn-heading" value="Xóa" onclick="removeRowThua(this)" />
+                                        </td>
+                                    </tr>
+                                }
+
+                            }
+                        }
+                    </tbody>
+                </table>
+                            }
+                            else
+                            {
+                                <p class="text-center">Không có dữ liệu thửa trong đăng ký!</p>
+                            }
+
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Phân trang cho table:
+        var table_DonDangKy_DSThua_DSThua = $('#table_DSTHUA_DANGKYID').DataTable({
+            "pageLength": 5,
+            "lengthChange": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+            "autoWidth": false,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+            },
+            "dom": 't<"bottom"p><"clear">',
+        });
+        var rows_table_DonDangKy_DSThua_DSThua = table_DonDangKy_DSThua_DSThua.rows().nodes();
+        $("#table_DSTHUA_DANGKYID").on("click", "tbody tr", function (e) {
+            $.each(rows_table_DonDangKy_DSThua_DSThua, function () {
+                $(this).removeClass('activerow');
+            });
+            $(this).addClass('activerow');
+            var dangKyThuaID = $(this)[0].cells[0].innerHTML;
+            var thuaDatID = $(this)[0].cells[1].innerHTML;
+            var donDangKyID = $('#DONDANGKYID').val();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ChiTietThuaDangKy",
+                data: { thuaDatID: thuaDatID.trim(), donDangKyID: donDangKyID.trim(), dangKyThuaID: dangKyThuaID.trim() },
+                dataType: "html",
+                success: function (data) {
+                    $('#TabTTChiTietID').html(data);
+                    document.getElementById('hi_ThuaID').value = document.getElementById('THUADATID').value;
+                    console.log("CLONE" + document.getElementById('THUADATID').value);
+                    $('#openTabTTChiTietID').click();
+                }
+            });
+        });
+    });
+
+    function removeRowThua(oButton) {
+        var ans = confirm("Bạn chắc chắn muốn xóa?");
+        //=== If user pressed Ok then delete the record else do nothing.
+        if (ans == true) {
+            //alert('xóa thành công!');
+            var empTab = document.getElementById('table_DSTHUA_DANGKYID');
+            var index = oButton.parentNode.parentNode.rowIndex;
+            // alert(index);
+            var nguoiid = empTab.rows[index].cells[0].innerHTML;
+            var dondk = $('#DONDANGKYID').val();
+            empTab.deleteRow(oButton.parentNode.parentNode.rowIndex);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/XOA_THUA",
+                dataType: "html",
+                data: { thuadangkyid: nguoiid.trim(), dondangky_id: dondk },
+                success: function (html) {
+                        alert("Xóa thửa gắn đăng ký thành công!");
+                        $('#divDonDangKy_DSThua_DSThua_ID').html(html);
+                },
+            });
+        }
+    }
+</script>

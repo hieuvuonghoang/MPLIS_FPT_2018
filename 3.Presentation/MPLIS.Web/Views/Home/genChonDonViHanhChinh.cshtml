@@ -1,0 +1,61 @@
+﻿<!--Đổi đơn vị hành chính-->
+<div class="modal fade" id="doiDVHC" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/Home/chonDVHC" method="post">
+                <input type="hidden" name="curURL" value="@Request.Url.PathAndQuery" />
+                <input type="hidden" name="LoaiNguoiDung" value="@ViewBag.LOAINGUOIDUNG"/>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Chọn đơn vị hành chính làm việc</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Huyện</label>
+                        <select class="form-control" name="HUYENID">
+                            @foreach (var item in ViewBag.HuyenNguoiDung)
+                            {
+                                if (!string.IsNullOrEmpty(ViewBag.HUYENID) && ViewBag.HUYENID == @item.HUYENID)
+                                {
+                                    <option value="@item.HUYENID" selected>@item.TENHUYEN</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.HUYENID">@item.TENHUYEN</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Xã</label>
+                        <select class="form-control" name="XAID">
+                            @foreach (var item in ViewBag.XaNguoiDung)
+                            {
+                                if (!string.IsNullOrEmpty(ViewBag.XAID) && ViewBag.XAID == @item.XAID)
+                                {
+                                    <option data-huyenid="@item.HUYENID" value="@item.XAID" selected>@item.TENXA</option>
+                                }
+                                else
+                                {
+                                    <option  data-huyenid="@item.HUYENID" value="@item.XAID">@item.TENXA</option>
+                                }
+                            }
+                        </select>
+                        @if (!string.IsNullOrEmpty(ViewBag.XAID))
+                        {
+                            <input type="hidden" class="is_selected_dvhc" value="1"/>
+                        }
+                        <select class="hidden xa_temp">
+
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Chọn</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+<!--End Đổi đơn vị hành chính-->

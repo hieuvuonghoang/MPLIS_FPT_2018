@@ -1,0 +1,15 @@
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\bin\Debug\MPLIS.Libraries.Data.XuLyHoSo.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\bin\Debug\MPLIS.Libraries.Data.XuLyHoSo.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\bin\Debug\AppCore.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\bin\Debug\AutoMapper.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\bin\Debug\EntityFramework.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\bin\Debug\EntityFramework.SqlServer.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\bin\Debug\Newtonsoft.Json.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\bin\Debug\AppCore.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\bin\Debug\AutoMapper.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\bin\Debug\EntityFramework.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\bin\Debug\EntityFramework.SqlServer.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\bin\Debug\Newtonsoft.Json.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\obj\Debug\MPLIS.Libraries.Data.XuLyHoSo.csprojResolveAssemblyReference.cache
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\obj\Debug\MPLIS.Libraries.Data.XuLyHoSo.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\obj\Debug\MPLIS.Libraries.Data.XuLyHoSo.pdb

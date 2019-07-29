@@ -1,0 +1,268 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.HoGiaDinhLS
+
+<form id="formTTHoGiaDinhID">
+    @Html.HiddenFor(model => model.HOGIADINHID)
+    @Html.HiddenFor(model => model.TRANGTHAI)
+    @Html.HiddenFor(model => model.CHUHO)
+    @Html.HiddenFor(model => model.VOCHONG)
+    @Html.HiddenFor(model => model.NGUOICAPNHATID)
+    <div class="box box-primary m-10">
+        <div class="box-header with-border">
+            <h3 class="box-title">Chủ hộ</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CMTCHUHO, "CMT / Hộ chiếu", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @if (Model.TRANGTHAI == 2)
+                    {
+                        @Html.TextBoxFor(model => model.CMTCHUHO, new { @class = "form-control input-sm", @disabled = "" })
+                    }
+                    else if (Model.TRANGTHAI == 1)
+                    {
+                        @Html.TextBoxFor(model => model.CMTCHUHO, new { @class = "form-control input-sm" })
+                    }
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CHUHO_HOTEN, "Họ tên", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.CHUHO_HOTEN, new { @class = "form-control input-sm", @disabled = "" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-primary m-10">
+        <div class="box-header with-border">
+            <h3 class="box-title">Vợ / Chồng</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.CMTVOCHONG, "CMT / Hộ chiếu", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.CMTVOCHONG, new { @class = "form-control input-sm", @disabled = "" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.VOCHONG_HOTEN, "Họ tên", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.VOCHONG_HOTEN, new { @class = "form-control input-sm", @disabled = "" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="box box-primary m-10">
+        <div class="box-header with-border">
+            <h3 class="box-title">Địa chỉ</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.DIACHI, "Địa chỉ", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.TextAreaFor(model => model.DIACHI, new { @class = "form-control", @rows = "3" })
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="box box-primary m-10">
+    <div class="box-header with-border">
+        <h3 class="box-title">Danh sách thành viên</h3>
+    </div>
+    <div id="HGDDSTVID" class="box-body">
+        <table id="TableTVHGDID" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>#</th>
+                    <th>Họ tên</th>
+                    <th>Số giấy tờ</th>
+                    <th>Quan hệ với chủ hộ</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DSThanhVien != null && Model.DSThanhVien.Count > 0)
+                {
+                    int sTT = 0;
+                    foreach (var item in Model.DSThanhVien)
+                    {
+                        sTT++;
+                        <tr>
+                            <td>
+                                @item.HOGIADINHTVID
+                            </td>
+                            <td>
+                                @sTT.
+                            </td>
+                            <td>
+                                @item.ThanhVien.HOTEN
+                            </td>
+                            <td>
+                                @item.ThanhVien.SOGIAYTO
+                            </td>
+                            <td>
+                                @item.TenQuanHe
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <button id="btnHGDThemTVID" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm mới</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var divProcessBar = "<div class='overlay'> <i class='fa fa-refresh fa-spin'></i> </div>";
+
+        var columns = [
+            { "data": "HOGIADINHTVID" },
+            { "data": "STT" },
+            { "data": "HOTEN" },
+            { "data": "SOGIAYTO" },
+            { "data": "TenQuanHe" },
+            { "data": null }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnDel'>Xóa</button>";
+                },
+                "className": "text-center"
+            },
+            {
+                "targets": [1],
+                "className": "text-right"
+            },
+            {
+                "targets": [3, 4],
+                "className": "text-center"
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "t<'row p-0'<'col-xs-6 p-0'<'row p-0'<'col-xs-6 p-0'<'#divBtnHGDThemTVID'>>>><'col-xs-6 p-0'<'pull-right'p>>>",
+            "initComplete": function () {
+                initComplete();
+            }
+        }
+
+        function initComplete() {
+            $('#btnHGDThemTVID').appendTo($('#divBtnHGDThemTVID'));
+        }
+
+        var TableTVHGDID = $('#TableTVHGDID').DataTable(options);
+
+        TableTVHGDID.rows().nodes().on('dblclick', 'tbody tr', function () {
+            if (TableTVHGDID.rows().nodes().length > 0) {
+                HGDXemTTTV(TableTVHGDID.row($(this)).data(), $(this));
+            }
+        })
+
+        $('#btnHGDThemTVID').on('click', function () {
+            $('#HGDDSTVID').append(divProcessBar);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/HoGiaDinh_ThemMoiThanhVien",
+                dataType: "html",
+                success: function (html) {
+                    $('#TableTVHGDID_wrapper').addClass('d-none');
+                    $('#HGDDSTVID').append(html);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Lỗi: ' + errorThrown);
+                },
+                complete: function () {
+                    $('.overlay', $('#HGDDSTVID')).remove();
+                }
+            })
+        })
+
+        TableTVHGDID.rows().nodes().on('click', 'tbody tr .btnDel', function (event) {
+            XoaHGDTV(TableTVHGDID, TableTVHGDID.row($(this).parents('tr')).data(), TableTVHGDID.row($(this).parents('tr')));
+        })
+
+        function XoaHGDTV(table, rowData, rowDel) {
+            if (confirm("Xác nhận xóa thành viên hộ gia đình?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/HoGiaDinh_XoaThanhVien",
+                    data: { hoGiaDinhTVID: rowData.HOGIADINHTVID },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+                            table.row(rowDel).remove();
+                            var i = 1;
+                            table.rows().every(function () {
+                                var d = this.data();
+                                d.STT = i++;
+                                d.STT += ".";
+                                table.row(this).data(d);
+                            })
+                            table.draw();
+                            $.ajax({
+                                type: "POST",
+                                url: '/XLHSDangKy/HoGiaDinh_GetThongTin',
+                                dataType: "json",
+                                success: function (hoGiaDinh) {
+                                    console.log(hoGiaDinh);
+                                    $('#formTTHoGiaDinhID [name=CHUHO]').val(hoGiaDinh.CHUHO);
+                                    $('#formTTHoGiaDinhID [name=VOCHONG]').val(hoGiaDinh.VOCHONG);
+                                    $('#formTTHoGiaDinhID [name=CMTCHUHO]').val(hoGiaDinh.CMTCHUHO);
+                                    $('#formTTHoGiaDinhID [name=CHUHO_HOTEN]').val(hoGiaDinh.CHUHO_HOTEN);
+                                    $('#formTTHoGiaDinhID [name=CMTVOCHONG]').val(hoGiaDinh.CMTVOCHONG);
+                                    $('#formTTHoGiaDinhID [name=VOCHONG_HOTEN]').val(hoGiaDinh.VOCHONG_HOTEN);
+                                }
+                            })
+                        }
+                        alert(result.mes);
+                    }
+                })
+            }
+        }
+
+        function HGDXemTTTV(rowData, eDom) {
+            $('#HGDDSTVID').append(divProcessBar);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/HoGiaDinh_ChiTietThanhVien",
+                data: { hoGiaDinhTVID: rowData.HOGIADINHTVID },
+                dataType: "html",
+                success: function (html) {
+                    $('#TableTVHGDID_wrapper').addClass('d-none');
+                    $('#HGDDSTVID').append(html);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Lỗi: ' + errorThrown);
+                },
+                complete: function () {
+                    $('.overlay', $('#HGDDSTVID')).remove();
+                }
+            })
+        }
+
+    })
+
+</script>

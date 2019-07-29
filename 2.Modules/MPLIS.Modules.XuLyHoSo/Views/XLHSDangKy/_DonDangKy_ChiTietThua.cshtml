@@ -1,0 +1,366 @@
+﻿@using AppCore.Models
+@model DC_THUADAT
+
+<div class="box-body">
+    @Html.HiddenFor(model => model.THUADATID)
+    <div class="row">
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.XAID, "Chọn xã", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.DropDownListFor(model => model.XAID, new SelectList(ViewBag.listxa, "XAID", "TENXA"), new { @class = "form-control input-sm" })
+        </div>
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.SOHIEUTOBANDO, "Số hiệu tờ bản đồ", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(model => model.SOHIEUTOBANDO, new { @class = "form-control input-sm" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.SOTHUTUTHUA, "Số thứ tự thửa", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(model => model.SOTHUTUTHUA, new { @class = "form-control input-sm" })
+        </div>
+        @Html.HiddenFor(model => model.TAILIEUDODACID)
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.TENTAILIEUDD, "Tài liệu đo đạc", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            <div class="col-xs-10" style="padding: 0;">
+                @Html.TextBoxFor(model => model.TENTAILIEUDD, new { @class = "form-control input-sm" })
+            </div>
+            <div class="col-xs-2" style="padding: 0;">
+                <button class="btn-sm btn-inform pull-right" type="button" onclick="TaiLieuDoDac()">...</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.DIENTICH, "Diện tích", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(model => model.DIENTICH, new { @class = "form-control input-sm" })
+        </div>
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.DIENTICHPHAPLY, "Diện tích pháp lý", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(model => model.DIENTICHPHAPLY, new { @class = "form-control input-sm" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.DIACHITHUADAT, "Địa chỉ thửa đất", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-10">
+            @Html.TextAreaFor(model => model.DIACHITHUADAT, new { @class = "form-control", @rows = "3" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.LOAITHUADAT, "Loại thửa đất", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.DropDownListFor(model => model.LOAITHUADAT, new SelectList(ViewBag.listloaithua, "idloaithuadat", "tenloaithuadat"), new { @class = "form-control input-sm" })
+        </div>
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model._DANGTRANHCHAP, "Tranh chấp", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4" style="padding-top: 7px;">
+            @Html.CheckBoxFor(model => model._DANGTRANHCHAP)
+        </div>
+    </div>
+</div>
+
+@*@{using (Html.BeginForm("_DonDangKy_ChiTietThua", "XLHSDangKy", FormMethod.Post, new { @id = "ThemMoiThuaDat" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(m => m.THUADATID, new { @class = "form-control input-sm" })
+
+
+        }
+    }*@
+
+<script>
+    function TimKiemThuaDat() {
+        var kvhc, soto, sothua;
+        kvhc = $("[name=XAID] option:selected").val();
+        soto = $('#SOHIEUTOBANDO').val();
+        sothua = $('#SOTHUTUTHUA').val();
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/SearchThuaDat",
+            data: { xaid: kvhc, sothututhua: sothua, sotobando: soto },
+            dataType: "json",
+            success: function (data) {
+                //  table_SerchDCCaNhan1.clear().draw();
+                $("#tableSerchThua tbody tr").remove();
+                if (data.length == 0) {
+                    //  $("#FormSearchCaNhan").modalUnLoading();
+                    alert("Không có thửa nào được tìm thấy!");
+                }
+                else {
+                    for (var ir = 0 ; ir <= data.length - 1; ir++) {
+                        var arrHead = new Array();
+                        arrHead = ['soto', 'sothua', 'dientich', 'dtpl', 'diachi', 'hanhdong'];
+                        //alert(obj);
+                        var empTab = document.getElementById('tableSerchThua');
+                        var rowCnt = empTab.rows.length;        // GET TABLE ROW COUNT.
+
+                        var tr = empTab.insertRow(rowCnt);      // TABLE ROW.
+                        tr = empTab.insertRow(rowCnt);
+                        //stt = $("#table_DSGCNVAOID td").closest("tr").length;
+                        for (var c = 0; c <= arrHead.length; c++) {
+                            var td = document.createElement('td');          // TABLE DEFINITION.
+                            td = tr.insertCell(c);
+
+                            if (c == arrHead.length) {           // FIRST COLUMN.
+                                // ADD A BUTTON chi tiết
+                                var buttondetail = document.createElement('input');
+
+                                // SET INPUT ATTRIBUTE.
+                                buttondetail.setAttribute('type', 'button');
+                                buttondetail.setAttribute('value', 'Chọn thửa đất');
+
+                                // ADD THE BUTTON's 'onclick' EVENT.
+                                buttondetail.setAttribute('onclick', 'chonthuadat(this)');
+                                td.appendChild(buttondetail);
+
+                            }
+
+                            else if (c == 0) {
+                                td.innerHTML = data[ir].THUADATID;
+                                td.hidden = true;
+                            }
+                            else if (c == 1) {
+                                td.innerHTML = data[ir].SOHIEUTOBANDO;
+                            }
+                            else if (c == 2) {
+                                td.innerHTML = data[ir].SOTHUTUTHUA;
+                            }
+                            else if (c == 3) {
+                                td.innerHTML = data[ir].DIENTICH;
+                            }
+                            else if (c == 4) {
+                                td.innerHTML = data[ir].DIENTICHPHAPLY;
+                            }
+                            else if (c == 5) {
+                                td.innerHTML = data[ir].DIACHITHUADAT;
+                            }
+                            else {
+
+                            }
+                        }
+                    }
+                    $("#div_SearchThua").modal();
+                }
+
+            }
+        });
+        //alert("Input field lost focus.");
+    }
+    // chọn hộ gia đình
+    function chonthuadat(oButton) {
+        // alert('af');
+        var empTab = document.getElementById('tableSerchThua');
+        var index = oButton.parentNode.parentNode.rowIndex;
+        // alert(index);
+        var thuaid = empTab.rows[index].cells[0].innerHTML;
+        $("#nutdongthua").click();
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/ChonThuaDat",
+            data: { thuadatid: thuaid },
+            dataType: "html",
+            success: function (data) {
+                $('#tabThua').html(data);
+
+            }
+        });
+        //$(".closeSearch_HoGiaDinh").click();
+    };
+
+    function TaiLieuDoDac() {
+        var taiLieuDoDacID = $('#TAILIEUDODACID').val();
+        var thuaDatID = $('#hi_ThuaID').val();
+        console.log(taiLieuDoDacID);
+        console.log(thuaDatID);
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/_Popup_TaiLieuDoDac",
+            data: { thuaDatID: thuaDatID.trim(), taiLieuDoDacID: taiLieuDoDacID.trim() },
+            success: function (html) {
+                $('#dialogformTaiLieuDoDacID').html(html);
+                var options = {
+                    "backdrop": "static",
+                    "show": true
+                }
+                $("#modalformTaiLieuDoDacID").modal(options);
+            }
+        });
+    }
+
+    function LuuThongTinThua() {
+        var kvhc, soto, sothua;
+        kvhc = $("[name=XAID] option:selected").val();
+        soto = $('#SOHIEUTOBANDO').val();
+        sothua = $('#SOTHUTUTHUA').val();
+        if (kvhc != null && soto != null && sothua != null) {
+
+            var dondk = $('#DONDANGKYID').val();
+            var formdata = $("#ThemMoiThuaDat").serializeArray();
+            formdata.push({
+                name: "DONDANGKYID",
+                value: dondk
+            });
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/themthuavaods",
+                data: formdata,
+                dataType: "json",
+                success: function (data) {
+                    if (data.themmoi === true) {
+                        var arrHeadthua = new Array();
+                        arrHeadthua = ['STT', 'xaphuong', 'soto', 'sothua', 'dientich', 'mdsd', 'hanhdong', 'thuaid'];
+                        //alert(obj);
+                        var empTab = document.getElementById('table_DSTHUA_DANGKYID');
+                        var rowCnt = empTab.rows.length;        // GET TABLE ROW COUNT.
+
+                        var tr = empTab.insertRow(rowCnt);      // TABLE ROW.
+                        tr = empTab.insertRow(rowCnt);
+
+                        for (var c = 0; c <= arrHeadthua.length; c++) {
+                            var td = document.createElement('td');          // TABLE DEFINITION.
+                            td = tr.insertCell(c);
+
+                            if (c == arrHeadthua.length - 1) {           // FIRST COLUMN.
+                                // ADD A BUTTON chi tiết
+                                var buttondetail = document.createElement('input');
+
+                                // SET INPUT ATTRIBUTE.
+                                buttondetail.setAttribute('type', 'button');
+                                buttondetail.setAttribute('value', 'Chi tiết');
+
+                                // ADD THE BUTTON's 'onclick' EVENT.
+                                buttondetail.setAttribute('onclick', 'DetailRowThua(this)');
+                                td.appendChild(buttondetail);
+
+                                // ADD A BUTTON xóa
+                                var button = document.createElement('input');
+
+                                // SET INPUT ATTRIBUTE.
+                                button.setAttribute('type', 'button');
+                                button.setAttribute('value', 'Xóa');
+
+                                // ADD THE BUTTON's 'onclick' EVENT.
+                                button.setAttribute('onclick', 'removeRowThua(this)');
+
+                                td.appendChild(button);
+                            } else if (c == 0) {
+                                td.innerHTML = data.DANGKYTHUAID;
+                                td.hidden = true;
+                            } else if (c == 1) {
+                                td.innerHTML = $("#table_DSTHUA_DANGKYID td").closest("tr").length;
+                            } else if (c == 2) {
+                                td.innerHTML = data.TenXaPhuong;
+                            } else if (c == 3) {
+                                td.innerHTML = data.SHToBanDo;
+                            } else if (c == 4) {
+                                td.innerHTML = data.STTThua;
+                            } else if (c == 5) {
+                                td.innerHTML = data.dientich;
+                            } else if (c == 6) {
+                                td.innerHTML = data.mdsd;
+                            } else if (c == arrHeadthua.length) {
+                                td.innerHTML = data.THUADATID;
+                                td.hidden = true;
+                            } else {
+
+                            }
+                        }
+                    }
+                    else
+                        //sửa
+                    {
+                        $('#table_DSTHUA_DANGKYID tr').each(function (i, row) {
+                            var id = $("#table_DSTHUA_DANGKYID").children().children().eq(i).children().eq(0).text();
+                            console.log(id);
+                            console.log(data.DANGKYTHUAID);
+
+                            if (data.DANGKYTHUAID.trim() === id.trim()) {
+
+                                $("#table_DSTHUA_DANGKYID").children().children().eq(i).children().eq(2)[0].innerHTML = data.TenXaPhuong;
+                                $("#table_DSTHUA_DANGKYID").children().children().eq(i).children().eq(3)[0].innerHTML = data.SHToBanDo;
+                                $("#table_DSTHUA_DANGKYID").children().children().eq(i).children().eq(4)[0].innerHTML = data.STTThua;
+                                $("#table_DSTHUA_DANGKYID").children().children().eq(i).children().eq(5)[0].innerHTML = data.dientich;
+                                $("#table_DSTHUA_DANGKYID").children().children().eq(i).children().eq(6)[0].innerHTML = data.mdsd;
+                                //  var $row = $(row)
+                                //alert(data.lasdchung);
+                                //$('#table_MDSDTHUA').find("input[type=checkbox]").prop('checked', data.lasdchung);
+                                alert('cập nhật thành công!');
+                                // $("#table_MDSDTHUA").children().children().eq(i).children().eq(4)[0].innerHTML(data.thoihan);
+                            }
+                        });
+                    }
+                }
+            });
+        }
+        else {
+            alert("Chưa nhập số tờ, số thửa !");
+            return;
+        }
+    }
+
+    function LamMoiThua() {
+        $("#table_DSTHUA_DANGKYID tbody tr").removeClass('activerow');
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/LamMoiTHua",
+            dataType: "html",
+            success: function (data) {
+                $('#TabTTChiTietID').html(data);
+                alert($('#THUADATID').val());
+                $('#hi_ThuaId').val($('#THUADATID').val());
+            }
+        });
+    }
+
+    $(function () {
+        document.getElementById("SOTHUTUTHUA").addEventListener("focusout", TimKiemThuaDat);
+
+        @*//load danh sách thửa đất
+        var rawdata=   @Html.Raw(Json.Encode( @Model.ListThua));
+        // alert(abc);
+        var stringdata = JSON.stringify(rawdata) ;
+        if(stringdata=='null')
+        {
+            //alert('flawe');
+            return;
+        }
+        //else
+        //{
+        //   // alert(stringdata);
+        //}
+
+        var jsondata = JSON.parse(stringdata);
+        var j = jsondata.length;
+        //  $("#eCaNhan_NGAYSINH").val(ConverDatatime(NGAYSINH));
+
+        table_DK_THUA.clear().draw();
+        for(var i =0;i<=j-1;i++)
+        {
+            table_DK_THUA.rows.add([{
+                thuaid: jsondata[i].thuaid,
+                STT: i+1,
+                TENXA: jsondata[i].TENXA,
+                soto: jsondata[i].soto,
+                sothua: jsondata[i].sothua,
+                dt_pl:jsondata[i].dt_pl,
+            }]).draw();
+        }
+            *@
+    });
+</script>

@@ -1,0 +1,50 @@
+﻿@using AppCore.Models
+@model DC_THUADAT
+    <form id="ChiTietGiaDat">
+        @Html.HiddenFor(m => m.CurGiaDat.THUADATID, new { @class = "form-control" })
+        @Html.HiddenFor(m => m.CurGiaDat.GIATHUADATID, new { @class = "form-control" })
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurGiaDat.LOAIGIADATID, "Loại giá đất", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(model => model.CurGiaDat.LOAIGIADATID, new SelectList(ViewBag.loaigiadat, "LOAIGIADATID", "LOAIGIADAT"), new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurGiaDat.CANCUPHAPLY, "Căn cứ pháp lý", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(model => model.CurGiaDat.CANCUPHAPLY, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurGiaDat.THOIDIEMXACDINH, "Thời điểm", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(model => model.CurGiaDat.THOIDIEMXACDINH, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm date" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurGiaDat.GIADAT, "Giá đất", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(model => model.CurGiaDat.GIADAT, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurGiaDat.TENFILE, "Tên tệp tin", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(model => model.CurGiaDat.TENFILE, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+    </form>
+
+<script>
+
+</script>

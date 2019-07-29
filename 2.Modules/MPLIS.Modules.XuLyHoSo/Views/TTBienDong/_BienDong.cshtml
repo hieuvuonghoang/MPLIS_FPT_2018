@@ -1,0 +1,191 @@
+﻿<div id="divBienDongID" class="m-15">
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divBienDongID" href="#collapse_BienDong_BD">
+                Thông tin chung biến động
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="PheDuyet_BD()">Phê duyệt</button>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuBienDong_BD()">Lưu thông tin</button>
+            <button id="btn_ThongTinRieng_BDID" class="btn-xs btn-heading pull-right" type="button" onclick="ThongTinRieng_BD()">Thông tin riêng BD</button>
+        </div>
+        <div id="collapse_BienDong_BD" class="panel-collapse collapse in">
+            <div id="divBienDongID_BD">
+                @Html.Action("_BienDong_BD", "TTBienDong")
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divBienDongID" href="#collapse_BienDong_DSGCN">
+                Danh sách GCN tham gia biến động
+            </a>
+            <button type="button" onclick="LuuBienDong_DSGCN()" class="btn-xs btn-heading pull-right">Lưu vào CSDL</button>
+        </div>
+        <div id="collapse_BienDong_DSGCN" class="panel-collapse collapse">
+            <div id="divBienDongID_DSGCN" class="partialContents" data-url="/TTBienDong/BienDong_DSGCN">
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divBienDongID" href="#collapse_BienDong_DSTHUA">
+                Danh sách thửa tham gia biến động
+            </a>
+            <button type="button" onclick="LuuBienDong_DSTHUA()" class="btn-xs btn-heading pull-right" style="margin-right:5px;">Lưu vào CSDL</button>
+            <button type="button" onclick="LamMoiDanhSachThua()" class="btn-xs btn-heading pull-right" style="margin-left:5px;">Làm mới danh sách</button>
+        </div>
+        <div id="collapse_BienDong_DSTHUA" class="panel-collapse collapse">
+            <div id="divBienDongID_DSTHUA" class="partialContents" data-url="/TTBienDong/_BienDong_DSTHUA">
+            </div>
+        </div>
+    </div>
+    <div id="div_BienDong_TTRIENG_ID" class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divBienDongID" href="#collapse_BienDong_TTRIENG">
+                Thông tin riêng
+            </a>
+            <button type="button" onclick="LuuBienDong_TTRIENG()" class="btn-xs btn-heading pull-right">Lưu vào CSDL</button>
+        </div>
+        <div id="collapse_BienDong_TTRIENG" class="panel-collapse collapse">
+            <div id="divBienDongID_TTRIENG" class="partialContents" data-url="/TTBienDong/_BienDong_TTRIENG">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divPopupID">
+
+</div>
+
+<div id="dialogformQuyetDinhID">
+    @*@{Html.RenderPartial("_PopupQuyetDinh");}*@
+</div>
+
+<div id="dialogformDSQuyetDinhID">
+    @*@{Html.RenderPartial("_PopupQuyetDinh");}*@
+</div>
+
+<div id="dialogformDSCHUVAOID">
+    @*@{Html.RenderPartial("_Popup_DSCHUVAO", Model);}*@
+</div>
+
+<div id="dialogformDSGCNRAID">
+    @*@{Html.RenderPartial("_Popup_DSGCNRA");}*@
+</div>
+
+<div id="dialogformDSGCNVAOID">
+    @*@{Html.RenderPartial("_Popup_DSGCNVAO");}*@
+</div>
+
+<div id="dialogformDSTHUARAID">
+    @*@{Html.RenderPartial("_Popup_DSTHUARA");}*@
+</div>
+
+<div id="dialogformDSTHUAVAOID">
+    @*@{Html.RenderPartial("_Popup_DSTHUAVAO");}*@
+</div>
+
+<div id="dialogformDSTHUAXLID">
+    @*@{Html.RenderPartial("_Popup_DSTHUAXL");}*@
+</div>
+
+<script type="text/javascript">
+    function LuuBienDong_BD() {
+        $.ajax({
+            type: "POST",
+            url: "/TTBienDong/Save_IDformBienDong_BD",
+            data: $('#IDformBienDong_BD').serialize(),
+            success: function (html) {
+                alert("Lưu biến động thành công!");
+            },
+        });
+    };
+
+    //function LuuBienDong_DSGCN() {
+    //    var dt = document.getElementById("JSONCha").value;
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/TTBienDong/Save_IDformBienDong_DSGCN",
+    //        data: { JsonGcnCha: dt },
+    //        success: function (html) {
+    //            alert("Lưu danh sách GCN thành công!");
+    //        },
+    //    });
+    //};
+
+    function LuuBienDong_DSGCN() {
+        $.ajax({
+            type: "POST",
+            url: "/TTBienDong/BienDong_Save_DSGCN",
+            data: { data: $('#JSONCha').val() },
+            dataType: "json",
+            success: function (result) {
+                alert(result.mes);
+            }
+        })
+    }
+
+    function LuuBienDong_DSTHUA() {
+        //console.log('Thua data:' + formBienDong_DSTHUA.serialize());
+        var dt = document.getElementById("JSONThuaCha").value;
+        var CoThuaXuLy = $('#isCOTHUAXL').is(':checked');
+        console.log('CoThuaXuLy:' + CoThuaXuLy);
+        console.log('Thua cha:' + dt);
+        $.ajax({
+            type: "POST",
+            url: "/TTBienDong/Save_IDformBienDong_DSTHUA",
+            data: { JSONThuaCha: dt, isCOTHUAXL: CoThuaXuLy },
+            success: function (html) {
+                console.log(html);
+                $('#divBienDongID_DSTHUA').html(html);
+                alert("Lưu danh sách thửa thành công!");
+            },
+        });
+    };
+
+    function LamMoiDanhSachThua() {
+        $.ajax({
+            type: "POST",
+            url: "/TTBienDong/_BienDong_UpdateDSTHUA",
+            success: function (html) {
+                $('#divBienDongID_DSTHUA').html(html);
+                console.log(html);
+            },
+        });
+    };
+
+    var formBienDong_TTRIENG = $('#IDformBienDong_TTRIENG');
+    function LuuBienDong_TTRIENG() {
+        $.ajax({
+            type: "POST",
+            url: "/TTBienDong/Save_IDformBienDong_TTRIENG",
+            data: formBienDong_TTRIENG.serialize(),
+            success: function (html) {
+                $('#divBienDongID_TTRIENG').html(html);
+                alert("Lưu TT riêng thành công");
+            },
+        });
+    };
+
+    $(document).ready(function () {
+        //kích hoạt sự kiện trên các tab dọc
+        trigger_tab_doc();
+
+        var ckcottrienghaykord = $('#ListLoaibiendongid').val();
+        $(".partialContents").each(function (index, item) {
+            var url = $(item).data("url");
+            if (url && url.length > 0) {
+                if (url.indexOf("/TTBienDong/_BienDong_TTRIENG") == -1) {
+                    $(item).load(url, function (responseTxt, statusTxt, xhr) {
+                        console.log('Load data-url' + url);
+                    });
+                }
+                else if (ckcottrienghaykord == "444444" || ckcottrienghaykord == "45555555") {
+                    $(item).load(url, function (responseTxt, statusTxt, xhr) {
+                        console.log('Load data-url' + url);
+                    });
+                }
+            }
+        });
+    })
+</script>

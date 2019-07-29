@@ -1,0 +1,188 @@
+﻿@{
+    ViewBag.Title = "Đăng nhập hệ thống";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+
+<!-- Full Width Column -->
+<div class="wrapper">
+    <header class="main-header" style="background-color: #00a65a;">
+        @*style="position: relative;max-height: 100px;z-index: 1030;">*@
+        @*<div class="logo-mini" style="background-color:#3c8dbc;"></div>*@
+        <div class="container">
+            <nav class="navbar navbar-static-top" style="margin-left: 0px;">
+                @*<div class="container">*@
+                <div class="navbar-header">
+                    <div class="navbar-brand" style="padding-left:0px;padding-right:4px;"><img src="~/Images/Picture1.png" width="38" height="30" /></div>
+                    <div class="navbar-brand" style="font-family:'Times New Roman', Times, serif;padding-left:4px;padding-right:4px;"><b>Hệ thống thông tin đất đai quốc gia đa mục tiêu - MPLIS</b></div>
+                </div>
+                @*</div>*@
+            </nav>
+        </div>
+</header>
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!-- Main content -->
+        <!--Main Layout-->
+        <br />
+        <section class="content">
+            <div style="padding-top: 16px; padding-left:230px;">
+                @*--- chinh ca khoi anh va cac modul ---*@
+                <fieldset style="padding-left:310px;">
+                    @*--- chinh anh dai dien ---*@
+                    <div>
+                        <img src="@ViewBag.AnhBieuTuong" alt="Chưa có ảnh đại diện !" class="img-circle" width="104" height="100" data-toggle="modal" data-target="#ThongTinCaNhan" />
+                    </div>
+                    <br />
+                </fieldset>
+                <fieldset style="font-size:19px;padding-left:200px; font-size:18px;">
+                    @*--- ten dang nhap, dang xuat ---*@
+                    <u><a href="#" style="text-align:center; font-family:'Times New Roman', Times, serif" data-toggle="modal" data-target="#ThongTinCaNhan">@ViewBag.tenguoidung</a></u>
+                    &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                    <u><a href="~/Home/Logout" style="font-family:'Times New Roman', Times, serif">Đăng xuất</a></u>
+                    <br />
+                    <br />
+                    @*  <label id="thongbao" style="color:red; ">@ViewBag.TenUngdung</label>*@
+                </fieldset>
+                <fieldset style="font-size:9px;">
+                    <!--Hàng ứng dụng thứ 1-->
+                    <!--Ô úng dung thứ 1-->
+                    @*<a href="@(ViewBag.LinkUngDung11)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung11','@ViewBag.ThuTuUngDung11');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:5px;font-family:'Times New Roman', Times, serif;background-color:#3C8DBC;">@ViewBag.TenUngDung11</a>*@
+                    @SuaTenUngDung((string)ViewData["LinkUngDung11"], (string)ViewData["KiemTraUngDung11"], (string)ViewData["ThuTuUngDung11"], (string)ViewData["TenUngDung11"], "#3C8DBC")
+                    <!--Ô úng dung thứ 2-->
+                    @*<a href="@(ViewBag.LinkUngDung12)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung12','@ViewBag.ThuTuUngDung12');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:19px;font-family:'Times New Roman', Times, serif;background-color:#449C44;">@ViewBag.TenUngDung12</a>*@
+                    @SuaTenUngDung((string)ViewData["LinkUngDung12"], (string)ViewData["KiemTraUngDung12"], (string)ViewData["ThuTuUngDung12"], (string)ViewData["TenUngDung12"], "#449C44")
+                    @*<input type="submit" class="btn btn-success btn-lg" style="width:160px; height: 60px;  white-space: pre-wrap;font-family:'Times New Roman', Times, serif;" value="Quy hoạch sử dụng đất" />&nbsp;&nbsp;*@
+                    <!--Ô úng dung thứ 3-->
+                    @*<a href="@(ViewBag.LinkUngDung13)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung13','@ViewBag.ThuTuUngDung13');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:19px; font-family:'Times New Roman', Times, serif;background-color:#3C8DBC;">@ViewBag.TenUngDung13</a>*@
+                    @SuaTenUngDung((string)ViewData["LinkUngDung13"], (string)ViewData["KiemTraUngDung13"], (string)ViewData["ThuTuUngDung13"], (string)ViewData["TenUngDung13"], "#3C8DBC")
+                    <!--Ô úng dung thứ 4-->
+                    @*<a href="@(ViewBag.LinkUngDung14)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung14','@ViewBag.ThuTuUngDung14');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:5px;font-family:'Times New Roman', Times, serif;background-color:#449C44;">@ViewBag.TenUngDung14</a>*@
+                    @SuaTenUngDung((string)ViewData["LinkUngDung14"], (string)ViewData["KiemTraUngDung14"], (string)ViewData["ThuTuUngDung14"], (string)ViewData["TenUngDung14"], "#449C44")
+                    <br />
+                    <br />
+                    <!--Hàng ứng dụng thứ 2-->
+                    <!--Ô úng dung thứ 1-->
+                    @*<a href="@(ViewBag.LinkUngDung21)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung21','@ViewBag.ThuTuUngDung21');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:5px;font-family:'Times New Roman', Times, serif;background-color:#449C44;">@ViewBag.TenUngDung21</a>*@
+                    @SuaTenUngDung((string)ViewData["LinkUngDung21"], (string)ViewData["KiemTraUngDung21"], (string)ViewData["ThuTuUngDung21"], (string)ViewData["TenUngDung21"], "#449C44")
+                    @*<input type="submit" class="btn btn-success btn-lg" style="width:160px; height: 60px;font-family:'Times New Roman', Times, serif;" value="Giá đất" />&nbsp;&nbsp;*@
+                    <!--Ô úng dung thứ 2-->
+                    @*<a href="@(ViewBag.LinkUngDung22)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung22','@ViewBag.ThuTuUngDung22');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:5px; font-family:'Times New Roman', Times, serif;background-color:#3C8DBC;">@SuaTenUngDung(ViewBag.TenUngDung22)</a>*@
+                    @SuaTenUngDung((string)ViewData["LinkUngDung22"], (string)ViewData["KiemTraUngDung22"], (string)ViewData["ThuTuUngDung22"], (string)ViewData["TenUngDung22"], "#3C8DBC")
+                    @*<input type="submit" class="btn btn-success btn-lg" style="width:160px; height: 60px; font-family:'Times New Roman', Times, serif;" value="Quản trị hệ thống" />*@
+                    <!--Ô úng dung thứ 3-->
+                    @*<a href="@(ViewBag.LinkUngDung23)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung23','@ViewBag.ThuTuUngDung23');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:19px;font-family:'Times New Roman', Times, serif;background-color:#449C44;">@ViewBag.TenUngDung23</a>*@
+                    @SuaTenUngDung((string)ViewData["LinkUngDung23"], (string)ViewData["KiemTraUngDung23"], (string)ViewData["ThuTuUngDung23"], (string)ViewData["TenUngDung23"], "#449C44")
+                    <!--Ô úng dung thứ 4-->
+                    @*<a href="@(ViewBag.LinkUngDung24)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung24','@ViewBag.ThuTuUngDung24');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:5px;font-family:'Times New Roman', Times, serif;background-color:#3C8DBC;">@ViewBag.TenUngDung24</a>*@
+                    @SuaTenUngDung((string)ViewData["LinkUngDung24"], (string)ViewData["KiemTraUngDung24"], (string)ViewData["ThuTuUngDung24"], (string)ViewData["TenUngDung24"], "#3C8DBC")
+                    <br />
+                    <br />
+                    <!--Hàng ứng dụng thứ 2-->
+                    <!--Ô úng dung thứ 1-->
+                    @*<a href="@(ViewBag.LinkUngDung31)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung31','@ViewBag.ThuTuUngDung31');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:19px;font-family:'Times New Roman', Times, serif;background-color:#3C8DBC;">@ViewBag.TenUngDung31</a>*@
+                    @SuaTenUngDung((string)ViewData["LinkUngDung31"], (string)ViewData["KiemTraUngDung31"], (string)ViewData["ThuTuUngDung31"], (string)ViewData["TenUngDung31"], "#3C8DBC")
+                    <!--Ô úng dung thứ 2-->
+                    @*<a href="@(ViewBag.LinkUngDung32)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung32','@ViewBag.ThuTuUngDung32');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:5px;font-family:'Times New Roman', Times, serif;background-color:#449C44;">@ViewBag.TenUngDung32</a>*@
+                    @SuaTenUngDung((string)ViewData["LinkUngDung32"], (string)ViewData["KiemTraUngDung32"], (string)ViewData["ThuTuUngDung32"], (string)ViewData["TenUngDung32"], "#449C44")
+                    @*<input type="submit" class="btn btn-success btn-lg" style="width:160px; height: 60px;  white-space: pre-wrap;font-family:'Times New Roman', Times, serif;" value="Quy hoạch sử dụng đất" />&nbsp;&nbsp;*@
+                    <!--Ô úng dung thứ 3-->
+                    @*<a href="@(ViewBag.LinkUngDung33)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung33','@ViewBag.ThuTuUngDung33');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:5px; font-family:'Times New Roman', Times, serif;background-color:#3C8DBC;">@ViewBag.TenUngDung33</a>*@
+                    @SuaTenUngDung((string)ViewData["LinkUngDung33"], (string)ViewData["KiemTraUngDung33"], (string)ViewData["ThuTuUngDung33"], (string)ViewData["TenUngDung33"], "#3C8DBC")
+                    <!--Ô úng dung thứ 4-->
+                    @*<a href="@(ViewBag.LinkUngDung34)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung34','@ViewBag.ThuTuUngDung34');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:5px;font-family:'Times New Roman', Times, serif;background-color:#449C44;">@ViewBag.TenUngDung34</a>*@
+                    @SuaTenUngDung((string)ViewData["LinkUngDung34"], (string)ViewData["KiemTraUngDung34"], (string)ViewData["ThuTuUngDung34"], (string)ViewData["TenUngDung34"], "#449C44")
+                    <br />
+                    <br /> @*tam thoi chua dung den*@
+                    @*<a href="@(ViewBag.LinkUngDung41)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung41');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:19px;font-family:'Times New Roman', Times, serif;background-color:#449C44;">@(ViewBag.TenUngDung41)</a>*@
+                    @*<input type="submit" class="btn btn-success btn-lg" style="width:160px; height: 60px;font-family:'Times New Roman', Times, serif;" value="Giá đất" />&nbsp;&nbsp;*@
+                    @*<a href="@(ViewBag.LinkUngDung42)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung42');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:19px;font-family:'Times New Roman', Times, serif;background-color:#3C8DBC;">@(ViewBag.TenUngDung42)</a>*@
+                    @*<input type="submit" class="btn btn-success btn-lg" style="width:160px; height: 60px; font-family:'Times New Roman', Times, serif;" value="Quản trị hệ thống" />*@
+                    @*<a href="@(ViewBag.LinkUngDung43)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung43');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:19px;font-family:'Times New Roman', Times, serif;background-color:#449C44;">@(ViewBag.TenUngDung43)</a>
+                        <a href="@(ViewBag.LinkUngDung44)" onclick="KiemTraUngDung('@ViewBag.KiemTraUngDung44');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:19px;font-family:'Times New Roman', Times, serif;background-color:#3C8DBC;">@(ViewBag.TenUngDung44)</a>*@
+                </fieldset>
+            </div>
+        </section>
+        <!--/EndMainLayout-->
+        <!-- /.content -->
+    </div>
+    <!-- /.container -->
+    <!-- /.content-wrapper -->
+    <footer class="main-footer">
+        <div class="container" style="font-family:'Times New Roman', Times, serif">
+            <strong>Bản quyền thuộc về FPT và Tổng cục Quản lý đất đai - Bộ Tài nguyên và Môi trường</strong>
+        </div>
+        <!-- /.container -->
+    </footer>
+</div>
+
+<!-- ./wrapper -->
+<!--Popup Thông tin cá nhân-->
+<div class="container">
+    @Html.Action("GenerateThongTinCaNhan", "Home")
+</div>
+<!--End Thông tin cá nhân-->
+
+@helper SuaTenUngDung(string LinkUngDung, string KiemTraUngDung, string ThuTuUngDung, string TenUngDung, string MauNen)
+{
+string chuoi = TenUngDung.Trim();
+string dong1 = "";
+string chuoiMoi = "";
+int i = 1;
+while (chuoi.IndexOf(" ") >= 0)
+{
+    dong1 = dong1 + " " + chuoi.Substring(0, chuoi.IndexOf(" "));
+    chuoi = chuoi.Substring(chuoi.IndexOf(" ")).Trim();
+    i = i + 1;
+    if (i > 4)
+    {
+        break;
+    }
+}
+if (i > 4)
+{
+    chuoiMoi = dong1.Trim() + "<br/>" + chuoi;
+        <a href="@LinkUngDung" onclick="KiemTraUngDung('@KiemTraUngDung','@ThuTuUngDung');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:5px; font-family:'Times New Roman', Times, serif;background-color:@MauNen;">@Html.Raw(chuoiMoi)</a>
+}
+else
+{
+    chuoiMoi = dong1.Trim() + " " + chuoi;
+        <a href="@LinkUngDung" onclick="KiemTraUngDung('@KiemTraUngDung','@ThuTuUngDung');" class="btn btn-microsoft btn-lg" style="width:180px; height: 60px; padding-top:15px; font-family:'Times New Roman', Times, serif;background-color:@MauNen;">@Html.Raw(chuoiMoi)</a>
+}
+}
+@*cac ham viet trong javaScrip*@
+
+@*ham thong bao ung dung co duoc phep truy cap cua nguoi dung*@
+<script language="javascript" type="text/javascript">
+    // Ham kiem tra ung dung
+    function KiemTraUngDung(KiemTra, ungDung) {
+        if (KiemTra != "co") {
+            if (KiemTra == "QuanTriHeThongDuocTruyCap")
+                alert("Quản trị hệ thống mới có quyền truy cập vào ứng dụng !");
+            else
+                if (KiemTra == "QuanTriHeThongKhongTruyCap")
+                    alert("Quản trị hệ thống không được phép truy cập vào ứng dụng !");
+                else
+                    alert("Tên đăng nhập không có quyền truy cập vào ứng dụng !");
+        }
+    }
+</script>
+
+@*ham thay doi anh - images*@
+<script language="javascript" type="text/javascript">
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#file')
+                    .attr('src', e.target.result)
+                    .width(80)
+                    .height(90);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+</script>

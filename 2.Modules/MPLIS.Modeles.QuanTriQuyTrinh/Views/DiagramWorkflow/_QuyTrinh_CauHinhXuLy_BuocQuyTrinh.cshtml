@@ -1,0 +1,94 @@
+﻿@model MPLIS.Libraries.Data.QuanTriQuyTrinh.Models.CauHinhXuLyVM
+
+<table id="Table_BUOCQUYTRINH_ID" class="table table-bordered">
+    <thead>
+        <tr>
+            <th></th>
+            <th>#</th>
+            <th>Tên bước</th>
+            <th>Thời gian quy định</th>
+            <th>Mô tả</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.DSBuocQuyTrinh != null && Model.DSBuocQuyTrinh.Count > 0)
+        {
+            int sTT = 0;
+            foreach (var item in Model.DSBuocQuyTrinh)
+            {
+                sTT++;
+                <tr>
+                    <td>
+                        @item.BUOCQUYTRINHID
+                    </td>
+                    <td>
+                        @sTT.
+                    </td>
+                    <td>
+                        @item.TENBUOC
+                    </td>
+                    <td>
+                        @item.THOIGIANQUYDINH
+                    </td>
+                    <td>
+                        @item.MOTA
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    var curBUOCQUYTRINHID = "";
+    $(document).ready(function () {
+        var columns = [
+            { "data": "BUOCQUYTRINHID" },
+            { "data": "STT" },
+            { "data": "TENBUOC" },
+            { "data": "THOIGIANQUYDINH" },
+            { "data": "MOTA" },
+            { "data": null }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": 1,
+                "className": "text-right"
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnEdit'>Chỉnh sửa</button>";
+                },
+                "className": "text-center"
+            },
+            {
+                "targets": 3,
+                "className": "text-center"
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "lengthChange": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+            "autoWidth": false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+            },
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "<'row p-0'<'col-sm-12 p-0'tr>><'row p-0'<'col-sm-6 p-0'><'col-sm-6 p-0'p>>"
+        }
+
+        var Table_BUOCQUYTRINH_ID = $('#Table_BUOCQUYTRINH_ID').DataTable(options);
+        
+    })
+</script>

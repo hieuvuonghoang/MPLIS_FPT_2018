@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{30176E2B-1FD8-4B91-B698-F441415A7DE9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MPLIS.Libraries.Data.SSO</RootNamespace>
+    <AssemblyName>MPLIS.Libraries.Data.SSO</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interfaces\IDMKVHC.cs" />
+    <Compile Include="Models\BSUserInfor.cs" />
+    <Compile Include="Models\SsoApiServiceParam.cs" />
+    <Compile Include="Models\SSOCookieInfor.cs" />
+    <Compile Include="Models\SSOCookieValues.cs" />
+    <Compile Include="Models\SSOHcHuyen.cs" />
+    <Compile Include="Models\SSOHcTinh.cs" />
+    <Compile Include="Models\SSOHcXa.cs" />
+    <Compile Include="Models\SSOHtCauHinhNguoiDung.cs" />
+    <Compile Include="Models\SSOHtChucNang.cs" />
+    <Compile Include="Models\SSOHtMenu.cs" />
+    <Compile Include="Models\SSOHtNguoiDung.cs" />
+    <Compile Include="Models\SSOHtQuyen.cs" />
+    <Compile Include="Models\SSOHtToChuc.cs" />
+    <Compile Include="Models\SSOHtToChucNguoiDung.cs" />
+    <Compile Include="Models\SSOHtTokenRequestData.cs" />
+    <Compile Include="Models\SSOHttpRequestParams.cs" />
+    <Compile Include="Models\SSOHtUngDung.cs" />
+    <Compile Include="Models\SSOLoginMessage.cs" />
+    <Compile Include="Models\SSOReturnResult.cs" />
+    <Compile Include="Models\SSOUserLoginInfors.cs" />
+    <Compile Include="Models\SSOUserStatus.cs" />
+    <Compile Include="Params\Config.cs" />
+    <Compile Include="Params\SSOConstants.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

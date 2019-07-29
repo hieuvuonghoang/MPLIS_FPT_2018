@@ -1,0 +1,168 @@
+﻿@using AppCore.Models
+@model DC_THUADAT
+
+<form id="ThemMoiThuaDat">
+    <input type="hidden" id="THUADATID" name="THUADATID" value="@Model.THUADATID" />
+    <input type="hidden" id="THUAGOCID" name="THUAGOCID" value="@Model.THUAGOCID" />
+    @Html.HiddenFor(model => model._KIEMTRA, new { @id = "KiemTra" })
+    @Html.HiddenFor(model => model._TRONGDANGKY, new { @id = "TrongDangKy" })
+    <div class="row">
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.XAID, "Chọn xã", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.DropDownListFor(model => model.XAID, new SelectList(ViewBag.listxa, "KVHCID", "TENKVHC"), new { @class = "form-control input-sm" })
+        </div>
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.SOHIEUTOBANDO, "Số hiệu tờ bản đồ", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(model => model.SOHIEUTOBANDO, new { @class = "form-control input-sm" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.SOTHUTUTHUA, "Số thứ tự thửa", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            <div class="col-xs-10" style="padding: 0;">
+                @Html.TextBoxFor(model => model.SOTHUTUTHUA, new { @class = "form-control input-sm" })
+            </div>
+            <div class="col-xs-2" style="padding: 0;">
+                <button class="btn-sm btn-inform pull-right" type="button">...</button>
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.TAILIEUDODACID)
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.TENTAILIEUDD, "Tài liệu đo đạc", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            <div class="col-xs-10" style="padding: 0;">
+                @Html.TextBoxFor(model => model.TENTAILIEUDD, new { @class = "form-control input-sm" })
+            </div>
+            <div class="col-xs-2" style="padding: 0;">
+                <button class="btn-sm btn-inform pull-right" type="button" onclick="TaiLieuDoDac()">...</button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.DIENTICH, "Diện tích", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(model => model.DIENTICH, new { @class = "form-control input-sm" })
+        </div>
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.DIENTICHPHAPLY, "Diện tích pháp lý", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(model => model.DIENTICHPHAPLY, new { @class = "form-control input-sm" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.DUONG, "Đường", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.DropDownListFor(model => model.DUONG, new SelectList(ViewBag.listduong, "TENDUONGID", "TENDUONG"), new { @class = "form-control input-sm" ,@id="drptenduong"})
+        </div>
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.DOANDUONGID, "Đoạn đường", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.DropDownListFor(model => model.DOANDUONGID, new SelectList(ViewBag.listdoanduong, "DOANDUONGID", "TENDOANDUONG"), new { @class = "form-control input-sm", @disabled = "true",@id="drpdoanduong" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.KHUVUCID, "Khu vực", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.DropDownListFor(model => model.KHUVUCID, new SelectList(ViewBag.listkhuvuc, "KHUVUCID", "TENKHUVUC"), new { @class = "form-control input-sm" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.DIACHITHUADAT, "Địa chỉ thửa đất", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-10">
+            @Html.TextAreaFor(model => model.DIACHITHUADAT, new { @class = "form-control", @rows = "3" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model.LOAITHUADAT, "Loại thửa đất", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-4">
+            @Html.DropDownListFor(model => model.LOAITHUADAT, new SelectList(ViewBag.listloaithua, "idloaithuadat", "tenloaithuadat"), new { @class = "form-control input-sm" })
+        </div>
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model._DANGTRANHCHAP, "Hạn chế", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-1 " style="padding-top: 7px;">
+            @Html.CheckBoxFor(model => model._DANGTRANHCHAP,new { @disabled="true"})
+        </div>
+        <div class="col-xs-2">
+            @Html.LabelFor(model => model._LADOITUONGCHIEMDAT, "Là đối tượng chiếm đất", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-1 " style="padding-top: 7px;">
+            @Html.CheckBoxFor(model => model._LADOITUONGCHIEMDAT)
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    function TaiLieuDoDac() {
+        var taiLieuDoDacID = $('#TAILIEUDODACID').val();
+        var thuaDatID = $('#hi_ThuaID').val();
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/_Popup_TaiLieuDoDac",
+            data: { thuaDatID: thuaDatID.trim(), taiLieuDoDacID: taiLieuDoDacID.trim() },
+            success: function (html) {
+                $('#dialogformTaiLieuDoDacID').html(html);
+                var options = {
+                    "backdrop": "static",
+                    "show": true
+                }
+                $("#modalformTaiLieuDoDacID").modal(options);
+            }
+        });
+    }
+    $(document).ready(function () {
+        $('#SOTHUTUTHUA').focusout(function () {
+            console.log($('#SOTHUTUTHUA').val());
+            console.log($('#KiemTra').val());
+            if ($('#KiemTra').val() != 1) {
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/TimKiem_THUADAT",
+                    data: { SttThua: $('#SOTHUTUTHUA').val(), SoToBanDo: $('#SOHIEUTOBANDO').val(), KhuVucHanhChinh: $('#XAID').val() },
+                    success: function (data) {
+                        $('#TabTTChiTietID').html(data);
+                        document.getElementById('hi_ThuaID').value = $('#THUADATID').val();
+                        if ($('#TrongDangKy').val() == 1) {
+                            alert("Thửa đã có trong đăng ký");
+                        }
+                    }
+                });
+            }
+        });
+        $("#drptenduong").change(function () {
+            var formdata = $('#ThemMoiThuaDat').serializeArray();
+            if ($('#drptenduong').val() != "") {
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChonDoanDuong",
+                    data: formdata,
+                    success: function (html) {
+                        $('#TabTTChiTietID').html(html);
+                        $('#drpdoanduong').prop("disabled", false);
+                    }
+                });
+            }
+        });
+
+    });
+</script>

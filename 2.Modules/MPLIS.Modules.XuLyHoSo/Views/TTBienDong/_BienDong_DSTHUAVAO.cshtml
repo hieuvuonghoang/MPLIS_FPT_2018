@@ -1,0 +1,134 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSThuaBDVM
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Danh sách thửa đầu vào</h3>
+    </div>
+    <div class="box-body">
+        <table id="table_DSTHUAVAOID" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Là cha</th>
+                    <th>#</th>
+                    <th>Xã/phường</th>
+                    <th>SH tờ bản đồ</th>
+                    <th>STT thửa</th>
+                    <th>DT pháp lý (m2)</th>
+                    <th>Địa chỉ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DSThua != null && Model.DSThua.Count > 0)
+                {
+                    int rowdsTHUAVaoID = 0;
+                    foreach (var item in Model.DSThua)
+                    {
+                        if (item.LOAITHUABD == "V")
+                        {
+                            rowdsTHUAVaoID = rowdsTHUAVaoID + 1;
+                            <tr data-id="@item.THUADATID">
+                                <td class="text-center">
+                                    <input type="checkbox" name="Array_DSTHUACHA" value="@item.THUADATID" />
+                                </td>
+                                <td class="text-right">
+                                    @rowdsTHUAVaoID.
+                                </td>
+                                <td>
+                                    @item.XaPhuong
+                                </td>
+                                <td class="text-center">
+                                    @item.SHToBanDo
+                                </td>
+                                <td class="text-center">
+                                    @item.STTThua
+                                </td>
+                                <td class="text-center">
+                                    @item.DienTich
+                                </td>
+                                <td>
+                                    @item.DiaChi
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="form-control-static">
+    @Html.CheckBoxFor(model => Model.isCOTHUAXL)
+    @Html.LabelFor(model => Model.isCOTHUAXL, "Có thửa xử lý", new { @style = "font-weight: normal;" })
+</div>
+<div class="clear"></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#divBienDongID_DSTHUAXL').toggle($("#isCOTHUAXL").is(':checked'));
+        InitDataTableXLHS($('#table_DSTHUAVAOID'));
+        $('#isCOTHUAXL').change(function () {
+            $('#divBienDongID_DSTHUAXL').toggle($(this).is(':checked'));
+        });
+    });
+    $("#btn_dialog_DSTHUAVAOID").button().on("click", function () {
+        $.ajax({
+            type: "GET",
+            url: "/TTBienDong/_Popup_DSTHUAVAO",
+            success: function (html) {
+                $('#dialogformDSTHUAVAOID').html(html);
+                var W_DSTHUAVAOID = $("#dialogformDSTHUAVAOID").dialog({
+                    autoOpen: false,
+                    height: 400,
+                    width: 800,
+                    modal: true,
+                    buttons: {
+                        Cancel: function () {
+                            W_DSTHUAVAOID.dialog("close");
+                        }
+                    },
+                });
+                W_DSTHUAVAOID.dialog("open");
+            },
+        });
+    });
+
+    $("#table_DSTHUAVAOID input").change(function () {
+        var id = document.getElementById("CurThuaSelectedID").value;
+        var CoThuaXuLy = $('#isCOTHUAXL').is(':checked');
+        if (id && id != "") {
+            if (CoThuaXuLy) {   //kiểm tra đã có thửa xử lý được chọn hay chưa
+                var checked = false;
+                var inputs = document.getElementById("table_DSTHUAXLID").getElementsByTagName("input");
+                for (i = 0; i < inputs.length; i++) {
+                    var inid = $(inputs[i]).value;
+                    if (id == inid) {
+                        checked = true;
+                        break;
+                    }
+                }
+                if (!checked) { //chưa có, thông báo chọn trước khi xử lý
+                    alert('Bạn cần chọn một thửa xử lý trước');
+                    return;
+                }
+            }
+            var data = document.getElementById("JSONThuaCha").value;
+            var obj = JSON.parse(data);
+            var arr = obj[id];
+            var ThuaID = this.value;
+            var index = arr.indexOf(ThuaID);
+            if ($(this).is(':checked')) {
+                if (index == -1) arr.push(ThuaID);
+            } else {
+                if (index > -1) arr.splice(index, 1);
+            }
+            obj[id] = arr;
+            document.getElementById("JSONThuaCha").value = JSON.stringify(obj);
+        } else {
+            if (CoThuaXuLy)
+                alert('Bạn cần chọn một thửa xử lý trước');
+            else
+                alert('Bạn cần chọn một thửa đầu ra trước');
+        }
+    });
+</script>

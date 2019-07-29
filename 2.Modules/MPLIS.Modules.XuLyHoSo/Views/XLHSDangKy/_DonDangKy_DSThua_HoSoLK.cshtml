@@ -1,0 +1,59 @@
+﻿@using AppCore.Models
+@model DC_THUADAT
+<div class="box">
+    <div class="box-body">
+        <div id="div_DSGiaDat">
+            <table id="table_GIADATTHUA" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th hidden>ID</th>
+                        <th>STT</th>
+                        <th>Mã hồ sơ</th>
+                        <th>Tên hồ sơ</th>
+                        <th>Ngày hồ sơ</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int rdsgcntable = 0;
+                        if (Model != null)
+                        {
+                            if (Model.DSHoSo != null)
+                            {
+                                foreach (var item in Model.DSHoSo)
+                                {
+                                    rdsgcntable = rdsgcntable + 1;
+                                    <tr data-giadatid="@item.HOSOID">
+                                        <td hidden>@item.HOSOID</td>
+                                        <td class="text-right">
+                                            @rdsgcntable.
+                                        </td>
+                                        <td class="text-center">
+                                            @item.MAHOSO
+                                        </td>
+                                        <td class="text-center">
+                                            @item.TENHOSO
+                                        </td>
+                                        <td class="text-center">
+                                            @if(@item.NGAYHOSO.Value!=null){
+                                            @item.NGAYHOSO.Value.ToString("dd/MM/yyyy")
+                                            }
+                                        </td>
+                                        <td>
+                                            <input type="button" class="btn btn-xs btn-heading" id="btnchitieths" value="Chi tiết" />
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+<script>
+
+</script>

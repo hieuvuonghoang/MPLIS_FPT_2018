@@ -1,0 +1,211 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSGCNBDVM
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Danh sách GCN đầu vào</h3>
+    </div>
+    <div class="box-body">
+        <table id="TableGCNVaoID" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Là cha</th>
+                    <th>#</th>
+                    <th>Số phát hành</th>
+                    <th>Mã vạch</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DSGcn != null && Model.DSGcn.Count() > 0)
+                {
+                    int rowdsGCNVaoID = 0;
+                    foreach (var item in Model.DSGcn)
+                    {
+                        if (item.LAGCNVAO == "Y")
+                        {
+                            rowdsGCNVaoID = rowdsGCNVaoID + 1;
+                            <tr>
+                                <td>
+                                    @item.BDGCNID
+                                </td>
+                                <td>
+                                    @item.GIAYCHUNGNHANID
+                                </td>
+                                <td></td>
+                                <td>
+                                    @rowdsGCNVaoID.
+                                </td>
+                                <td>
+                                    @item.SoPhatHanh
+                                </td>
+                                <td>
+                                    @item.MaVach
+                                </td>
+                                <td>
+                                    @item.TrangThai
+                                </td>
+                                <td></td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+        <button id="btnThemGCNVao" type="button" class="btn btn-sm btn-default btn-sm m-r-5"><i class='fa fa-plus'></i> Thêm mới</button>
+        <button id="btnThemGCNVaoTuDangKy" type="button" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm từ đăng ký</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var columns = [
+            { "data": "BDGCNID" },
+            { "data": "GIAYCHUNGNHANID" },
+            { "data": null },
+            { "data": "STT" },
+            { "data": "SoPhatHanh" },
+            { "data": "MaVach" },
+            { "data": "TrangThai" },
+            { "data": null }
+        ]
+
+        var columnDefs = [
+            {
+                "targets": [0, 1],
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function (data) {
+                    if (data.TrangThai == "Y") {
+                        return "<button type='button' class='btn btn-xs btn-heading btnDel' data-toggle='tooltip' data-placement='bottom' title='Xóa GCN khỏi danh sách'>Xóa</button> <button type='button' class='btn btn-xs btn-heading btnCoppy' data-toggle='tooltip' data-placement='bottom' title='Sao chép GCN đầu vào tới GCN đầu ra'>Sao chép</button> <button type='button' class='btn btn-xs btn-heading btnDetail' data-toggle='tooltip' data-placement='bottom' title='Xem thông tin chi tiết GCN'>Chi tiết</button>";
+                    }
+                    return "<button type='button' class='btn btn-xs btn-heading btnDel' data-toggle='tooltip' data-placement='bottom' title='Xóa GCN khỏi danh sách'>Xóa</button> <button type='button' class='btn btn-xs btn-heading btnCoppy' disabled>Sao chép</button> <button type='button' class='btn btn-xs btn-heading btnDetail' data-toggle='tooltip' data-placement='bottom' title='Xem thông tin chi tiết GCN'>Chi tiết</button>";
+                }
+            },
+            {
+                "targets": 2,
+                "render": function () {
+                    return "<input type='checkbox' disabled/>";
+                },
+                "className": "text-center"
+            },
+            {
+                "targets": 3,
+                "className": "text-right"
+            },
+            {
+                "targets": [-1, 4, 5, 6],
+                "className": "text-center"
+            }
+        ]
+
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "t<'row p-0'<'col-xs-6 p-0'<'row p-0'<'col-xs-12 p-0'<'#divBTAdd'>>>><'col-xs-6 p-0'<'pull-right'p>>>",
+            "stateSave": true,
+            "initComplete": function () {
+                initComplete();
+            }
+        }
+
+        function initComplete() {
+            $('#btnThemGCNVao').appendTo($('#divBTAdd'));
+            $('#btnThemGCNVaoTuDangKy').appendTo($('#divBTAdd'));
+        }
+
+        var TableGCNVaoID = $('#TableGCNVaoID').DataTable(options);
+
+        $('#btnThemGCNVao').on('click', function () {
+            $.ajax({
+                type: "POST",
+                url: "/TTBienDong/ThemMoi_GCN",
+                data: { LAGCNVAO: "Y" },
+                dataType: "json",
+                success: function (result) {
+                    if (result.success) {
+                        $('#divBienDongID_DSGCN').load('/TTBienDong/BienDong_DSGCN');
+                    }
+                    alert(result.message);
+                }
+            })
+        })
+
+        $('#btnThemGCNVaoTuDangKy').on('click', function () {
+            $.ajax({
+                type: "POST",
+                url: "/TTBienDong/ThemMoi_GCNVao_TuDangKy",
+                dataType: "html",
+                success: function (html) {
+                    $('#divPopupID')
+                        .html(html)
+                        .ready(function () {
+                            var options = {
+                                "backdrop": "static",
+                                "show": true
+                            }
+                            $("#modalDSDangKyGCNID").modal(options);
+                        })
+                }
+            })
+        })
+
+        TableGCNVaoID.rows().nodes().on('click', 'tbody tr .btnDetail', function (event) {
+            var rowData = TableGCNVaoID.row($(this).parents('tr')).data();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSGiayChungNhan/InitCurGiayChungNhan",
+                data: { gCNID: rowData.GIAYCHUNGNHANID, taiGCN: "1" },
+                success: function (result) {
+                    if (result.message == undefined) {
+                        $('#bhs-tabID').html(result);
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            })
+        })
+
+        TableGCNVaoID.rows().nodes().on('click', 'tbody tr .btnDel', function (event) {
+            var rowData = TableGCNVaoID.row($(this).parents('tr')).data();
+            if (confirm("Xác nhận xóa GCN đầu vào khỏi danh sách?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/TTBienDong/BienDong_DSGCN_XoaGCN",
+                    data: { bienDongGCNID: rowData.BDGCNID },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+                            $('#divBienDongID_DSGCN').load('/TTBienDong/BienDong_DSGCN');
+                        }
+                        alert(result.message);
+                    }
+                })
+            }
+        })
+
+        TableGCNVaoID.rows().nodes().on('click', 'tbody tr .btnCoppy', function (event) {
+            var rowData = TableGCNVaoID.row($(this).parents('tr')).data();
+            $.ajax({
+                type: "POST",
+                url: "/TTBienDong/BienDong_DSGCNVAO_SaoChepGCN",
+                data: { bienDongGCNID: rowData.BDGCNID },
+                dataType: "json",
+                success: function (result) {
+                    if (result.success) {
+                        $('#divBienDongID_DSGCN').load('/TTBienDong/BienDong_DSGCN');
+                    }
+                    alert(result.message);
+                }
+            })
+        })
+
+    })
+</script>

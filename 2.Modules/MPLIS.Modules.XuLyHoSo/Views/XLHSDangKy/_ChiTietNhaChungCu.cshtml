@@ -1,0 +1,65 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.VM_XuLyHoSo_DK
+<div id="ChiTietNhaChungCu">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Chi tiết nhà chung cư</h3>
+        </div>
+        <div class="box-body" id="tabsncc">
+            <div class="tab-pane fade in active" id="tabNhaChungCu">
+                    @{Html.RenderAction("LoadNhaChungCu", "XLHSDangKy", new { a = ViewBag.IDNCC });}                
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <button type='submit' id="btnthemncc" class='t100 btn btn-primary btn-sm pull-right'>Lưu</button>
+        <button type='submit' id="btnlammoincc" class='t100 btn btn-primary btn-sm pull-left'>Làm mới</button>
+    </div>
+
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Nhà trong khu chung cư</h3>
+        </div>
+        <div class="box-body" id="lstnhachungcu_kcc">
+            @Html.Action("lstNhaChungCu",new {t =ViewBag.IDNCC })
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#btnthemncc").on("click", function () {
+            var dondk = $('#DONDANGKYID').val();
+            var formdata = $("#ThemMoiNhaChungCu").serializeArray();
+            console.log(formdata);
+            formdata.push({
+                name: "DONDANGKYID",
+                value: dondk
+            });
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ThemMoiNhaChungCu",
+                data: formdata,
+                success: function (html) {
+                    alert("Lưu thành công");
+                    $('#lstnhachungcu_kcc').html(html);
+                }
+            });
+
+        });
+        $("#btnlammoincc").on("click", function () {
+            $.ajax({
+                type: "GET",
+                url: "/XLHSDangKy/LoadNhaChungCu",
+                data: { a: $('#CurKCCID').val().trim() },
+                success: function (response, startus, xhr) {
+                    $('#tabNhaChungCu').html(response);
+                }
+            });
+        });
+    });
+
+</script>
+
+
+
+
+

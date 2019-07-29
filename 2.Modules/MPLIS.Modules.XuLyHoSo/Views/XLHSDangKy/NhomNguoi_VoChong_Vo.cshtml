@@ -1,0 +1,121 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.VoChongLS
+
+<div id="FormVoChong_ChiTietVoID" class="box box-primary m-0">
+    <div class="box-header with-border">
+        <div class="row p-0">
+            <div class="col-xs-4 p-0">
+                <div class="pull-left">
+                    @if (Model.VO == null)
+                    {
+                        <button id="BtnSave_FormVoChong_ChiTietVoID" type="button" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm mới</button>
+                    }
+                    else
+                    {
+                        <button id="BtnSave_FormVoChong_ChiTietVoID" type="button" class="btn btn-sm btn-default"><i class='fa fa-check'></i> Lưu thông tin</button>
+                    }
+                    <button id="BtnClear_FormVoChong_ChiTietVoID" type="button" class="btn btn-sm btn-default"><i class='fa fa-trash'></i> Xóa trắng</button>
+                </div>
+            </div>
+            <div class="col-xs-4 text-center p-0">
+                <h3 class="box-title">Thông tin chi tiết Vợ</h3>
+            </div>
+            <div class="col-xs-4 p-0">
+                <div class="pull-right">
+                    <button id="BtnClose_FormVoChong_ChiTietVoID" type="button" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-body p-0">
+        @Html.Partial("ChiTietChu_CaNhan", Model.CurCaNhan)
+    </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var divProcessBar = "<div class='overlay'> <i class='fa fa-refresh fa-spin'></i> </div>";
+
+            $('#BtnClose_FormVoChong_ChiTietVoID').on('click', function () {
+                $('#divVoID').removeClass("d-none");
+                $('#FormVoChong_ChiTietVoID').remove();
+            })
+
+            $('#BtnSave_FormVoChong_ChiTietVoID').on('click', function () {
+                $('#FormVoChong_ChiTietVoID').append(divProcessBar);
+                var objVo = {};
+                objVo = FormToObject($('#formTTCaNhanID'));
+                var TableGiayToID = $('#TableGiayToID').DataTable();
+                var dSGiayTo = [];
+                $.each(TableGiayToID.rows().nodes(), function () {
+                    var curRow = TableGiayToID.row(this).data();
+                    var objGiayTo = {};
+                    for (var temp in curRow) {
+                        objGiayTo[temp] = curRow[temp];
+                    }
+                    dSGiayTo.push(objGiayTo);
+                })
+                for (var temp in dSGiayTo) {
+                    if (dSGiayTo[temp]["LAGIAYTOINGCN"] == "True") {
+                        dSGiayTo[temp]["LAGIAYTOINGCN"] = "true";
+                    } else {
+                        dSGiayTo[temp]["LAGIAYTOINGCN"] = "false";
+                    }
+                    dSGiayTo[temp]["NGAYCAP"] = ConverDatatime(dSGiayTo[temp]["NGAYCAP"]);
+                    delete dSGiayTo[temp]["STT"];
+                    delete dSGiayTo[temp]["TenLoaiGiayTo"];
+                    delete dSGiayTo[temp]["TRANGTHAI"];
+                }
+                objVo["DSGiayToTuyThan"] = dSGiayTo;
+                console.log(objVo);
+                $.ajax({
+                    type: "POST",
+                    url: '/XLHSDangKy/NhomNguoi_Save_FormVoChong_ChiTietVoID',
+                    data: { data: JSON.stringify(objVo) },
+                    dataType: "html",
+                    success: function (html) {
+                    if ($('#formTTVoChongID [name=VO]').val() == "") {
+                        alert('Thêm mới thông tin Vợ thành công!');
+                    } else {
+                        alert('Cập nhật thông tin Vợ thành công!');
+                    }
+                    var objVoChong = FormToObject($('#formTTVoChongID'));
+                    $('#divChiTietChu_VoChongID')
+                        .html(html)
+                        .ready(function () {
+                            $('#formTTVoChongID [name=DIACHI]').val(objVoChong['DIACHI']);
+                        });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Lỗi: ' + errorThrown);
+                },
+                complete: function () {
+                    $('.overlay', $('#FormVoChong_ChiTietVoID')).remove();
+                }
+                })
+            })
+
+            $('#BtnClear_FormVoChong_ChiTietVoID').on('click', function () {
+                $('#FormVoChong_ChiTietVoID').append(divProcessBar);
+                $.ajax({
+                    type: "POST",
+                    url: '/XLHSDangKy/NhomNguoi_XoaTrang_FormVoChong_ChiTietVoID',
+                    dataType: "html",
+                    success: function (html) {
+                        $('#divChiTietVoID').html(html);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('Lỗi: ' + errorThrown);
+                    },
+                    complete: function () {
+                        $('.overlay', $('#FormVoChong_ChiTietVoID')).remove();
+                    }
+                })
+            })
+
+        })
+
+    </script>
+</div>
+
+

@@ -1,0 +1,200 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.GiayChungNhanLS
+
+<div class="box">
+    <div class="box-body">
+        <table id="TableGCN_HanCheID" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>#</th>
+                    <th>Nội dung</th>
+                    <th>Ngày ban hành</th>
+                    <th>Ngày hết hiệu lực</th>
+                    <th>Còn hiệu lực</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.DSHanChe != null && Model.DSHanChe.Count > 0)
+                {
+                    int stt = 0;
+                    foreach (var item in Model.DSHanChe)
+                    {
+                        stt++;
+                        <tr>
+                            <td>
+                                @item.HANCHEID
+                            </td>
+                            <td>
+                                @stt.
+                            </td>
+                            <td>
+                                @item.NOIDUNGHANCHE
+                            </td>
+                            <td>
+                                @if (@item.NGAYBANHANH != null)
+                                {
+                                    @item.NGAYBANHANH.Value.ToString("dd/MM/yyyy")
+                                }
+                            </td>
+                            <td>
+                                @if (@item.NGAYHETHIEULUC != null)
+                                {
+                                    @item.NGAYHETHIEULUC.Value.ToString("dd/MM/yyyy")
+                                }
+                            </td>
+                            <td>
+                                @item._ConHieuLuc
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <button id="btnThemHanCheID" type="button" class="btn btn-default btn-sm" disabled><i class='fa fa-plus'></i> Thêm hạn chế</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        if ('@Model.ChinhSua' == 'True') {
+            $('#btnThemHanCheID').prop('disabled', false)
+        }
+
+        var divProcessBar = "<div class='overlay'> <i class='fa fa-refresh fa-spin'></i> </div>";
+
+        var columns = [
+            { "data": "HANCHEID" },
+            { "data": "STT" },
+            { "data": "NOIDUNGHANCHE" },
+            { "data": "NGAYBANHANH" },
+            { "data": "NGAYHETHIEULUC" },
+            { "data": "_ConHieuLuc" },
+            { "data": null }
+        ]
+
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    if ('@Model.ChinhSua' == 'True') {
+                        return "<button type='button' class='btn btn-xs btn-heading btnDel'>Xóa</button>";
+                    }
+                    return "<button type='button' class='btn btn-xs btn-heading btnDel' disabled>Xóa</button>";
+                },
+                "className": "text-center"
+            },
+            {
+                "targets": -2,
+                "render": function (data) {
+                    if (data == "True") {
+                        return "<input type='checkbox' disabled checked>";
+                    } else {
+                        return "<input type='checkbox' disabled>";
+                    }
+                }
+            },
+            {
+                "targets": 1,
+                "className": "text-right"
+            },
+            {
+                "targets": [2, 3, 4, 5],
+                "className": "text-center"
+            }
+        ]
+
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "t<'row p-0'<'col-xs-6 p-0'<'row p-0'<'col-xs-6 p-0'<'#divBTAddHaChe'>>>><'col-xs-6 p-0'<'pull-right'p>>>",
+            "initComplete": function () {
+                initComplete();
+            }
+        }
+
+        function initComplete() {
+            $('#btnThemHanCheID').appendTo($('#divBTAddHaChe'));
+        }
+
+        var TableGCN_HanCheID = $('#TableGCN_HanCheID').DataTable(options);
+
+        TableGCN_HanCheID.rows().nodes().on('dblclick', 'tbody tr', function () {
+            if (TableGCN_HanCheID.rows().nodes().length > 0) {
+                XemTTChiTietHanChe(TableGCN_HanCheID.row($(this)).data(), $(this));
+            }
+        })
+
+        function XemTTChiTietHanChe(rowData, eDom) {
+            $('.box-body').has(eDom).append(divProcessBar);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSGiayChungNhan/DanhSachHanChe_ChiTietHanChe",
+                data: { hanCheID: rowData.HANCHEID },
+                dataType: "html",
+                success: function (html) {
+                    $('#TableGCN_HanCheID_wrapper').addClass("d-none");
+                    $('.box-body').has('#TableGCN_HanCheID_wrapper').append(html);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Lỗi: ' + errorThrown);
+                },
+                complete: function () {
+                    $('.overlay', $('.box-body').has(eDom)).remove();
+                }
+            })
+        }
+
+        $('#btnThemHanCheID').on('click', function () {
+            var eDom = $(this);
+            $('.box-body').has($(this)).append(divProcessBar);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSGiayChungNhan/DanhSachHanChe_ThemMoiHanChe",
+                success: function (result) {
+                    if (result.message == undefined) {
+                        $('#TableGCN_HanCheID_wrapper').addClass("d-none");
+                        $('.box-body').has('#TableGCN_HanCheID_wrapper').append(result);
+                    } else {
+                        console.log(result);
+                        alert(result.message);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Lỗi: ' + errorThrown);
+                },
+                complete: function () {
+                    $('.overlay', $('.box-body').has(eDom)).remove();
+                }
+            })
+        })
+
+        TableGCN_HanCheID.rows().nodes().on('click', 'tbody tr .btnDel', function (event) {
+            if (confirm("Xác nhận xóa hạn chế?")) {
+                var curRow = TableGCN_HanCheID.row($(this).parents('tr'));
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSGiayChungNhan/DanhSachHanChe_XoaHanChe",
+                    data: { hanCheID: curRow.data().HANCHEID },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+                            $('#divGCN_Main_HanChe').load('/XLHSGiayChungNhan/GiayChungNhan_Main_HanChe');
+                        }
+                        alert(result.message);
+                    }
+                })
+            }
+        })
+
+    })
+</script>

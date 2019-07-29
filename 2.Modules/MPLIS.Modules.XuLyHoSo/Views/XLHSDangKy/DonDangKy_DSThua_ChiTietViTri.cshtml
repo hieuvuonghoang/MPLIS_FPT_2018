@@ -1,0 +1,85 @@
+﻿@using AppCore.Models
+@model DC_THUADAT
+<form id="Div_ChiTietViTri">
+    @Html.HiddenFor(m => m.CurViTri.MUCDICHSUDUNGDATID, new { @class = "form-control" })
+    @Html.HiddenFor(m => m.CurViTri.VITRIID, new { @class = "form-control" })
+    <div class="row">
+        <div class="col-xs-4">
+            @Html.LabelFor(model => model.CurViTri.DUONG, "Đường", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-8">
+            @Html.TextBoxFor(model => model.CurViTri.DUONG, new { @class = "form-control input-sm" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            @Html.LabelFor(model => model.CurViTri.DOANDUONG, "Đoạn đường", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-8">
+            @Html.TextBoxFor(model => model.CurViTri.DOANDUONG, new { @class = "form-control input-sm" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            @Html.LabelFor(model => model.CurViTri.KHUVUC, "Khu Vực", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-8">
+            @Html.TextBoxFor(model => model.CurViTri.KHUVUC, new { @class = "form-control input-sm" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            @Html.LabelFor(model => model.CurViTri.VITRI, "Vị trí", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-8">
+            @Html.TextBoxFor(model => model.CurViTri.VITRI, new { @class = "form-control input-sm" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            @Html.LabelFor(model => model.CurViTri.CHIEUSAU, "Chiều sâu", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-8">
+            @Html.TextBoxFor(model => model.CurViTri.CHIEUSAU, new { @class = "form-control input-sm" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-4">
+            @Html.LabelFor(model => model.CurViTri.CHIEURONGNGOHEM, "Chiều rộng ngõ", new { @class = "pull-right control-label" })
+        </div>
+        <div class="col-xs-8">
+            @Html.TextBoxFor(model => model.CurViTri.CHIEURONGNGOHEM, new { @class = "form-control input-sm" })
+        </div>
+    </div>
+</form>
+<div class="box-footer">
+    <input type="button" class="btn-xs btn-heading pull-left" id="btncapnhatViTri" value="Cập nhật" />
+    <input type="button" class="btn-xs btn-heading pull-left" id="btnlammoiViTri" value="Xóa trắng" />
+</div>
+<script>
+    $('#btncapnhatViTri').on("click", function () {
+        var formdata = $("#Div_ChiTietViTri").serializeArray();
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/ThemMoiViTri",
+            data: formdata,
+            success: function (data) {
+                $('#Div_DSViTri').html(data);
+            }
+        })
+    });
+    $('#btnlammoiViTri').on("click", function () {
+        var mucdichid = $('#CurViTri_MUCDICHSUDUNGDATID').val();
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/LoadViTri",
+            dataType: "html",
+            data: { mucdichid: mucdichid.trim() },
+            success: function (data) {
+                console.log("SUCCES");
+                $('#ChiTietMDSD').html(data);
+            },
+        });
+    });
+
+</script>

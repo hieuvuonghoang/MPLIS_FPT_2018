@@ -1,0 +1,94 @@
+﻿@*
+    Người viết : Nguyễn Hải ninh
+    email: ninh1986@gmail.com
+    số ĐT : 01663992327
+*@
+
+@{
+    ViewBag.Title = "Đổi mật khẩu khi Đăng nhập hệ thống lần đầu";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>MPLIS | Đăng nhập hệ thống</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="~/Content/QTHT/DangNhap/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <!-- MetisMenu CSS -->
+    <link href="~/Content/QTHT/DangNhap/Home/bootstrap/metisMenu/dist/metisMenu.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="~/Content/QTHT/DangNhap/Home/bootstrap/css/sb-admin-2.css" rel="stylesheet" />
+    <!-- Custom Fonts -->
+    <link href="~/Content/QTHT/DangNhap/Home/plugins/font-awesome/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body class="hold-transition login-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="login-panel panel panel-default">
+                    @using (Html.BeginForm("DoiMatKhauKhiDangNhap", "Home"))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="panel-body">
+                            <form role="form">
+                                <div class="panel-heading" style="height:86px; font-family:'Times New Roman', Times, serif ">
+                                    <h3 class="panel-title"><img src="~/Content/QTHT/DangNhap/Home/dist/img/Picture1.png" width="67" height="60" /> &nbsp; Hệ thống thông tin đất đai quốc gia - MPLIS</h3>
+                                </div>
+                                <fieldset>
+                                    <div><b style="color:mediumseagreen">Yêu cầu đổi mật khẩu, khi đăng nhập lần đầu !</b></div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Mật khẩu hiện tại" id="TxtMatKhauHienTai" name="TxtMatKhauHienTai" type="password">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Mật khẩu mới" id="TxtMatKhauMoi" name="TxtMatKhauMoi" type="password">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="Xác nhận mật khẩu" id="TxtXacNhanMatKhau" name="TxtXacNhanMatKhau" type="password">
+                                    </div>
+                                    <!-- Change this to a button or input when using this as a form -->
+                                    <button class="btn btn-lg btn-success btn-block" onclick="return KiemTraNhapXacNhanMatKhau();">Lưu Mật Khẩu</button>
+                                    @*<a href="~/Home/Index" class="btn btn-lg btn-success btn-block">Đăng nhập</a>*@
+                                    <br />
+                                    <a href="/Home/Logout" style="font-family:'Times New Roman', Times, serif"><u>Quay lại trang Login</u></a><br>
+                                </fieldset>
+                            </form>
+                        </div>
+                    }
+                    <div>
+                        <label style="color:red;"> @ViewBag.ThongBaoDoiMatkhau </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery -->
+    <script src="~/Content/QTHT/DangNhap/Home/plugins/jQuery/jQuery-2.2.0.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/Content/QTHT/DangNhap/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="~/Content/QTHT/DangNhap/Home/bootstrap/metisMenu/dist/metisMenu.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="~/Content/QTHT/DangNhap/Home/bootstrap/js/sb-admin-2.js"></script>
+</body>
+</html>
+
+@*Kiem tra qua trinh nhap xac nhan mat khau*@
+<script type="text/javascript">
+        function KiemTraNhapXacNhanMatKhau() {
+            if ($("#TxtMatKhauMoi").val() == $("#TxtXacNhanMatKhau").val()) {
+                if ($("#TxtMatKhauMoi").val() == $("#TxtMatKhauHienTai").val()) {
+                    alert("Không nhập mật khẩu mới trùng với mật khẩu hiện tại !");
+                    return false;
+                }
+                else
+                    {
+                    return true;
+                }
+            }
+            else {
+                alert("Nhập xác nhận mật khẩu sai !");
+                return false;
+            }
+        }
+</script>

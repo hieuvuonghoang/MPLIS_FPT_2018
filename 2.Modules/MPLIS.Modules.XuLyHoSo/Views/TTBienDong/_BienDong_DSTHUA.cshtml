@@ -1,0 +1,73 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSThuaBDVM
+
+<form id="IDformBienDong_DSTHUA">
+    <div>
+        @Html.HiddenFor(model => model.JSONThuaCha)
+        <input id="CurThuaSelectedID" name="CurThuaSelectedID" type="hidden" value="">
+        <div id="divBienDongID_DSTHUAVAO">
+            @Html.Partial("_BienDong_DSTHUAVAO")
+        </div>
+        <div id="divBienDongID_DSTHUAXL">
+            @Html.Partial("_BienDong_DSTHUAXL")
+        </div>
+        <div id="divBienDongID_DSTHUARA">
+            @Html.Partial("_BienDong_DSTHUARA")
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(function () {
+        addRowHandlers("table_DSTHUARAID");
+        addRowHandlers("table_DSTHUAXLID");
+        $('#table_DSTHUARAID').on('click', 'tr', function (e) {
+            $(this).addClass('activerow').siblings().removeClass('activerow');
+        })
+
+        function addRowHandlers(tableid) {
+            $("#" + tableid + " td").click(function () {
+                var CoThuaXuLy = $('#isCOTHUAXL').is(':checked');
+                var column_num = parseInt($(this).index()) + 1;
+                //var row_num = parseInt($(this).parent().index()) + 1;
+                if ((tableid === "table_DSTHUAXLID" && column_num > 1) || (tableid === "table_DSTHUARAID")) {
+                    var currentRow = $(this).parent();
+                    var id = $(currentRow).attr("data-id");
+                    document.getElementById("CurThuaSelectedID").value = id;
+                    if (tableid == "table_DSTHUARAID" && CoThuaXuLy)
+                        CheckRow("table_DSTHUAXLID", id);
+                    else CheckRow("table_DSTHUAVAOID", id);
+                }
+            });
+        }
+
+        function CheckRow(tableid, ThuaID) {
+            var data = document.getElementById("JSONThuaCha").value;
+            var obj = JSON.parse(data);
+            var arr = obj[ThuaID];
+            var CoThuaXuLy = $('#isCOTHUAXL').is(':checked');
+            var i;
+            if (tableid === "table_DSTHUAVAOID") {
+                var inputs = document.getElementById("table_DSTHUAXLID").getElementsByTagName("input");
+                for (i = 0; i < inputs.length; i++) {
+                    $(inputs[i]).prop("checked", false);
+                }
+            } else {
+                var inputs = document.getElementById("table_DSTHUAVAOID").getElementsByTagName("input");
+                for (i = 0; i < inputs.length; i++) {
+                    $(inputs[i]).prop("checked", false);
+                }
+            }
+            $("#" + tableid + " input").each(function () {
+                var checked = false;
+                var id = this.value;
+                for (i = 0; i < arr.length; i++)
+                    if (id == arr[i]) {
+                        $(this).prop("checked", true);
+                        checked = true;
+                        break;
+                    }
+                if (!checked) $(this).prop("checked", false);
+            });
+        }
+    });
+</script>

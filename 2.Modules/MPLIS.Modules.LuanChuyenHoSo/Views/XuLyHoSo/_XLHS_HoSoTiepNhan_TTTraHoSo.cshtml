@@ -1,0 +1,53 @@
+﻿@model AppCore.Models.QT_HOSOTIEPNHAN
+
+<div class="box box-primary">
+    <div class="box-body">
+        <form id="formTTTraHoSoID">
+            @Html.HiddenFor(model => model.HOSOTIEPNHANID)
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.TENNGUOINHANKETQUA, "Tên người nhận", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.TENNGUOINHANKETQUA, "", new { @class = "form-control input-sm" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.VAITRONGUOINHANKETQUA, "Vai trò người nhận", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.VAITRONGUOINHANKETQUA, "", new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @*@Html.LabelFor(model => model.NGUOINHANKQHS, "Người nhận", new { @class = "pull-right control-label" })*@
+                </div>
+                <div class="col-xs-4">
+                    @*@Html.TextBoxFor(model => model.NGUOINHANKQHS, "", new { @class = "form-control input-sm" })*@
+                </div>
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.NGAYTRAKETQUA, "Ngày trả", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(model => model.NGAYTRAKETQUA, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.GHICHUTRAKETQUA, "Ghi chú", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.TextAreaFor(model => model.GHICHUTRAKETQUA, new { @class = "form-control", @rows = "3" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-2">
+                    @Html.LabelFor(model => model.DIACHINGUOINHANKETQUA, "Địa chỉ", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-10">
+                    @Html.TextAreaFor(model => model.DIACHINGUOINHANKETQUA, new { @class = "form-control", @rows = "3" })
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

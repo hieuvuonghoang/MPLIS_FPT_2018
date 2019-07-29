@@ -1,0 +1,65 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSChuBDVM
+
+<table id="table_DSCHUVAOID" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Vai trò chủ</th>
+            <th>Loại chủ</th>
+            <th>Họ tên</th>
+            <th>CMT/Hộ chiếu</th>
+            <th></th>
+        </tr>
+    </thead>
+    @{int rowdsChuVaoID = 0;
+        if (Model.DSChu != null)
+        {
+            foreach (var item in Model.DSChu)
+            {
+                rowdsChuVaoID = rowdsChuVaoID + 1;
+                <tr data-id="@item.NGUOIID">
+                    <td style="text-align: right;">
+                        @rowdsChuVaoID.
+                    </td>
+                    <td>
+                        @item.VaiTro
+                    </td>
+                    <td>
+                        @item.Chu_TenLoaiChu
+                    </td>
+                    <td>
+                        @item.Chu_HoTen
+                    </td>
+                    <td>
+                        @item.Chu_CMT
+                    </td>
+                    <td style="text-align: center;">
+                        @Ajax.ActionLink("Xóa", "Remove_DSCHUVAO_R", "TTBienDong", new { id = item.NGUOIID },
+                            new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                //OnSuccess = "RemoveRow",
+                                UpdateTargetId = "divBienDongID_DSCHUVAO_Table",
+                                InsertionMode = InsertionMode.Replace,
+                                Confirm = "Xác nhận xóa?"
+                            }, new { @class = "btn btn-xs btn-heading", @title = "Xóa" })
+                        @Ajax.ActionLink("Chi tiết", "Details_DSCHUVAO_R", "TTBienDong", new { id = item.NGUOIID },
+                            new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                OnSuccess = "alert('Demo!')",
+                                UpdateTargetId = "divBienDongID_DSCHUVAO_Table",
+                                InsertionMode = InsertionMode.Replace
+                            }, new { @class = "btn btn-xs btn-heading", @title = "Chi tiết" })
+                    </td>
+                </tr>
+            }
+        }
+    }
+</table>
+<script type="text/javascript">
+    $(document).ready(function () {
+        InitDataTableXLHS($('#table_DSCHUVAOID'));
+    });
+</script>
+

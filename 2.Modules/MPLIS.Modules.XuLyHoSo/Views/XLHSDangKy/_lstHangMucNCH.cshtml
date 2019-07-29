@@ -1,0 +1,86 @@
+﻿@model AppCore.Models.DangKyTaiSan
+@Html.HiddenFor(m => m.CurHangMucNgoaiCanHo.HANGMUCSOHUUCHUNGID, new { @class = "form-control input-sm" })
+@Html.HiddenFor(m => m.CurHangMucNgoaiCanHo.uId, new { @class = "form-control input-sm" })
+<table id="table_HANGMUCNGOAICANHO" class="table table-bordered">
+    <thead>
+        <tr>
+            <th class="t100" hidden="true"></th>
+            <th class="t50">STT</th>
+            <th class="t100">Tên Hạng Mục</th>
+            <th class="t100">Diện tích</th>
+            <th class="t100">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int rtdtable = 0;
+            if (Model != null)
+            {
+                if (Model.lstHangMucNgoaiCanHo != null)
+                {
+                    foreach (var item in Model.lstHangMucNgoaiCanHo)
+                    {
+                        rtdtable = rtdtable + 1;
+                        <tr data-id="@item.HANGMUCSOHUUCHUNGID">
+                            <td hidden="true">@item.uId</td>
+                            <td align="center">@rtdtable</td>
+                            <td align="center">@item.TENHANGMUC</td>
+                            <td align="center">@item.DIENTICH</td>
+                            <td align="center">
+                                <input type="button" class="btn btn-xs btn-heading" id="btnxoahangmuc" value="Xóa" onclick="removeRowhmnch(this)" />
+                            </td>
+                        </tr>
+
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>
+<script>
+    InitDataTableXLHS($('#table_HANGMUCNGOAICANHO'));
+    function removeRowhmnch(button) {
+        var ans = confirm("Bạn chắc chắn muốn xóa?");
+        //=== If user pressed Ok then delete the record else do nothing.
+        if (ans == true) {
+            //alert('xóa thành công!');
+            var empTab = document.getElementById('table_HANGMUCNGOAICANHO');
+            var index = button.parentNode.parentNode.rowIndex;
+            // alert(index);
+            var taisanid = empTab.rows[index].cells[0].innerHTML;
+            var dondk = $('#DONDANGKYID').val();
+            empTab.deleteRow(button.parentNode.parentNode.rowIndex);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/XOA_HANGMUCNGOAICANHO",
+                dataType: "html",
+                data: { taisanid: taisanid.trim(), dondangky_id: dondk.trim() },
+                success: function (html) {
+                    alert("Xóa thành công!");
+                    $('#openTabHangmuc').click();
+                },
+            });
+        }
+
+
+
+    }
+    $(function () {
+        $("#table_HANGMUCNGOAICANHO tbody").on("click", "tr", function (e) {
+            $(this).addClass('activerow').siblings().removeClass('activerow');
+            var taisanid = $(this)[0].cells[0].innerHTML;
+            var dondk = $('#DONDANGKYID').val();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ChiTietHangMucNgoaiCanHo",
+                data: { idtaisan: taisanid.trim(), Loaitaisan: "5" },
+                datatype: "html",
+                success: function (data) {
+                    $('#tabHangMucNCH').html(data);
+                }
+            });
+        });
+
+    });
+
+</script>

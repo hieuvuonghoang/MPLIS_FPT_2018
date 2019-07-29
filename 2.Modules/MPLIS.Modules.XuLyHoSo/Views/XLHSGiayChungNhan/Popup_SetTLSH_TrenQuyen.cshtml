@@ -1,0 +1,142 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSTLSHTrenQuyenVM
+
+<div class='modal fade' id='modal_GCN_QUYEN_TLSH_ID' role="dialog">
+    <div class='modal-dialog modal-dialog-centered' role="document">
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'></h4>
+            </div>
+            <div class='modal-body p-10'>
+                <table id="TablePopUpDSTLSHTrenQuyenID" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>#</th>
+                            <th>Số phát hành</th>
+                            <th>Mã vạch</th>
+                            <th>Tỷ lệ sở hữu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DSTLSHTrenQuyen != null && Model.DSTLSHTrenQuyen.Count > 0)
+                        {
+                            int sTT = 0;
+                            foreach (var item in Model.DSTLSHTrenQuyen)
+                            {
+                                sTT++;
+                                <tr>
+                                    <td>@item.QUYENID</td>
+                                    <td>@sTT.</td>
+                                    <td>@item.SOPHATHANH</td>
+                                    <td>@item.MAVACH</td>
+                                    <td>@item.TILESOHUU</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <button id="modal_GCN_QUYEN_TLSH_ID_btnSave" type='button' class='btn btn-default btn-sm pull-left'><i class='fa fa-check'></i> Xong</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var iSQuyen = '@Model.ISQUYEN';
+
+        var columns = [
+            { "data": "QUYENID" },
+            { "data": "STT" },
+            { "data": "SOPHATHANH" },
+            { "data": "MAVACH" },
+            { "data": "TILESOHUU" }
+        ]
+
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function (data) {
+                    return "<input type='number' name='TLSH' class='form-control input-sm' min='0' max='100' value='" + data + "' />%";
+                }
+            },
+            {
+                "targets": 1,
+                "className": "text-right"
+            },
+            {
+                "targets": [-1, -2, -3],
+                "className": "text-center"
+            }
+        ]
+
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "t<'row p-0'<'col-xs-6 p-0'<'row p-0'<'col-xs-6 p-0'<'#divmodal_GCN_QUYEN_TLSH_ID_btnSave'>>>><'col-xs-6 p-0'<'pull-right'p>>>",
+            "initComplete": function () {
+                initComplete();
+            }
+        }
+
+        var TablePopUpDSTLSHTrenQuyenID = $('#TablePopUpDSTLSHTrenQuyenID').DataTable(options);
+
+        function initComplete() {
+            $('#modal_GCN_QUYEN_TLSH_ID_btnSave').appendTo($('#divmodal_GCN_QUYEN_TLSH_ID_btnSave'));
+        }
+
+        TablePopUpDSTLSHTrenQuyenID.rows().nodes().on('focusout', 'tbody tr [name=TLSH]', function () {
+            TablePopUpDSTLSHTrenQuyenID.row($(this).parents('tr')).data().TILESOHUU = $(this).val();
+        })
+
+        $('#modal_GCN_QUYEN_TLSH_ID_btnSave').on('click', function () {
+            var arr = [];
+            var totalTLSH = 0.0;
+            $.each(TablePopUpDSTLSHTrenQuyenID.rows().nodes(), function () {
+                var curRowData = TablePopUpDSTLSHTrenQuyenID.row($(this)).data();
+                arr.push({
+                    "QUYENID": curRowData.QUYENID,
+                    "TILESOHUU": curRowData.TILESOHUU
+                })
+                totalTLSH += parseFloat(curRowData.TILESOHUU);
+            })
+            console.log(totalTLSH);
+            if (totalTLSH !== 100) {
+                alert('Có lỗi xảy ra kiểm tra lại TLSH trên quyền cho từng GCN?');
+            } else {
+                var obj = {};
+                obj.ISQUYEN = iSQuyen;
+                obj.DSTLSHTrenQuyen = arr;
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSGiayChungNhan/SaveForm_Popup_SetTLSH_TrenQuyen",
+                    data: { data: JSON.stringify(obj) },
+                    dataType: "json",
+                    success: function (result) {
+                        $("#modal_GCN_QUYEN_TLSH_ID").modal('hide');
+                        switch ('@Model.ISQUYEN') {
+                            case "QSDDAT":
+                                $('#divGCN_Main_SDDATID').load('/XLHSGiayChungNhan/GiayChungNhan_Main_SDDat');
+                                break;
+                            case "QSHTS":
+                                $('#divGCN_Main_SHTaiSanID').load('/XLHSGiayChungNhan/GiayChungNhan_Main_SHTaiSan');
+                                break;
+                            case "QQLDAT":
+                                $('#divGCN_Main_QLDATID').load('/XLHSGiayChungNhan/GiayChungNhan_Main_QLDat');
+                                break;
+                        }
+                    }
+                })
+            }
+        })
+    })
+</script>

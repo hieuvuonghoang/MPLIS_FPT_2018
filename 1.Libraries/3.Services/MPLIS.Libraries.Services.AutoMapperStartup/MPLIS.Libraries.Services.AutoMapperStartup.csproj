@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{33A57715-FC3C-4D45-80C3-0FB84A145205}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MPLIS.Libraries.Services.AutoMapperStartup</RootNamespace>
+    <AssemblyName>MPLIS.Libraries.Services.AutoMapperStartup</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\..\..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AutoMapperRegister.cs" />
+    <Compile Include="ClassMapper\QuanTriQuyTrinhMapper.cs" />
+    <Compile Include="ClassMapper\SSOMapper.cs" />
+    <Compile Include="ClassMapper\XuLyHoSoMapper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\2.Data\AppCore\AppCore.csproj">
+      <Project>{0A99AAE9-81DE-4322-AF61-3C99D27629F1}</Project>
+      <Name>AppCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\2.Data\MPLIS.Libraries.Data.QuanTriQuyTrinh\MPLIS.Libraries.Data.QuanTriQuyTrinh.csproj">
+      <Project>{23266cf2-4328-44b9-bba7-251e26a32c59}</Project>
+      <Name>MPLIS.Libraries.Data.QuanTriQuyTrinh</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\2.Data\MPLIS.Libraries.Data.SSO\MPLIS.Libraries.Data.SSO.csproj">
+      <Project>{30176E2B-1FD8-4B91-B698-F441415A7DE9}</Project>
+      <Name>MPLIS.Libraries.Data.SSO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\2.Data\MPLIS.Libraries.Datas.XuLyHoSo\MPLIS.Libraries.Data.XuLyHoSo.csproj">
+      <Project>{779CCA92-29A0-4D45-B2F3-E6D51D0F3289}</Project>
+      <Name>MPLIS.Libraries.Data.XuLyHoSo</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

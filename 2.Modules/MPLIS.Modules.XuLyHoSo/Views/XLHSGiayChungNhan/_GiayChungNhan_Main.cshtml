@@ -1,0 +1,171 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.BoHoSoModel
+<div id="divGiayChungNhanID">
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divGiayChungNhanID" href="#collapse_GCN_TTChung">
+                Thông tin chung giấy chứng nhận
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="LuuGiayChungNhan_MAIN_TTCHUNG()" @Html.Raw(Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? "disabled" : "")>Cập nhật</button>
+        </div>
+        <div id="collapse_GCN_TTChung" class="panel-collapse collapse in">
+            <div id="divGCN_TTChung_ID">
+                @{Html.RenderPartial("_GiayChungNhan_Main_TTCHUNG");}
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divGiayChungNhanID" href="#collapse_GCN_SDDAT">
+                Danh sách quyền sử dụng đất
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="UpDateDSQuyenSDDat()" @Html.Raw(Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? "disabled" : "")>Cập nhật</button>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="GCN_ThemThuaDat('QSD')" @Html.Raw(Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? "disabled" : "")>Thêm quyền</button>
+        </div>
+        <div id="collapse_GCN_SDDAT" class="panel-collapse collapse">
+            <div id="divGCN_Main_SDDATID">
+                @{Html.RenderPartial("_GiayChungNhan_Main_SDDAT");}
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divGiayChungNhanID" href="#collapse_GCN_SHTS">
+                Danh sách quyền sở hữu tài sản
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="UpDateDSQuyenSHTS()" @Html.Raw(Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? "disabled" : "")>Cập nhật</button>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="GCN_ThemTaiSan()" @Html.Raw(Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? "disabled" : "")>Thêm tài sản</button>
+        </div>
+        <div id="collapse_GCN_SHTS" class="panel-collapse collapse">
+            <div id="divGCN_Main_SHTaiSanID">
+                @{Html.RenderPartial("_GiayChungNhan_Main_SHTAISAN");}
+            </div>
+        </div>
+    </div>
+    <div class="row panel" style="margin-bottom: 5px;">
+        <div class="btn btn-default btn-block tab-doc" style="text-align:left;">
+            <a style="color: blue;font-weight: bold;" data-toggle="collapse" data-parent="#divGiayChungNhanID" href="#collapse_GCN_QLD">
+                Danh sách quyền quản lý đất
+            </a>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="UpDateDSQuyenQLDat()" @Html.Raw(Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? "disabled" : "")>Cập nhật</button>
+            <button class="btn-xs btn-heading pull-right" type="button" onclick="GCN_ThemThuaDat('QQL')" @Html.Raw(Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? "disabled" : "")>Thêm quyền</button>
+        </div>
+        <div id="collapse_GCN_QLD" class="panel-collapse collapse">
+            <div id="divGCN_Main_QLDATID">
+                @{Html.RenderPartial("_GiayChungNhan_Main_QLDAT");}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        trigger_tab_doc();
+    })
+    function LuuGiayChungNhan_MAIN_TTCHUNG() {
+        //var xhlhs_gcnchon1 = $('#droplistxulyhsgcn').val();
+        @*var formdatabanquet = new FormData();
+        var fileInputbanquet = document.getElementById('chonfilebanquetid');
+        if (fileInputbanquet.files.length > 0) {
+            formdatabanquet.append(fileInputbanquet.files[0].name, fileInputbanquet.files[0]);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '@(Url.Action("ImportBanQuet", "XLHSGiayChungNhan"))');
+            xhr.send(formdatabanquet);
+        };*@
+        $('#CurDC_GIAYCHUNGNHAN_TRANGTHAIXULY').removeAttr('disabled');
+        var formGiayChungNhan_MAIN_TTCHUNG = $('#FormGCN_Main_TTCHUNGID');
+        $.ajax({
+            type: "POST",
+            url: "/XLHSGiayChungNhan/Save_GCN_MAIN_TTCHUNG",
+            data: formGiayChungNhan_MAIN_TTCHUNG.serialize(),
+            success: function (html) {
+                alert("Cập nhật thông tin GCN thành công!");
+            },
+        });
+        $('#CurDC_GIAYCHUNGNHAN_TRANGTHAIXULY').attr('disabled', 'disabled');
+    };
+    function GCN_ThemThuaDat(isQuyen) {
+        console.log(isQuyen);
+        $.ajax({
+            type: "POST",
+            url: "/XLHSGiayChungNhan/_Popup_DSThuaTrongDK",
+            data: { isQuyen: isQuyen },
+            dataType: "html",
+            success: function (html) {
+                $('#dialogformMAIN_SDDAT_Popup')
+                    .html(html)
+                    .ready(function () {
+                        var options = {
+                            "backdrop": "static",
+                            "show": true
+                        }
+                        $("#modalformDSThua").on('show.bs.modal', function () {
+                            switch (isQuyen) {
+                                case "QSD":
+                                    $('#titlePopupQDID').html('Thêm quyền sử dụng đất vào giấy chứng nhận');
+                                    break;
+                                case "QQL":
+                                    $('#titlePopupQDID').html('Thêm quyền quản lý đất vào giấy chứng nhận');
+                                    break;
+                                default:
+                                    break;
+                            }
+                        });
+                        $("#modalformDSThua").modal(options);
+                    });
+            }
+        });
+    };
+    function GCN_ThemTaiSan() {
+        $.ajax({
+            type: "GET",
+            url: "/XLHSGiayChungNhan/_Popup_DSTaiSanTrongDK",
+            success: function (html) {
+                $('#dialogformMAIN_SHTAISAN_Popup').html(html);
+                var options = {
+                    "backdrop": "static",
+                    "show": true
+                }
+                $("#modalformDSTaiSan").modal(options);
+            },
+        });
+    };
+    function LuuGiayChungNhan_MAIN_SDDAT() {
+
+    };
+    function LuuGiayChungNhan_MAIN_SHTAISAN() {
+
+    };
+
+    function UpDateDSQuyenSDDat() {
+        $.ajax({
+            type: "POST",
+            url: "/XLHSGiayChungNhan/updateDSQuyenSDDatInGCN",
+            data: { gcnID: $('#CurDC_GIAYCHUNGNHAN_GIAYCHUNGNHANID').val() },
+            success: function (html) {
+                alert('Cập nhật danh sách quyền sử dụng đất thành công!');
+            },
+        });
+    }
+
+    function UpDateDSQuyenSHTS() {
+        $.ajax({
+            type: "POST",
+            url: "/XLHSGiayChungNhan/updateDSQuyenSHTSInGCN",
+            data: { gcnID: $('#CurDC_GIAYCHUNGNHAN_GIAYCHUNGNHANID').val() },
+            success: function (html) {
+                alert('Cập nhật danh sách quyền sở hữu tài sản thành công!');
+            },
+        })
+    }
+
+    function UpDateDSQuyenQLDat() {
+        $.ajax({
+            type: "POST",
+            url: "/XLHSGiayChungNhan/updateDSQuyenQLDatInGCN",
+            data: { gcnID: $('#CurDC_GIAYCHUNGNHAN_GIAYCHUNGNHANID').val() },
+            success: function (html) {
+                alert('Cập nhật danh sách quyền quản lý đất thành công!');
+            },
+        })
+    }
+</script>

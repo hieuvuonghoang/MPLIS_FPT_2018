@@ -1,0 +1,128 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSThuaDatVM
+
+<table id="Table_SDDatMDSDID" class="table table-bordered" data-toggle="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>
+                <input type="checkbox" id="checkall_QuyenSDDATMucDich" />
+            </th>
+            <th>#</th>
+            <th>Xã phường</th>
+            <th>SH tờ bản đồ</th>
+            <th>STT thửa</th>
+            <th>Mục đích sử dụng</th>
+            <th>Diện tích (m<sup>2</sup>)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.DSThuaTheoMDSDID != null && Model.DSThuaTheoMDSDID.Count() > 0)
+        {
+            int stt = 0;
+            foreach (var item in Model.DSThuaTheoMDSDID)
+            {
+                stt++;
+                <tr>
+                    <td>@item.MUCDICHSUDUNGDATID</td>
+                    <td></td>
+                    <td>@stt.</td>
+                    <td>@item.TenXaPhuong</td>
+                    <td>@item.SOHIEUTOBANDO</td>
+                    <td>@item.SOTHUTUTHUA</td>
+                    <td>@item.MDSD</td>
+                    <td>@item.DIENTICH</td>
+                    <td></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<button id="Table_SDDatMDSDID_btnSave" type='button' class='btn btn-default btn-sm pull-left'><i class='fa fa-check'></i> Xong</button>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var columns = [
+            { "data": "MUCDICHSUDUNGDATID" },
+            { "data": null },
+            { "data": "STT" },
+            { "data": "TenXaPhuong" },
+            { "data": "SOHIEUTOBANDO" },
+            { "data": "SOTHUTUTHUA" },
+            { "data": "MDSD" },
+            { "data": "DIENTICH" },
+            { "data": null }
+        ]
+
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": 1,
+                "render": function () {
+                    return "<input type='checkbox'/>";
+                }
+            },
+            {
+                "targets": 2,
+                "className": "text-right"
+            },
+            {
+                "targets": [1, 4, 5, 6, 7],
+                "className": "text-center"
+            }
+        ]
+
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "t<'row p-0'<'col-xs-6 p-0'<'row p-0'<'col-xs-6 p-0'<'#Table_SDDatMDSDID_divBTSave'>><'col-xs-6 p-0' >>><'col-xs-6 p-0'<'pull-right'p>>>",
+            "initComplete": function () {
+                initComplete();
+            }
+        }
+
+        function initComplete() {
+            $('#Table_SDDatMDSDID_btnSave').appendTo($('#Table_SDDatMDSDID_divBTSave'));
+        }
+
+        var Table_SDDatMDSDID = $('#Table_SDDatMDSDID').DataTable(options);
+
+        ProcessCheckBox(Table_SDDatMDSDID, $('#checkall_QuyenSDDATMucDich'));
+
+        $('#Table_SDDatMDSDID_btnSave').on('click', function () {
+            var arrSel = [];
+            $.each(Table_SDDatMDSDID.rows().nodes(), function () {
+                if ($('[type=checkbox]', this).is(':checked')) {
+                    arrSel.push(Table_SDDatMDSDID.row(this).data().MUCDICHSUDUNGDATID);
+                }
+            });
+            if (arrSel.length == 0) {
+                alert('Vui lòng chọn ít nhất một Mục Đích Sử Dụng?')
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSGiayChungNhan/Save_Popup_ThemQuyenVaoGCN",
+                    data: { data: JSON.stringify(arrSel), isQuyen: '@Model.ISQuyen', thuaTheo: 0 },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+                            $("#modalformDSThua").modal('hide');
+                            if('@Model.ISQuyen' == 'QSDDAT') {
+                                $('#divGCN_Main_SDDATID').load('/XLHSGiayChungNhan/GiayChungNhan_Main_SDDat');
+                            } else if('@Model.ISQuyen' == 'QQLDAT') {
+                                $('#divGCN_Main_QLDATID').load('/XLHSGiayChungNhan/GiayChungNhan_Main_QLDat');
+                            }
+                        }
+                        alert(result.message);
+                    }
+                })
+            }
+        })
+    })
+</script>

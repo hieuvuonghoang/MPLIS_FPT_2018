@@ -1,0 +1,184 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.TheChapGiaiChapGCNVM
+
+@Html.HiddenFor(model => model.JSONTheChapGCNVM)
+<div class="box box-solid" style="margin-bottom: 10px;">
+    <div class="box-header with-border">
+        <h4 class="box-title">Quyền sử dụng đất</h4>
+    </div>
+    <div class="box-body">
+        <table class="table table-bordered" id="QuyenSDDatTableID" data-toggle="table">
+            <thead>
+                <tr>
+                    <th>Đang thế chấp</th>
+                    <th>Ngày thế chấp</th>
+                    <th>Xã/phường</th>
+                    <th>SH tờ bản đồ</th>
+                    <th>STT thửa</th>
+                    <th>Mục đích sử dụng</th>
+                    <th>Diện tích (m<sup>2</sup>)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DSQuyenSuDungDat != null && Model.DSQuyenSuDungDat.Count() > 0)
+                {
+                    foreach (var objQD in Model.DSQuyenSuDungDat)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <input type="checkbox" name="QUYENSUDUNGDATID" value="@objQD.QUYENSUDUNGDATID" checked="@objQD.TRANGTHAIPL" @Html.Raw(objQD.EnableCheck ? "" : "disabled") />
+                            </td>
+                            <td class="text-center">
+                                @objQD.NGAYDANGKYTC
+                            </td>
+                            <td>
+                                @objQD.XaPhuong
+                            </td>
+                            <td class="text-center">
+                                @objQD.SHToBanDo
+                            </td>
+                            <td class="text-center">
+                                @objQD.STTThua
+                            </td>
+                            <td class="text-center">
+                                @objQD.MDSD
+                            </td>
+                            <td class="text-center">
+                                @objQD.DienTich
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="box box-solid" style="margin-bottom: 10px;">
+    <div class="box-header with-border">
+        <h4 class="box-title">Quyền sở hữu tài sản</h4>
+    </div>
+    <div class="box-body">
+        <table class="table table-bordered" id="QuyenSHTaiSanTableID" data-toggle="table">
+            <thead>
+                <tr>
+                    <th>Đang thế chấp</th>
+                    <th>Ngày thế chấp</th>
+                    <th>Loại tài sản</th>
+                    <th>Tên tài sản</th>
+                    <th>Diện tích (m<sup>2</sup>)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DSQuyenSoHuuTaiSan != null && Model.DSQuyenSoHuuTaiSan.Count() > 0)
+                {
+                    foreach (var objQTS in Model.DSQuyenSoHuuTaiSan)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <input type="checkbox" name="QUYENSOHUUTAISANID" value="@objQTS.QUYENSOHUUTAISANID" checked="@objQTS.TRANGTHAIPL" @Html.Raw(objQTS.EnableCheck ? "" : "disabled") />
+                            </td>
+                            <td class="text-center">
+                                @objQTS.NGAYDANGKYTC
+                            </td>
+                            <td class="text-center">
+                                @objQTS.LoaiTaiSan
+                            </td>
+                            <td class="text-center">
+                                @objQTS.TenTaiSan
+                            </td>
+                            <td class="text-center">
+                                @objQTS.DienTich
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="box box-solid" style="margin-bottom: 10px;">
+    <div class="box-header with-border">
+        <h4 class="box-title">Quyền quản lý đất</h4>
+    </div>
+    <div class="box-body">
+        <table class="table table-bordered" id="QuyenQLDatTableID" data-toggle="table">
+            <thead>
+                <tr>
+                    <th>Đang thế chấp</th>
+                    <th>Ngày thế chấp</th>
+                    <th>Xã/phường</th>
+                    <th>SH tờ bản đồ</th>
+                    <th>STT thửa</th>
+                    <th>Mục đích sử dụng</th>
+                    <th>Diện tích (m<sup>2</sup>)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.DSQuyenQuanLyDat != null && Model.DSQuyenQuanLyDat.Count() > 0)
+                {
+                    foreach (var objQQLD in Model.DSQuyenQuanLyDat)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <input type="checkbox" name="QUYENSUDUNGDATID" value="@objQQLD.QUYENQUANLYDATID" checked="@objQQLD.TRANGTHAIPL" @Html.Raw(objQQLD.EnableCheck ? "" : "disabled") />
+                            </td>
+                            <td class="text-center">
+                                @objQQLD.NGAYDANGKYTC
+                            </td>
+                            <td>
+                                @objQQLD.XaPhuong
+                            </td>
+                            <td class="text-center">
+                                @objQQLD.SHToBanDo
+                            </td>
+                            <td class="text-center">
+                                @objQQLD.STTThua
+                            </td>
+                            <td class="text-center">
+                                @objQQLD.MDSD
+                            </td>
+                            <td class="text-center">
+                                @objQQLD.DienTich
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        InitDataTableXLHS($('#QuyenSDDatTableID'));
+        InitDataTableXLHS($('#QuyenSHTaiSanTableID'));
+        InitDataTableXLHS($('#QuyenQLDatTableID'));
+        $("#QuyenSDDatTableID input").change(function () {
+            var obj = JSON.parse($("#JSONTheChapGCNVM").val());
+            for (var i = 0; i < obj.DSQuyen.length; i++) {
+                if (obj.DSQuyen[i].ISQuyen == "QSDDAT" && obj.DSQuyen[i].IDQuyen == $(this).val()) {
+                    obj.DSQuyen[i].TrangThaiPL = $(this).is(':checked') ? true : false;
+                }
+            }
+            $("#JSONTheChapGCNVM").val(JSON.stringify(obj));
+        })
+        $("#QuyenSHTaiSanTableID input").change(function () {
+            var obj = JSON.parse($("#JSONTheChapGCNVM").val());
+            for (var i = 0; i < obj.DSQuyen.length; i++) {
+                if (obj.DSQuyen[i].ISQuyen == "QTS" && obj.DSQuyen[i].IDQuyen == $(this).val()) {
+                    obj.DSQuyen[i].TrangThaiPL = $(this).is(':checked') ? true : false;
+                }
+            }
+            $("#JSONTheChapGCNVM").val(JSON.stringify(obj));
+        })
+        $("#QuyenQLDatTableID input").change(function () {
+            var obj = JSON.parse($("#JSONTheChapGCNVM").val());
+            for (var i = 0; i < obj.DSQuyen.length; i++) {
+                if (obj.DSQuyen[i].ISQuyen == "QQLDAT" && obj.DSQuyen[i].IDQuyen == $(this).val()) {
+                    obj.DSQuyen[i].TrangThaiPL = $(this).is(':checked') ? true : false;
+                }
+            }
+            $("#JSONTheChapGCNVM").val(JSON.stringify(obj));
+        })
+    })
+</script>
+

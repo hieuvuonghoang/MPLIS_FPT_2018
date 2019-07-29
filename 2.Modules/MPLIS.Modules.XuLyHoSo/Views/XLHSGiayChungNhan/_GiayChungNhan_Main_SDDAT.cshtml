@@ -1,0 +1,72 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.BoHoSoModel
+
+<div class="box">
+    <div class="box-body">
+        <table id="_GCN_Main_SDDAT_TableID" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Xã phường</th>
+                    <th>SH tờ bản đồ</th>
+                    <th>STT thửa</th>
+                    <th>Mục đích sử dụng</th>
+                    <th>Diện tích (m<sup>2</sup>)</th>
+                    <th>Trạng thái</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.CurDC_GIAYCHUNGNHAN != null && Model.CurDC_GIAYCHUNGNHAN.DSQuyenSDDat != null && Model.CurDC_GIAYCHUNGNHAN.DSQuyenSDDat.Count > 0)
+                {
+                    int stt = 0;
+                    foreach (var item in Model.CurDC_GIAYCHUNGNHAN.DSQuyenSDDat)
+                    {
+                        stt++;
+                        <tr data-id="@item.QUYENSUDUNGDATID">
+                            <td class="text-right">
+                                @stt.
+                            </td>
+                            <td>
+                                @item.XaPhuong
+                            </td>
+                            <td class="text-center">
+                                @item.SHToBanDo
+                            </td>
+                            <td class="text-center">
+                                @item.STTThua
+                            </td>
+                            <td class="text-center">
+                                @item.MdsdDat.MDSD
+                            </td>
+                            <td class="text-center">
+                                @item.DienTich
+                            </td>
+                            <td class="text-center">
+                                @(item.TRANGTHAIPL == "T" ? "Đang thế chấp" : "Bình thường")
+                            </td>
+                            <td class="text-center">
+                                @Ajax.ActionLink("Xóa", "Remove_DSQUYENSDDAT_Row", "XLHSGiayChungNhan", new { quyenSDDATID = item.QUYENSUDUNGDATID, gcnID = Model.CurDC_GIAYCHUNGNHAN.GIAYCHUNGNHANID },
+                                new AjaxOptions
+                                {
+                                    HttpMethod = "POST",
+                                    OnSuccess = "RemoveRow_GCN_Main_SDDAT_TableID",
+                                    Confirm = "Xác nhận xóa?"
+                                }, Model.CurDC_GIAYCHUNGNHAN.ThuocDangKy ? (object)new { @class = "btn btn-xs btn-heading", @title = "Xóa", @disabled = "" } : (object)new { @class = "btn btn-xs btn-heading", @title = "Xóa" })
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var _GCN_Main_SDDAT_TableID;
+    function RemoveRow_GCN_Main_SDDAT_TableID(objJson) {
+        RemoveRowDataTable($('#_GCN_Main_SDDAT_TableID'), objJson.RowID);
+    }
+    $(document).ready(function () {
+        _GCN_Main_SDDAT_TableID = InitDataTableXLHS($('#_GCN_Main_SDDAT_TableID'));
+    });
+</script>

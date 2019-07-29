@@ -1,0 +1,122 @@
+﻿<link href="~/Content/XuLyHoSo/css/font-awesome.min.css" rel="stylesheet" />
+<link href="~/Content/XuLyHoSo/css/jquery.orgchart.min.css" rel="stylesheet" />
+<link href="~/Content/XuLyHoSo/css/style.css" rel="stylesheet" />
+@*<script src="~/Scripts/XuLyHoSo/Orchart/js/jquery.min.js"></script>*@
+<script src="~/Scripts/XuLyHoSo/Orchart/js/js/jquery.orgchart.js"></script>
+<link href="~/Content/XuLyHoSo/XLHSstyle.css" rel="stylesheet" />
+
+    
+@*<script src="~/Scripts/XuLyHoSo/ViewModel/main.js"></script>*@
+@*@model MPLIS.Modules.XuLyHoSo.Controllers.ObjLichSu*@
+
+@model MPLIS.Libraries.Data.XuLyHoSo.Models.ObjLichSu
+
+<body>
+    <div class="row">
+        <div class="col-xs-4 form-group">
+            <fieldset>
+                <legend>
+                    Cây lịch sử
+                </legend>
+                <div id="IdCayLichSu">
+
+                </div>
+            </fieldset>
+        </div>
+        <div class="col-xs-8 form-group">
+            <fieldset>
+                <legend>
+                    Thông tin thuộc tính
+                </legend>
+                <div id="divLichSuID">
+                    @*<div class="panel-group" id="accordion3">
+
+
+                        </div>*@
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</body>
+
+<script type="text/javascript">
+    $(function () {
+        var abc=  @Html.Raw(Json.Encode(Model));
+        //var js = JSON.parse('abc');
+      //  alert(abc);
+        var datascource = {
+            'name': 'GCN',
+            'GCN': '12345678',
+            'SOTO': '12',
+            'SOTHUA': '123',
+            'CHU': 'abc',
+            'LAGCN': 'Y',
+            //'name': 'Bo Miao', 'title': 'department manager',
+            'children': [
+              {
+                  'name': 'Biến động', 'GCN': 'Tách Thửa',
+                  'SOTO': '33',
+                  'SOTHUA': '123',
+                  'CHU': 'aaaaaaaaaaaaaaaaaa', 'LAGCN': 'N', 'className': 'middle-level',
+                  'children': [
+                    {
+                        'name': 'GCN',
+                        'GCN': '3333333333333',
+                        'SOTO': '12',
+                        'SOTHUA': '33',
+                        'CHU': 'xxxxxxxxxxxxxxxxx',
+                        'LAGCN': 'Y',
+                    },
+                    {
+                        'name': 'GCN',
+                        'GCN': '2222222222222',
+                        'SOTO': '12',
+                        'SOTHUA': '22',
+                        'CHU': 'tttttttttttttttttttt',
+                        'LAGCN': 'Y',
+                        //'children': [
+                        //  { 'name': 'To To', 'title': 'engineer', 'className': 'pipeline1' },
+                        //  { 'name': 'Fei Fei', 'title': 'engineer', 'className': 'pipeline1' },
+                        //  { 'name': 'Xuan Xuan', 'title': 'engineer', 'className': 'pipeline1' }
+                        //]
+                    }
+                  ]
+              }
+
+            ]
+        };
+
+
+        $('#IdCayLichSu').orgchart({
+            'data': abc,
+            'GCN': 'GCN',
+            'SOTO': 'SOTO',
+            'SOTHUA': 'SOTHUA',
+            'CHU': 'CHU',
+            //'nodeContent2': 'name',
+            'nodeId': 'GCN'
+        });
+        //var abc = new model1();
+        //ko.applyBindings(abc);
+
+        //load gcn
+        try {
+            $.ajax({
+                url: '/Lichsu/_GCNLS',
+                type: 'POST',
+                dataType: 'html',
+                contentType: 'application/html',
+                success: function (_partial) {
+                    $('#divLichSuID').html(_partial);
+                },
+                error: function (err) {
+                    alert(err.status + " : " + err.statusText);
+                }
+            });
+        } catch (e) {
+            // window.location.href = '/Home/Read/';
+        }
+    });
+
+
+</script>

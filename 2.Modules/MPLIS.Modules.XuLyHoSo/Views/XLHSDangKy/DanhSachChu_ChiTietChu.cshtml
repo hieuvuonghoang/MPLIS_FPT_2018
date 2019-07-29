@@ -1,0 +1,269 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DangKy_NguoiLS
+
+<div id="FormChiTietChuID" class="box box-primary m-0">
+    <form id="formNguoiID" class="d-none">
+        @Html.Hidden("NGUOIID", Model.Chu.NGUOIID)
+        @Html.Hidden("CHITIETID", Model.Chu.CHITIETID)
+        @Html.Hidden("DOITUONGSUDUNGID", Model.Chu.DOITUONGSUDUNGID)
+        @Html.Hidden("TRANGTHAI", Model.Chu.TRANGTHAI)
+        @Html.Hidden("LOAIDOITUONGID", Model.Chu.LOAIDOITUONGID)
+    </form>
+    <div class="box-header with-border">
+        <div class="row p-0">
+            <div class="col-xs-4 p-0">
+                <div class="pull-left">
+                    @if (Model.TRANGTHAI == 1)
+                    {
+                        <button id="BtnSave_FormChiTietChuID" type="button" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm mới</button>
+                    }
+                    else if (Model.TRANGTHAI == 2)
+                    {
+                        <button id="BtnSave_FormChiTietChuID" type="button" class="btn btn-sm btn-default"><i class='fa fa-check'></i> Lưu thông tin</button>
+                    }
+                    <button id="BtnClear_FormChiTietChuID" type="button" class="btn btn-sm btn-default"><i class='fa fa-trash'></i> Xóa trắng</button>
+                </div>
+            </div>
+            <div class="col-xs-4 text-center p-0">
+                @{
+                    string title = "";
+                    switch (Model.Chu.LOAIDOITUONGID)
+                    {
+                        case "1":
+                            title = "Cá Nhân";
+                            break;
+                        case "2":
+                            title = "Hộ Gia Đình";
+                            break;
+                        case "3":
+                            title = "Vợ Chồng";
+                            break;
+                        case "4":
+                            title = "Tổ Chức";
+                            break;
+                        case "5":
+                            title = "Cộng Đồng";
+                            break;
+                        case "6":
+                            title = "Nhóm Người";
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                <h3 class="box-title">Thông tin chi tiết @Html.Raw(title)</h3>
+            </div>
+            <div class="col-xs-4 p-0">
+                <div class="row p-0">
+                    <div class="col-xs-3 p-0">
+                    </div>
+                    <div class="col-xs-6 p-0">
+                        <div class="pull-right">
+                            @Html.DropDownListFor(model => model.Chu.DOITUONGSUDUNGID, new SelectList(ViewBag.dSDoiTuongSuDung, "DOITUONGSUDUNGID", "TENDOITUONGSUDUNG"), "---- Chọn đối tượng sử dụng ----", new { @class = "input-sm form-control" })
+                        </div>
+                    </div>
+                    <div class="col-xs-3 p-0">
+                        <div class="pull-right">
+                            <button id="BtnClose_FormChiTietChuID" type="button" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-body p-0">
+        @{
+            switch (Model.Chu.LOAIDOITUONGID)
+            {
+                case "1":
+                    @Html.Partial("ChiTietChu_CaNhan", Model.Chu.CaNhan)
+                    break;
+                case "2":
+                    @Html.Partial("ChiTietChu_HoGiaDinh", Model.Chu.HoGiaDinh)
+                    break;
+                case "3":
+                    <div id="divChiTietChu_VoChongID">
+                        @Html.Partial("ChiTietChu_VoChong", Model.Chu.VoChong)
+                    </div>
+                    break;
+                case "4":
+                    <div id="divChiTietChu_ToChucID">
+                        @Html.Partial("ChiTietChu_ToChuc", Model.Chu.ToChuc)
+                    </div>
+                    break;
+                case "5":
+                    <div id="divChiTietChu_CongDongID">
+                        @Html.Partial("ChiTietChu_CongDong", Model.Chu.CongDong)
+                    </div>
+                    break;
+                case "6":
+                    <div id="divChiTietChu_NhomNguoiID">
+                        @Html.Partial("ChiTietChu_NhomNguoi", Model.Chu.NhomNguoi)
+                    </div>
+                    break;
+                default:
+                    break;
+            }
+        }
+    </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $('#BtnClose_FormChiTietChuID').on('click', function () {
+                $('#FormChiTietChuID').siblings().removeClass("d-none");
+                $('#FormChiTietChuID').remove();
+            })
+
+            $('#BtnSave_FormChiTietChuID').on('click', function () {
+                var objNguoi = FormToObject($('#formNguoiID'));
+                var checkSubmit = false;
+                switch ('@Model.Chu.LOAIDOITUONGID') {
+                    case "1":
+                        var TableGiayToID = $('#TableGiayToID').DataTable();
+                        var dSGiayTo = [];
+                        $.each(TableGiayToID.rows().nodes(), function () {
+                            var curRow = TableGiayToID.row(this).data();
+                            var objGiayTo = {};
+                            for (var temp in curRow) {
+                                objGiayTo[temp] = curRow[temp];
+                            }
+                            dSGiayTo.push(objGiayTo);
+                        })
+                        for (var temp in dSGiayTo) {
+                            if (dSGiayTo[temp]["LAGIAYTOINGCN"] == "True") {
+                                dSGiayTo[temp]["LAGIAYTOINGCN"] = "true";
+                            } else {
+                                dSGiayTo[temp]["LAGIAYTOINGCN"] = "false";
+                            }
+                            dSGiayTo[temp]["NGAYCAP"] = ConverDatatime(dSGiayTo[temp]["NGAYCAP"]);
+                            delete dSGiayTo[temp]["STT"];
+                            delete dSGiayTo[temp]["TenLoaiGiayTo"];
+                            delete dSGiayTo[temp]["TRANGTHAI"];
+                        }
+                        objNguoi["CaNhan"] = FormToObject($('#formTTCaNhanID'));
+                        objNguoi["CaNhan"]["DSGiayToTuyThan"] = dSGiayTo;
+                        checkSubmit = true;
+                        break;
+                    case "2":
+                        if ($('#formTTHoGiaDinhID [name=CHUHO]').val() == "") {
+                            alert("Vui lòng thêm Chủ Hộ cho Hộ Gia Đình!");
+                        } else {
+                            $('#formTTHoGiaDinhID [name=CMTCHUHO]').prop('disabled', false);
+                            $('#formTTHoGiaDinhID [name=CMTVOCHONG]').prop('disabled', false);
+                            objNguoi["HoGiaDinh"] = FormToObject($('#formTTHoGiaDinhID'));
+                            $('#formTTHoGiaDinhID [name=CMTCHUHO]').prop('disabled', true);
+                            $('#formTTHoGiaDinhID [name=CMTVOCHONG]').prop('disabled', true);
+                            checkSubmit = true;
+                        }
+                        break;
+                    case "3":
+                        if ($('#formTTVoChongID [name=CHONG]').val() == "") {
+                            alert("Vui lòng thêm Chồng cho chủ Vợ Chồng!");
+                        } else if ($('#formTTVoChongID [name=VO]').val() == "") {
+                            alert("Vui lòng thêm Vợ cho chủ Vợ Chồng!");
+                        } else {
+                            $('#formTTVoChongID [name=CMTCHONG]').prop('disabled', false);
+                            $('#formTTVoChongID [name=CMTVO]').prop('disabled', false);
+                            objNguoi["VoChong"] = FormToObject($('#formTTVoChongID'));
+                            $('#formTTVoChongID [name=CMTCHONG]').prop('disabled', true);
+                            $('#formTTVoChongID [name=CMTVO]').prop('disabled', true);
+                            checkSubmit = true;
+                        }
+                        break;
+                    case "4":
+                        if ($('#formTTToChucID [name=NGUOIDAIDIENID]').val() == "") {
+                            alert("Vui lòng thêm Người Đại Diện cho chủ Tổ Chức!")
+                        } else {
+                            $('#formTTToChucID [name=CMTNGUOIDAIDIEN]').prop('disabled', false);
+                            $('#formTTToChucID [name=LOAITOCHUC]').prop('disabled', false);
+                            objNguoi["ToChuc"] = FormToObject($('#formTTToChucID'));
+                            $('#formTTToChucID [name=CMTNGUOIDAIDIEN]').prop('disabled', true);
+                            $('#formTTToChucID [name=LOAITOCHUC]').prop('disabled', true);
+                            checkSubmit = true;
+                        }
+                        break;
+                    case "5":
+                        if ($('#formTTCongDongID [name=NGUOIDAIDIENID]').val() == "") {
+                            alert("Vui lòng thêm Người Đại Diện cho chủ Cộng Đồng!")
+                        } else {
+                            $('#formTTCongDongID [name=CMTNGUOIDAIDIEN]').prop('disabled', false);
+                            objNguoi["CongDong"] = FormToObject($('#formTTCongDongID'));
+                            $('#formTTCongDongID [name=CMTNGUOIDAIDIEN]').prop('disabled', true);
+                            checkSubmit = true;
+                        }
+                        break;
+                    case "6":
+                        if ($('#formTTNhomNguoiID [name=NGUOIDAIDIEN]').val() == "") {
+                            alert("Vui lòng thêm Người Đại Diện cho chủ Nhóm Người!")
+                        } else {
+                            $('#formTTNhomNguoiID [name=CMTNGUOIDAIDIEN]').prop('disabled', false);
+                            objNguoi["NhomNguoi"] = FormToObject($('#formTTNhomNguoiID'));
+                            $('#formTTNhomNguoiID [name=CMTNGUOIDAIDIEN]').prop('disabled', true);
+                            checkSubmit = true;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                console.log(objNguoi);
+                if (checkSubmit) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/XLHSDangKy/Save_FormChiTietChu',
+                        data: { data: JSON.stringify(objNguoi) },
+                        dataType: "json",
+                        success: function (result) {
+                            console.log(result);
+                            if (result.success) {
+                                if ('@Model.TRANGTHAI' == '1') {
+                                    $('#BtnClear_FormChiTietChuID').click();
+                                }
+                                var DangKyTableChuID = $('#DangKyTableChuID').DataTable();
+                                var objDangKyNguoi = null;
+                                var rowEle = null;
+                                $.each(DangKyTableChuID.rows().nodes(), function () {
+                                    var curRow = DangKyTableChuID.row(this).data();
+                                    if (curRow.DANGKYNGUOIID == result.obj.DANGKYNGUOIID) {
+                                        objDangKyNguoi = DangKyTableChuID.row(this).data();
+                                        rowEle = this;
+                                        return false;
+                                    }
+                                })
+                                if (objDangKyNguoi != null) {
+                                    result.obj.STT = DangKyTableChuID.row(rowEle).data().STT;
+                                    DangKyTableChuID.row(rowEle).data(result.obj).draw();
+                                } else {
+                                    result.obj.STT = DangKyTableChuID.data().count() + 1;
+                                    result.obj.STT += ".";
+                                    DangKyTableChuID.row.add(result.obj).draw();
+                                }
+                            }
+                            alert(result.mes);
+                        }
+                    })
+                }
+            })
+
+            $('#BtnClear_FormChiTietChuID').on('click', function () {
+                $.ajax({
+                    type: "POST",
+                    url: '/XLHSDangKy/ChiTietChu_XoaTrang',
+                    dataType: "html",
+                    success: function (html) {
+                        $('#FormChiTietChuID').remove();
+                        $('.box-body').has('#DangKyTableChuID_wrapper').append(html);
+                    }
+                })
+            })
+
+            $('#Chu_DOITUONGSUDUNGID').on('change', function () {
+                $('#formNguoiID [name=DOITUONGSUDUNGID]').val($('#Chu_DOITUONGSUDUNGID').val());
+                $('#formTTToChucID [name=LOAITOCHUC]').val($('#Chu_DOITUONGSUDUNGID').val()).change();
+            })
+
+        })
+
+    </script>
+
+</div>

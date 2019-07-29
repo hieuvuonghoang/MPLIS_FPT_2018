@@ -1,0 +1,148 @@
+﻿@using AppCore.Models
+@model DC_THUADAT
+    <div id="div_GiaDat">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="row" style="padding: 0;">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Danh sách giá đất</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="div_DSGiaDat">
+                                <table id="table_GIADATTHUA" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th hidden>ID</th>
+                                            <th>STT</th>
+                                            <th>Căn cứ PL</th>
+                                            <th>Thời điểm</th>
+                                            <th>Giá đất</th>
+                                            <th>Hành động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int rdsgcntable = 0;
+                                            if (Model != null)
+                                            {
+                                                if (Model.DSGiaDat != null)
+                                                {
+                                                    foreach (var item in Model.DSGiaDat)
+                                                    {
+                                                        rdsgcntable = rdsgcntable + 1;
+                                                        <tr data-giadatid="@item.GIATHUADATID">
+                                                            <td hidden>@item.GIATHUADATID</td>
+                                                            <td class="text-right">
+                                                                @rdsgcntable.
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @item.CANCUPHAPLY
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @if (@item.THOIDIEMXACDINH != null)
+                                                                {
+                                                                    @item.THOIDIEMXACDINH.Value.ToString("dd/MM/yyyy")
+                                                                }
+                                                            </td>
+                                                            <td>
+                                                                @item.GIADAT
+                                                            </td>
+                                                            <td>
+                                                                <input type="button" class="btn btn-xs btn-heading" id="btnxoagiadat" value="Xóa" onclick="removeRowGD(this)" />
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-xs-6">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Chi tiết giá của thửa</h3>
+                    </div>
+                    <div class="box-body">
+                        <div id="chitietgiathuadat">
+                            @Html.Partial("DonDangKy_DSThua_ChiTietGiaDat")
+                        </div>
+                        <div class="row">
+                            <input type="button" class="btn-xs btn-heading pull-left" id="btncapnhatgiadat" value="Cập nhật giá đất" />
+                            <input type="button" class="btn-xs btn-heading pull-left" id="btnlammoigiadat" value="Làm mới" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+<script>
+    $('#table_GIADATTHUA tbody').on("click", "tr", function (e) {
+        $(this).addClass('activerow').siblings().removeClass('activerow');
+        var idgiadat = $(this)[0].cells[0].innerHTML;
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/ChiTietGiaDat",
+            data: { idgiadatthuadat: idgiadat.trim() },
+            datatype: "html",
+            success: function (data) {
+                $('#chitietgiathuadat').html(data);
+            }
+        })
+    });
+    $(document).ready(function () {
+        InitDataTableXLHS($('#table_GIADATTHUA'));
+        $('#btnlammoigiadat').on("click", function () {
+            $.ajax({
+                type: "GET",
+                url: "/XLHSDangKy/ChiTietGiaDat",
+                datatype: "html",
+                success: function (response) {
+                    $('#chitietgiathuadat').html(response);
+                }
+            })
+        });
+        $('#btncapnhatgiadat').on("click", function () {
+            var formdata = $("#ChiTietGiaDat").serializeArray();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ThemMoiGiaDat",
+                data: formdata,
+                success: function (data) {
+                    $('#div_GiaDat').html(data);
+                }
+            })
+        });
+    });
+    function removeRowGD(button) {
+        var ans = confirm("Bạn chắc chắn muốn xóa?");
+        //=== If user pressed Ok then delete the record else do nothing.
+        if (ans == true) {
+            var empTab = document.getElementById('table_GIADATTHUA');
+            var index = button.parentNode.parentNode.rowIndex;
+            var giadatid = empTab.rows[index].cells[0].innerHTML;
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/XoaGiaThua",
+                dataType: "html",
+                data: { giadatid: giadatid.trim() },
+                success: function (html) {
+                    console.log("SUCCES");
+                    alert("Xóa  thành công!");
+                    $('#div_GiaDat').html(html);
+                },
+            });
+        }
+    }
+
+</script>
+

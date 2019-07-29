@@ -1,0 +1,195 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.GiayChungNhanLS
+
+<div class="box">
+    <div class="box-body">
+        <table id="TableQuyenSHTaiSanID" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>STT</th>
+                    <th>Loại tài sản</th>
+                    <th>Tên tài sản</th>
+                    <th>Diện tích (m<sup>2</sup>)</th>
+                    <th>Trạng thái</th>
+                    <th>TLSH</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.DSQuyenSHTS != null && Model.DSQuyenSHTS.Count > 0)
+                {
+                    int stt = 0;
+                    foreach (var item in Model.DSQuyenSHTS)
+                    {
+                        stt++;
+                        <tr>
+                            <td>
+                                @item.QUYENSOHUUTAISANID
+                            </td>
+                            <td>
+                                @item.TAISANGANLIENVOIDATID
+                            </td>
+                            <td>
+                                @stt.
+                            </td>
+                            <td>
+                                @item.LoaiTaiSan
+                            </td>
+                            <td>
+                                @item.TenTaiSan
+                            </td>
+                            <td>
+                                @item.DienTich
+                            </td>
+                            <td>
+                                @(item.TRANGTHAIPL == "T" ? "Đang thế chấp" : "Bình thường")
+                            </td>
+                            <td>@item.TILESOHUU%</td>
+                            <td>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <button id="btnThemQuyenSHTaiSanID" type="button" class="btn btn-default btn-sm" disabled><i class='fa fa-plus'></i> Thêm quyền</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        if ('@Model.ChinhSua' == 'True') {
+            $('#btnThemQuyenSHTaiSanID').prop('disabled', false)
+        }
+
+        var columns = [
+            { "data": "QUYENSOHUUTAISANID" },
+            { "data": "TAISANGANLIENVOIDATID" },
+            { "data": "STT" },
+            { "data": "LoaiTaiSan" },
+            { "data": "TenTaiSan" },
+            { "data": "DienTich" },
+            { "data": "TRANGTHAIPL" },
+            { "data": "TILESOHUU" },
+            { "data": null }
+        ]
+
+        var columnDefs = [
+            {
+                "targets": [0, 1],
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    if ('@Model.ChinhSua' == 'True') {
+                        return "<button type='button' class='btn btn-xs btn-heading btnDel'>Xóa</button>";
+                    }
+                    return "<button type='button' class='btn btn-xs btn-heading btnDel' disabled>Xóa</button>";
+                }
+            },
+            {
+                "targets": 2,
+                "className": "text-right"
+            },
+            {
+                "targets": [-1, -2, 3, 4, 5, 6],
+                "className": "text-center"
+            }
+        ]
+
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "t<'row p-0'<'col-xs-6 p-0'<'row p-0'<'col-xs-6 p-0'<'#divBTAddQuyenSHTaiSanID'>>>><'col-xs-6 p-0'<'pull-right'p>>>",
+            "initComplete": function () {
+                initComplete();
+            }
+        }
+
+        function initComplete() {
+            $('#btnThemQuyenSHTaiSanID').appendTo($('#divBTAddQuyenSHTaiSanID'));
+        }
+
+        var TableQuyenSHTaiSanID = $('#TableQuyenSHTaiSanID').DataTable(options);
+
+        $('#btnThemQuyenSHTaiSanID').on('click', function () {
+            $.ajax({
+                type: "POST",
+                url: "/XLHSGiayChungNhan/Popup_ThemQuyenVaoGCN",
+                data: { iSQuyen: "1" },
+                success: function (result) {
+                    if (result.message == undefined) {
+                        $('#divPopup')
+                        .html(result)
+                        .ready(function () {
+                            var options = {
+                                "backdrop": "static",
+                                "show": true
+                            }
+                            $("#modalformDSTaiSan").modal(options);
+                        });
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            })
+        })
+
+        TableQuyenSHTaiSanID.rows().nodes().on('click', 'tbody tr .btnDel', function (event) {
+            if (confirm("Xác nhận xóa quyền sở hữu tài sản?")) {
+                var curRow = TableQuyenSHTaiSanID.row($(this).parents('tr'));
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSGiayChungNhan/QuyenSoHuuTaiSan_XoaQuyen",
+                    data: { quyenSoHuuTaiSanID: curRow.data().QUYENSOHUUTAISANID },
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.success) {
+                            TableQuyenSHTaiSanID
+                            .row(curRow)
+                            .remove();
+                            //Cập nhật lại STT cho dataTable
+                            var i = 1;
+                            TableQuyenSHTaiSanID.rows().every(function () {
+                                var d = this.data();
+                                d.STT = i++;
+                                d.STT += ".";
+                                TableQuyenSHTaiSanID.row(this).data(d);
+                            })
+                            //Vẽ lại dataTable sau khi cập nhật
+                            TableQuyenSHTaiSanID.draw();
+                        }
+                        alert(result.message);
+                    }
+                })
+            }
+        })
+
+        TableQuyenSHTaiSanID.rows().nodes().on('dblclick', 'tbody tr', function (event) {
+            var curRow = TableQuyenSHTaiSanID.row($(this));
+            $.ajax({
+                type: "POST",
+                url: "/XLHSGiayChungNhan/Popup_SetTLSH_TrenQuyen",
+                data: { isQuyen: "1", ID: curRow.data().TAISANGANLIENVOIDATID },
+                dataType: "html",
+                success: function (html) {
+                    $('#divPopup')
+                        .html(html)
+                        .ready(function () {
+                            var options = {
+                                "backdrop": "static",
+                                "show": true
+                            }
+                            $("#modal_GCN_QUYEN_TLSH_ID").modal(options);
+                        });
+                }
+            })
+        })
+    })
+</script>

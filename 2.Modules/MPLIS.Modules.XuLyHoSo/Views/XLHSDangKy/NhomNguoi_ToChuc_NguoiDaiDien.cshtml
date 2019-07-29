@@ -1,0 +1,131 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.ToChucLS
+
+<div id="FormToChuc_ChiTietNguoiDaiDienID" class="box box-primary m-0">
+    <div class="box-header with-border">
+        <div class="row p-0">
+            <div class="col-xs-4 p-0">
+                <div class="pull-left">
+                    @if (Model.NGUOIDAIDIENID == null)
+                    {
+                        <button id="BtnSave_FormToChuc_ChiTietNguoiDaiDienID" type="button" class="btn btn-sm btn-default"><i class='fa fa-plus'></i> Thêm mới</button>
+                    }
+                    else
+                    {
+                        <button id="BtnSave_FormToChuc_ChiTietNguoiDaiDienID" type="button" class="btn btn-sm btn-default"><i class='fa fa-check'></i> Lưu thông tin</button>
+                    }
+                    <button id="BtnClear_FormToChuc_ChiTietNguoiDaiDienID" type="button" class="btn btn-sm btn-default"><i class='fa fa-trash'></i> Xóa trắng</button>
+                </div>
+            </div>
+            <div class="col-xs-4 text-center p-0">
+                <h3 class="box-title">Thông tin chi tiết Người Đại Diện</h3>
+            </div>
+            <div class="col-xs-4 p-0">
+                <div class="pull-right">
+                    <button id="BtnClose_FormToChuc_ChiTietNguoiDaiDienID" type="button" class="btn btn-box-tool"><i class="fa fa-remove"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box-body p-0">
+        @Html.Partial("ChiTietChu_CaNhan", Model.CurCaNhan)
+    </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var divProcessBar = "<div class='overlay'> <i class='fa fa-refresh fa-spin'></i> </div>";
+
+            $('#BtnClose_FormToChuc_ChiTietNguoiDaiDienID').on('click', function () {
+                $('#divNguoiDaiDienID').removeClass("d-none");
+                $('#FormToChuc_ChiTietNguoiDaiDienID').remove();
+            })
+
+            $('#BtnSave_FormToChuc_ChiTietNguoiDaiDienID').on('click', function () {
+                $('#FormToChuc_ChiTietNguoiDaiDienID').append(divProcessBar);
+                var objNguoiDaiDien = {};
+                objNguoiDaiDien = FormToObject($('#formTTCaNhanID'));
+                var TableGiayToID = $('#TableGiayToID').DataTable();
+                var dSGiayTo = [];
+                $.each(TableGiayToID.rows().nodes(), function () {
+                    var curRow = TableGiayToID.row(this).data();
+                    var objGiayTo = {};
+                    for (var temp in curRow) {
+                        objGiayTo[temp] = curRow[temp];
+                    }
+                    dSGiayTo.push(objGiayTo);
+                })
+                for (var temp in dSGiayTo) {
+                    if (dSGiayTo[temp]["LAGIAYTOINGCN"] == "True") {
+                        dSGiayTo[temp]["LAGIAYTOINGCN"] = "true";
+                    } else {
+                        dSGiayTo[temp]["LAGIAYTOINGCN"] = "false";
+                    }
+                    dSGiayTo[temp]["NGAYCAP"] = ConverDatatime(dSGiayTo[temp]["NGAYCAP"]);
+                    delete dSGiayTo[temp]["STT"];
+                    delete dSGiayTo[temp]["TenLoaiGiayTo"];
+                    delete dSGiayTo[temp]["TRANGTHAI"];
+                }
+                objNguoiDaiDien["DSGiayToTuyThan"] = dSGiayTo;
+                console.log(objNguoiDaiDien);
+                $.ajax({
+                    type: "POST",
+                    url: '/XLHSDangKy/NhomNguoi_Save_FormToChuc_ChiTietNguoiDaiDienID',
+                    data: { data: JSON.stringify(objNguoiDaiDien) },
+                    dataType: "html",
+                    success: function (html) {
+                        if ($('#formTTToChucID [name=NGUOIDAIDIENID]').val() == "") {
+                            alert('Thêm mới thông tin Người Đại Diện thành công!');
+                        } else {
+                            alert('Cập nhật thông tin Người Đại Diện thành công!');
+                        }
+                        $('#formTTToChucID [name=LOAITOCHUC]').prop('disabled', false);
+                        var objToChuc = FormToObject($('#formTTToChucID'));
+                        $('#formTTToChucID [name=LOAITOCHUC]').prop('disabled', true);
+                        console.log(objToChuc);
+                        $('#divChiTietChu_ToChucID')
+                            .html(html)
+                            .ready(function () {
+                                $('#formTTToChucID [name=MASOTHUE]').val(objToChuc['MASOTHUE']);
+                                $('#formTTToChucID [name=MADOANHNGHIEP]').val(objToChuc['MADOANHNGHIEP']);
+                                $('#formTTToChucID [name=TENTOCHUC]').val(objToChuc['TENTOCHUC']);
+                                $('#formTTToChucID [name=TENTOCHUCTA]').val(objToChuc['TENTOCHUCTA']);
+                                $('#formTTToChucID [name=TENVIETTAT]').val(objToChuc['TENVIETTAT']);
+                                $('#formTTToChucID [name=SOQUYETDINH]').val(objToChuc['SOQUYETDINH']);
+                                $('#formTTToChucID [name=NGAYQUYETDINH]').val(objToChuc['NGAYQUYETDINH']);
+                                $('#formTTToChucID [name=DIACHI]').val(objToChuc['DIACHI']);
+                                $('#formTTToChucID [name=LOAITOCHUC]').val(objToChuc['LOAITOCHUC']);
+                            });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('Lỗi: ' + errorThrown);
+                    },
+                    complete: function () {
+                        $('.overlay', $('#FormToChuc_ChiTietNguoiDaiDienID')).remove();
+                    }
+                })
+            })
+
+            $('#BtnClear_FormToChuc_ChiTietNguoiDaiDienID').on('click', function () {
+                $('#FormToChuc_ChiTietNguoiDaiDienID').append(divProcessBar);
+                $.ajax({
+                    type: "POST",
+                    url: '/XLHSDangKy/NhomNguoi_XoaTrang_FormToChuc_ChiTietNguoiDaiDienID',
+                    dataType: "html",
+                    success: function (html) {
+                        $('#divTCCTNguoiDaiDienID').html(html);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        alert('Lỗi: ' + errorThrown);
+                    },
+                    complete: function () {
+                        $('.overlay', $('#FormToChuc_ChiTietNguoiDaiDienID')).remove();
+                    }
+                })
+            })
+
+        })
+
+    </script>
+</div>
+

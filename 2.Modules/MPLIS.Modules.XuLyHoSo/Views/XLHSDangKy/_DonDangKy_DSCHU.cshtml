@@ -1,0 +1,966 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.VM_XuLyHoSo_DK
+
+@* Thông tin ẩn *@
+<input type="hidden" id="idcanhangiadinh" />
+<input type="hidden" class="form-control input-sm" id="txtsearch_chu" readonly="readonly" />
+<input type="hidden" id="hi_nguoiid" />
+<input type="hidden" id="hi_loaichuid" />
+<div class="col-xs-2" style="display:none">
+    <input type="checkbox" id="idnhomnguoi">
+    <label style="font-weight: normal;">Nhóm người</label>
+</div>
+@* Phần bảng dữ liệu *@
+<div class="row">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Chủ đã đăng ký</h3>
+        </div>
+        <div class="box-body" style="padding-bottom:5px;">
+            <table id="table_DSCHU" class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th hidden="true">CHU_ID</th>
+                        <th>#</th>
+                        <th>Loại chủ</th>
+                        <th>Tên chủ</th>
+                        <th>Số hộ chiếu/Cmt</th>
+                        <th>Hành động</th>
+                        <th hidden="true">LOAICHUID</th>
+                    </tr>
+                    @{int rdsgcntable = 0;
+                        if (Model != null)
+                        {
+                            if (Model.CHU_DANGKY != null)
+                            {
+                                foreach (var item in Model.CHU_DANGKY)
+                                {
+                                    rdsgcntable = rdsgcntable + 1;
+                                    <tr data-id="@item.NGUOIID">
+                                        <td hidden="true">
+                                            @item.NGUOIID
+                                        </td>
+                                        <td style="text-align: right;">
+                                            @rdsgcntable.
+                                        </td>
+                                        <td>
+                                            @item.Chu_TenLoaiChu
+                                        </td>
+                                        <td>
+                                            @item.Chu_HoTen
+                                        </td>
+                                        <td>
+                                            @item.Chu_CMT
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <input class="btn btn-xs btn-heading" type="button" value="Chi tiết" onclick="DetailRow(this)" />
+                                            <input class="btn btn-xs btn-heading" style="margin-left:3px;" type="button" value="Xóa" onclick="removeRow(this)" />
+                                        </td>
+                                        <td hidden="true">
+                                            @item.Chu.LOAIDOITUONGID
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@* Phần trung gian *@
+<div class="row">
+    <div class="box-footer" style="border-top: 1px solid #d2d6de;">
+        <div class="col-xs-6">
+            <div class="col-xs-4">
+                @Html.Label("Chọn loại chủ", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                <select class="form-control input-sm" title="Chọn loại chủ" id="drpchonchu">
+                    <option value="1">Cá nhân </option>
+                    <option value="2">Hộ gia đình</option>
+                    <option value="3">Vợ chồng</option>
+                    <option value="4">Tổ chức</option>
+                    <option value="5">Cộng đồng dân cư</option>
+                    <option value="6">Nhóm người đồng sử dụng</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-xs-6" style="padding:0px;">
+            <button type="button" class="btn btn-primary btn-sm btn-heading" style="margin-left:10px;" id="btnlammoichucanhan">Làm mới</button>
+            <button type="button" class="btn btn-primary btn-sm btn-heading pull-right" id="btnthemmoichucanhan">Lưu vào danh sách</button>
+        </div>
+    </div>
+</div>
+@* Phần thông tin chi tiết của chủ *@
+<div class="row">
+    <div id="tabChuCaNhan" class="box box-primary" style="margin:0px;">
+        @*@{Html.RenderAction("_Dk_ChuCaNhan_GiayTo", "XLHSDangKy");}*@
+    </div>
+    <div id="divnhomnguoi" style="display:none"></div>
+</div>
+@* Các form modal *@
+<div id="div_SearchHoGiaDinh" class="modal fade" role="dialog" tabindex="-1">
+    <div role="document" style="width:500px !important;height:auto; margin:20px auto!important;">
+        <div class="modal-content" style="width:500px !important;height:auto; margin:20px auto!important;">
+            <div class="modal-header">
+                <button type="button" id="nutdong" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Tìm kiếm hộ gia đình</h4>
+            </div>
+            <div id="div_TimKiemHoGiaDinh" class="modal-body">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group btnright-group">
+                                <table id="tableSerchHoGiaDinh" class="bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="t50" hidden="true">HOGIADINHID</th>
+                                            <th class="t100">Chủ hộ</th>
+                                            <th class="t100">CMTND/Chủ Hộ</th>
+                                            <th class="t100">Vợ Chồng</th>
+                                            <th class="t100">CMTND/Vợ chồng</th>
+                                            <th class="t50">Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="div_SearchVoChong" class="modal fade" role="dialog" tabindex="-1">
+    <div role="document" style="width:500px !important;height:auto; margin:20px auto!important;">
+        <div class="modal-content" style="width:500px !important;height:auto; margin:20px auto!important;">
+            <div class="modal-header">
+                <button type="button" id="nutdongVoChong" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Tìm kiếm Vợ chồng</h4>
+            </div>
+            <div id="div_TimKiemVoChong" class="modal-body">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group btnright-group">
+                                <table id="tableSerchVoChong" class="bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="t50" hidden="true">VOCHONGID</th>
+                                            <th class="t100">Chủ hộ</th>
+                                            <th class="t100">CMTND/Chủ Hộ</th>
+                                            <th class="t100">Vợ Chồng</th>
+                                            <th class="t100">CMTND/Vợ chồng</th>
+                                            <th class="t50">Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="div_SearchToChuc" class="modal fade" role="dialog" tabindex="-1">
+    <div role="document" style="width:500px !important;height:auto; margin:20px auto!important;">
+        <div class="modal-content" style="width:500px !important;height:auto; margin:20px auto!important;">
+            <div class="modal-header">
+                <button type="button" id="nutdongToChuc" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Tìm kiếm tổ chức</h4>
+            </div>
+            <div id="div_TimKiemToChuc" class="modal-body">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group btnright-group">
+                                <table id="tableSerchToChuc" class="bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="t50" hidden="true">TOCHUCID</th>
+                                            <th class="t100">Tên tổ chức</th>
+                                            <th class="t100">Số quyết định</th>
+                                            <th class="t100">Mã số thuế</th>
+                                            <th class="t100">Người đại diện</th>
+                                            <th class="t50">Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="div_SearchCongDong" class="modal fade" role="dialog" tabindex="-1">
+    <div role="document" style="width:500px !important;height:auto; margin:20px auto!important;">
+        <div class="modal-content" style="width:500px !important;height:auto; margin:20px auto!important;">
+            <div class="modal-header">
+                <button type="button" id="nutdongCongDong" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Tìm kiếm cộng đồng</h4>
+            </div>
+            <div id="div_TimKiemCongDong" class="modal-body">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group btnright-group">
+                                <table id="tableSerchCongDong" class="bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="t50" hidden="true">CONGDONGID</th>
+                                            <th class="t100">Tên cộng đồng</th>
+                                            <th class="t100">Địa chỉ cộng đồng</th>
+
+                                            <th class="t100">Người đại diện</th>
+                                            <th class="t50">Thao tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="div_SearchCaNhan" class="modal fade" role="dialog" tabindex="-1">
+    <div role="document" style="width:500px !important;height:auto; margin:20px auto!important;">
+        <div class="modal-content" style="width:500px !important;height:auto; margin:20px auto!important;">
+            <div class="modal-header">
+                <button type="button" class="close closeSearch_CaNhan" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Tìm kiếm cá nhân</h4>
+            </div>
+            <div id="div_TimKiemCaNhanh" class="modal-body">
+                <div class="box-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group btnright-group">
+                                <table id="tableSerchCaNhan" class="bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Họ và Tên</th>
+                                            <th>CMTND/Hộ Chiếu</th>
+                                            <th>Địa Chỉ</th>
+                                            <th>Thao Tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        // hiển thị chủ nhóm người
+        $("#idnhomnguoi").change(function () {
+            if (this.checked) {
+                document.getElementById("divnhomnguoi").style.display = "block";
+            }
+            else {
+                document.getElementById("divnhomnguoi").style.display = "none";
+            }
+        });
+
+        // nút thêm vào danh sách + làm mới
+        // Nútlàm mới
+        $("#btnlammoichucanhan").on("click", function () {
+            //cá nhân
+            if ($("#drpchonchu").val() == "1") {
+                $("#idnhomnguoi").prop('checked', false);
+                $.ajax({
+                    type: "GET",
+                    url: "/XLHSDangKy/_Dk_ChuCaNhan_GiayTo",
+                    success: function (response, status, xhr) {
+                        $('#idcanhangiadinh').val("0");
+                        $('#tabChuCaNhan').html(response);
+                    }
+                });
+            }
+                //hộ gia đình
+            else if ($("#drpchonchu").val() == "2") {
+                $("#idnhomnguoi").prop('checked', false);
+                $.ajax({
+                    type: "GET",
+                    url: "/XLHSDangKy/LoadHoGiaDinh",
+                    success: function (response, status, xhr) {
+                        $('#idcanhangiadinh').val("1");
+                        $('#tabChuCaNhan').html(response);
+                    }
+                });
+            }
+                //vợ chồng
+            else if ($("#drpchonchu").val() == "3") {
+                $("#idnhomnguoi").prop('checked', false);
+                $.ajax({
+                    type: "GET",
+                    url: "/XLHSDangKy/LoadVoChong",
+                    success: function (response, status, xhr) {
+                        $('#idcanhangiadinh').val("2");
+                        $('#tabChuCaNhan').html(response);
+                    }
+                });
+            }
+                // tổ chức
+            else if ($("#drpchonchu").val() == "4") {
+                $("#idnhomnguoi").prop('checked', false);
+                $.ajax({
+                    type: "GET",
+                    url: "/XLHSDangKy/LoadToChuc",
+                    success: function (response, status, xhr) {
+                        $('#idcanhangiadinh').val("3");
+                        $('#tabChuCaNhan').html(response);
+                    }
+                });
+            }
+                //cộng đồng
+            else if ($("#drpchonchu").val() == "5") {
+                $("#idnhomnguoi").prop('checked', false);
+                $.ajax({
+                    type: "GET",
+                    url: "/XLHSDangKy/LoadCongDong",
+                    success: function (response, status, xhr) {
+                        $('#idcanhangiadinh').val("4");
+                        $('#tabChuCaNhan').html(response);
+                    }
+                });
+            }
+            else if ($("#drpchonchu").val() == "6") {
+                $.ajax({
+                    type: "GET",
+                    url: "/XLHSDangKy/LoadNhomNguoi",
+                    success: function (response, status, xhr) {
+                        //   $('#idcanhangiadinh').val("5");
+                        $("#idnhomnguoi").prop('checked', true);
+                        $('#divnhomnguoi').html(response);
+                        document.getElementById("divnhomnguoi").style.display = "block";
+                    }
+                });
+            }
+        });
+        // Nút thêm vào danh sách
+        //Thêm mới
+        $("#btnthemmoichucanhan").on("click", function () {
+            var dondk = $('#DONDANGKYID').val();
+            if (document.getElementById("idnhomnguoi").checked == false) {
+                switch ($("#drpchonchu").val()) {
+                    case "1"://cá nhân
+                        var formdata = $("#ThemMoiChuCaNhan").serializeArray();
+                        formdata.push({
+                            name: "DONDANGKYID",
+                            value: dondk
+                        });
+                        // alert(formdata);
+                        $.ajax({
+                            type: "POST",
+                            url: "/XLHSDangKy/ThemMoiDK_CaNhan",
+                            data: formdata,
+                            dataType: "json",
+                            success: function (data) {
+                                ProcessAddChu(data, 'table_DSCHU', 'cá nhân vào đăng ký');
+                            }
+                        });
+                        break;
+                    case "2"://hộ gia đình
+                        var diachihogiadinh = $('#txtdiachihogiadinh').val();
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            data: { diachi: diachihogiadinh, dondangky: dondk },
+                            url: "/XLHSDangKy/ThemDanhSachHoGiaDinh",
+                            success: function (data) {
+                                ProcessAddChu(data, 'table_DSCHU', 'hộ gia đình vào đăng ký');
+                            }
+                        });
+                        break;
+                    case "3"://vợ chồng
+                        var diachihogiadinh = $('#txtdiachivochong').val();
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            data: { diachi: diachihogiadinh, dondangky: dondk },
+                            url: "/XLHSDangKy/ThemDanhSachVoChong",
+                            success: function (data) {
+                                ProcessAddChu(data, 'table_DSCHU', 'vợ chồng vào đăng ký');
+                            }
+                        });
+                        break;
+                    case "4":// tổ chức
+                        var formdata = $("#ThemMoiToChuc").serializeArray();
+                        formdata.push({
+                            name: "DONDANGKYID",
+                            value: dondk
+                        });
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            //  data: { diachi: diachitochuc, dondangky: dondk },
+                            data: formdata,
+                            url: "/XLHSDangKy/ThemDanhSachToChuc",
+                            success: function (data) {
+                                ProcessAddChu(data, 'table_DSCHU', 'tổ chức vào đăng ký');
+                            }
+                        });
+                        break;
+                    case "5"://cộng đồng dân cư
+                        var formdata = $("#ThemMoiCongDong").serializeArray();
+                        formdata.push({
+                            name: "DONDANGKYID",
+                            value: dondk
+                        });
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            //  data: { diachi: diachitochuc, dondangky: dondk },
+                            data: formdata,
+                            url: "/XLHSDangKy/ThemDanhSachCongDong",
+                            success: function (data) {
+                                ProcessAddChu(data, 'table_DSCHU', 'cộng đồng dân cư vào đăng ký');
+                            }
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else   // lưu chủ nhóm người
+            {
+                switch ($("#drpchonchu").val()) {
+                    case "1"://cá nhân
+                        // thêm mới thành viên là người đại diện của nhóm
+                        if ($('#idcanhangiadinh').val() == "5") {
+                            var formdata = $("#ThemMoiChuCaNhan").serializeArray();
+                            $.ajax({
+                                type: "POST",
+                                url: "/XLHSDangKy/ThemMoiDK_CaNhanDaiDiennhomnguoi",
+                                data: formdata,
+                                dataType: "json",
+                                success: function (data) {
+                                    ProcessAddChu(data, 'table_Chu_NhomNguoi', 'cá nhân vào nhóm người');
+
+                                    $('#curNguoiDaiDien_SOGIAYTO').val(data.CMT);
+                                    $('#curNguoiDaiDien_HOTEN').val(data.HOTEN);
+                                    $('#curNguoiDaiDien_CANHANID').val(data.CANHANID);
+                                    $('#CANHANID').val(data.CANHANID);
+                                }
+                            });
+                        }
+                        else {
+                            var formdata = $("#ThemMoiChuCaNhan").serializeArray();
+                            $.ajax({
+                                type: "POST",
+                                url: "/XLHSDangKy/ThemMoiDK_CaNhanThanhViennhomnguoi",
+                                data: formdata,
+                                dataType: "json",
+                                success: function (data) {
+                                    ProcessAddChu(data, 'table_Chu_NhomNguoi', 'cá nhân vào nhóm người');
+
+                                    $('#CANHANID').val(data.CANHANID);
+                                }
+                            });
+                        }
+                        break;
+                    case "2"://hộ gia đình
+                        var diachihogiadinh = $('#txtdiachihogiadinh').val();
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            data: { diachi: diachihogiadinh },
+                            url: "/XLHSDangKy/ThemDanhSachHoGiaDinhNhom",
+                            success: function (data) {
+                                ProcessAddChu(data, 'table_Chu_NhomNguoi', 'hộ gia đình vào nhóm người');
+                            }
+                        });
+                        break;
+                    case "3"://vợ chồng
+                        var diachihogiadinh = $('#txtdiachivochong').val();
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            data: { diachi: diachihogiadinh },
+                            url: "/XLHSDangKy/ThemDanhSachVoChongNhom",
+                            success: function (data) {
+                                ProcessAddChu(data, 'table_Chu_NhomNguoi', 'vợ chồng vào nhóm người');
+                            }
+                        });
+                        break;
+                    case "4":// tổ chức
+                        var formdata = $("#ThemMoiToChuc").serializeArray();
+                        formdata.push({
+                            name: "DONDANGKYID",
+                            value: dondk
+                        });
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            //  data: { diachi: diachitochuc, dondangky: dondk },
+                            data: formdata,
+                            url: "/XLHSDangKy/ThemDanhSachToChucNhom",
+                            success: function (data) {
+                                ProcessAddChu(data, 'table_Chu_NhomNguoi', 'tổ chức vào nhóm người');
+                            }
+                        });
+                        break;
+                    case "5"://cộng đồng dân cư
+                        var formdata = $("#ThemMoiCongDong").serializeArray();
+                        formdata.push({
+                            name: "DONDANGKYID",
+                            value: dondk
+                        });
+                        $.ajax({
+                            type: "POST",
+                            dataType: "json",
+                            //  data: { diachi: diachitochuc, dondangky: dondk },
+                            data: formdata,
+                            url: "/XLHSDangKy/ThemDanhSachCongDongNhom",
+                            success: function (data) {
+                                ProcessAddChu(data, 'table_Chu_NhomNguoi', "cộng đồng dân cư vào nhóm người");
+                            }
+                        });
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+        //load form chủ
+        $('#drpchonchu').change(function () {
+            //cá nhân
+            if ($(this).val() == "1") {
+                $("#idnhomnguoi").prop('checked', false);
+                $('#idcanhangiadinh').val("0");
+                $.ajax({
+                    type: "GET",
+                    url: "/XLHSDangKy/_Dk_ChuCaNhan_GiayTo",
+                    success: function (response, status, xhr) {
+                        $('#tabChuCaNhan').html(response);
+                    }
+                });
+            }
+                //hộ gia đình
+            else if ($(this).val() == "2") {
+                $("#idnhomnguoi").prop('checked', false);
+                $.ajax({
+                    type: "GET",
+                    url: "/XLHSDangKy/LoadHoGiaDinh",
+                    success: function (response, status, xhr) {
+                        $('#idcanhangiadinh').val("1");
+                        $('#tabChuCaNhan').html(response);
+                    }
+                });
+            }
+                //vợ chồng
+            else if ($(this).val() == "3") {
+                $("#idnhomnguoi").prop('checked', false);
+                $.ajax({
+                    type: "GET",
+                    url: "/XLHSDangKy/LoadVoChong",
+                    success: function (response, status, xhr) {
+                        $('#idcanhangiadinh').val("2");
+                        $('#tabChuCaNhan').html(response);
+                    }
+                });
+            }
+                // tổ chức
+            else if ($(this).val() == "4") {
+                $("#idnhomnguoi").prop('checked', false);
+                $.ajax({
+                    type: "GET",
+                    url: "/XLHSDangKy/LoadToChuc",
+                    success: function (response, status, xhr) {
+                        $('#idcanhangiadinh').val("3");
+                        $('#tabChuCaNhan').html(response);
+                    }
+                });
+            }
+                //cộng đồng
+            else if ($(this).val() == "5") {
+                $("#idnhomnguoi").prop('checked', false);
+                $.ajax({
+                    type: "GET",
+                    url: "/XLHSDangKy/LoadCongDong",
+                    success: function (response, status, xhr) {
+                        $('#idcanhangiadinh').val("4");
+                        $('#tabChuCaNhan').html(response);
+                    }
+                });
+            }
+            else if ($(this).val() == "6") {
+                $.ajax({
+                    type: "GET",
+                    url: "/XLHSDangKy/LoadNhomNguoi",
+                    success: function (response, status, xhr) {
+                        $("#idnhomnguoi").prop('checked', true);
+                        $('#divnhomnguoi').html(response);
+                        document.getElementById("divnhomnguoi").style.display = "block";
+                    }
+                });
+            }
+        });
+
+        //hộ gia đình
+        $("#openTabHoGiaDinh").on("click", function () {
+            //alert("Hộ gia đình");
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/LoadHoGiaDinh",
+                // data: { giaytoid: giaytotuythanid, idcanhan: canhanid, loaigiaytoid: rowData.LOAIGIAYTOTUYTHANID, sogiayto: rowData.SOGIAYTOTUYTHAN, noicapgiayto: rowData.NOICAPTUYTHAN, ngaycapgiayto: rowData.NGAYCAPTUYTHAN, lagiaytoingcn: rowData.LAGIAYTOINGCN },
+                dataType: "html",
+                success: function (data) {
+                    $('#tabChuCaNhan').html('');
+                    $('#tabHoGiaDinh').html(data);
+                }
+            });
+        });
+    });
+    $(function () {
+
+        //$("#tabChuCaNhan").click();
+        $("#table_DSCHU").on("click", "tr", function (e) {
+            $(this).addClass('activerow').siblings().removeClass('activerow');
+            var nguoiid = $(this)[0].cells[0].innerHTML;
+            var loaichuID = $(this)[0].cells[6].innerHTML;
+            var dondk = $('#DONDANGKYID').val();
+
+            if (loaichuID.trim() == "1") {
+                $("#idnhomnguoi").prop('checked', false);
+                $('#idcanhangiadinh').val("0");
+                $('#drpchonchu').val(1);
+                document.getElementById("divnhomnguoi").style.display = "none";
+                loadchucanhan(nguoiid, loaichuID);
+            }
+                //load chủ hộ gia đình
+            else if (loaichuID.trim() == "2") {
+                $("#idnhomnguoi").prop('checked', false);
+                document.getElementById("divnhomnguoi").style.display = "none";
+                $('#drpchonchu').val(2);
+                $('#idcanhangiadinh').val("1");
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChiTietHoGiaDinh",
+                    data: { idnguoi: nguoiid.trim(), loaichu: loaichuID.trim() },
+                    dataType: "html",
+                    success: function (data) {
+                        $('#tabChuCaNhan').html(data);
+                    }
+                });
+            }
+                //load chủ vợ chồng
+            else if (loaichuID.trim() == "3") {
+                $("#idnhomnguoi").prop('checked', false);
+                document.getElementById("divnhomnguoi").style.display = "none";
+                $('#drpchonchu').val(3);
+                $('#idcanhangiadinh').val("2");
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChiTietVoChong",
+                    data: { idnguoi: nguoiid.trim(), loaichu: loaichuID.trim() },
+                    dataType: "html",
+                    success: function (data) {
+                        $('#tabChuCaNhan').html(data);
+                    }
+                });
+            }
+                //load chủ tổ chức
+            else if (loaichuID.trim() == "4") {
+                $("#idnhomnguoi").prop('checked', false);
+                document.getElementById("divnhomnguoi").style.display = "none";
+                $('#drpchonchu').val(4);
+                $('#idcanhangiadinh').val("3");
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChiTietToChuc",
+                    data: { idnguoi: nguoiid.trim(), loaichu: loaichuID.trim() },
+                    dataType: "html",
+                    success: function (data) {
+                        $('#tabChuCaNhan').html(data);
+                    }
+                });
+            }
+            else if (loaichuID.trim() == "5") {
+                $("#idnhomnguoi").prop('checked', false);
+                document.getElementById("divnhomnguoi").style.display = "none";
+                $('#drpchonchu').val(5);
+                $('#idcanhangiadinh').val("4");
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChiTietCongDong",
+                    data: { idnguoi: nguoiid.trim(), loaichu: loaichuID.trim() },
+                    dataType: "html",
+                    success: function (data) {
+                        $('#tabChuCaNhan').html(data);
+                    }
+                });
+            }
+            else if (loaichuID.trim() == "6") {
+                $('#drpchonchu').val(6);
+                $('#idcanhangiadinh').val("5");
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSDangKy/ChiTietNhomNguoi",
+                    data: { idnguoi: nguoiid.trim(), loaichu: loaichuID.trim() },
+                    dataType: "html",
+                    success: function (data) {
+                        $("#idnhomnguoi").prop('checked', true);
+                        $('#divnhomnguoi').html(data);
+                        document.getElementById("divnhomnguoi").style.display = "block";
+                        $("#txtnguoiid").val(nguoiid.trim());
+                    }
+                });
+            }
+        });
+    });
+
+    //xử lý với dữ liệu thêm chủ thành công
+    function ProcessAddChu(data, tableid, message) {
+        console.log('tableid:' + tableid);
+        if (data.themmoi === true) {
+            alert("Bạn đã thêm mới " + message + " thành công!");
+            // thêm thông tin chủ vào bảng đăng ký
+            var arrHead = new Array();
+            arrHead = ['STT', 'loaichu', 'hoten', 'CmT', 'hanhdong', 'loaichu'];
+            var tableName = '#';
+            var arrButton = new Array();
+            if (tableid == 'table_DSCHU') {
+                arrButton = ['DetailRow(this)', 'removeRow(this)'];
+            } else {
+                arrButton = ['DetailRowNhom(this)', 'removeRowNhom(this)'];
+            }
+            var empTab = document.getElementById(tableid);
+            var rowCnt = empTab.rows.length;        // GET TABLE ROW COUNT.
+
+            var tr = empTab.insertRow(rowCnt);      // TABLE ROW.
+            tr = empTab.insertRow(rowCnt);
+            for (var c = 0; c <= arrHead.length; c++) {
+                var td = tr.insertCell(c);
+                if (c == arrHead.length - 1) {           // FIRST COLUMN.
+                    // ADD A BUTTON chi tiết
+                    var buttondetail = document.createElement('input');
+
+                    // SET INPUT ATTRIBUTE.
+                    buttondetail.setAttribute('class', 'btn btn-xs btn-heading');
+                    buttondetail.setAttribute('type', 'button');
+                    buttondetail.setAttribute('value', 'Chi tiết');
+
+                    // ADD THE BUTTON's 'onclick' EVENT.
+                    buttondetail.setAttribute('onclick', arrButton[0]);
+                    td.appendChild(buttondetail);
+
+                    // ADD A BUTTON xóa
+                    var button = document.createElement('input');
+
+                    // SET INPUT ATTRIBUTE.
+                    button.setAttribute('class', 'btn btn-xs btn-heading');
+                    button.setAttribute('type', 'button');
+                    button.setAttribute('value', 'Xóa');
+                    button.setAttribute('style', 'margin-left:3px;');
+
+                    // ADD THE BUTTON's 'onclick' EVENT.
+                    button.setAttribute('onclick', arrButton[1]);
+
+                    td.appendChild(button);
+                    td.setAttribute('style', 'text-align: center;');
+                }
+                else if (c == 0) {
+                    td.innerHTML = data.NGUOIID;
+                    td.hidden = true;
+                }
+                else if (c == 1) {
+                    tableName = '#' + tableid + ' td';
+                    console.log('tableName:' + tableName);
+                    td.innerHTML = $(tableName).closest("tr").length + '.';
+                    td.setAttribute('style', 'text-align: right;');
+                }
+                else if (c == 2) {
+                    td.innerHTML = data.LOAICHU;
+                }
+                else if (c == 3) {
+                    td.innerHTML = data.HOTEN;
+                }
+                else if (c == 4) {
+                    td.innerHTML = data.CMT;
+                }
+                else if (c == arrHead.length) {
+                    td.innerHTML = data.LOAICHUID;
+                    td.hidden = true;
+                }
+            }
+        }
+        else     //Cập nhật
+        {
+            tableName = '#' + tableid + ' tr';
+            console.log('tableName:' + tableName);
+            var tname = '#' + tableid;
+            console.log('tname:' + tname);
+            $(tableName).each(function (i, row) {
+                var id = $(tname).children().children().eq(i).children().eq(0).text();
+                if (data.NGUOIID.trim() === id.trim()) {
+                    $(tname).children().children().eq(i).children().eq(2)[0].innerHTML = data.LOAICHU;
+                    $(tname).children().children().eq(i).children().eq(3)[0].innerHTML = data.HOTEN;
+                    $(tname).children().children().eq(i).children().eq(4)[0].innerHTML = data.CMT;
+                    alert('cập nhật ' + message + ' thành công!');
+                }
+            });
+        }
+    }
+
+    // chủ cá nhân
+    function loadchucanhan(nguoiid, loaichuID) {
+        var nguoiid = nguoiid;
+        var loaichuid = loaichuID;
+        var dondk = $('#DONDANGKYID').val();
+
+        if (nguoiid.trim() != "" && loaichuid.trim() === "1") {
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ChiTietChuCaNhan",
+                data: { idnguoi: nguoiid.trim(), dondangkyid: dondk.trim() },
+                dataType: "html",
+                success: function (data) {
+                    $('#tabChuCaNhan').html(data);
+                    $("#NGUOIID").val(nguoiid.trim());
+                }
+            });
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/_Dk_ChuCaNhan_GiayTo",
+                // data: { giaytoid: giaytotuythanid, idcanhan: canhanid, loaigiaytoid: rowData.LOAIGIAYTOTUYTHANID, sogiayto: rowData.SOGIAYTOTUYTHAN, noicapgiayto: rowData.NOICAPTUYTHAN, ngaycapgiayto: rowData.NGAYCAPTUYTHAN, lagiaytoingcn: rowData.LAGIAYTOINGCN },
+                dataType: "html",
+                success: function (data) {
+                    $('#tabChuCaNhan').html(data);
+                }
+            });
+        }
+    };
+
+    function DetailRow(oButton) {
+        var empTab = document.getElementById('table_DSCHU');
+        var index = oButton.parentNode.parentNode.rowIndex;
+        var nguoiid = empTab.rows[index].cells[0].innerHTML;
+        var loaichuID = empTab.rows[index].cells[6].innerHTML;
+        var dondk = $('#DONDANGKYID').val();
+
+        if (loaichuID.trim() == "1") {
+            // $("#openTabChuCaNhan").click();
+            $('#idcanhangiadinh').val("0");
+            $('#drpchonchu').val(1);
+            loadchucanhan(nguoiid, loaichuID);
+        }
+            //load chủ hộ gia đình
+        else if (loaichuID.trim() == "2") {
+            $('#drpchonchu').val(2);
+            $('#idcanhangiadinh').val("1");
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ChiTietHoGiaDinh",
+                data: { idnguoi: nguoiid.trim(), loaichu: loaichuID.trim() },
+                dataType: "html",
+                success: function (data) {
+                    $('#tabChuCaNhan').html(data);
+                }
+            });
+        }
+            //load chủ vợ chồng
+        else if (loaichuID.trim() == "3") {
+            $('#drpchonchu').val(3);
+            $('#idcanhangiadinh').val("2");
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ChiTietVoChong",
+                data: { idnguoi: nguoiid.trim(), loaichu: loaichuID.trim() },
+                dataType: "html",
+                success: function (data) {
+                    $('#tabChuCaNhan').html(data);
+                }
+            });
+        }
+            //load chủ tổ chức
+        else if (loaichuID.trim() == "4") {
+            $('#drpchonchu').val(4);
+            $('#idcanhangiadinh').val("3");
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ChiTietToChuc",
+                data: { idnguoi: nguoiid.trim(), loaichu: loaichuID.trim() },
+                dataType: "html",
+                success: function (data) {
+                    $('#tabChuCaNhan').html(data);
+                }
+            });
+        }
+        else if (loaichuID.trim() == "5") {
+            $('#drpchonchu').val(5);
+            $('#idcanhangiadinh').val("4");
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ChiTietCongDong",
+                data: { idnguoi: nguoiid.trim(), loaichu: loaichuID.trim() },
+                dataType: "html",
+                success: function (data) {
+                    $('#tabChuCaNhan').html(data);
+                }
+            });
+        }
+        else if (loaichuID.trim() == "6") {
+            $('#drpchonchu').val(6);
+            $('#idcanhangiadinh').val("5");
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ChiTietNhomNguoi",
+                data: { idnguoi: nguoiid.trim(), loaichu: loaichuID.trim() },
+                dataType: "html",
+                success: function (data) {
+                    $("#idnhomnguoi").prop('checked', true);
+                    $('#divnhomnguoi').html(data);
+                    document.getElementById("divnhomnguoi").style.display = "block";
+                    $("#txtnguoiid").val(nguoiid.trim());
+                }
+            });
+        }
+    };
+
+    function removeRow(oButton) {
+        var ans = confirm("Bạn chắc chắn muốn xóa?");
+        //=== If user pressed Ok then delete the record else do nothing.
+        if (ans == true) {
+            //alert('xóa thành công!');
+            var empTab = document.getElementById('table_DSCHU');
+            var index = oButton.parentNode.parentNode.rowIndex;
+            var nguoiid = empTab.rows[index].cells[0].innerHTML;
+            var dondk = $('#DONDANGKYID').val();
+            empTab.deleteRow(oButton.parentNode.parentNode.rowIndex);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/XOA_NGUOIDANGKY",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({ nguoi: nguoiid, dondangky_id: dondk }),
+                success: function (data) {
+                    if (data === "true") {
+                        alert("Xóa chủ gắn đăng ký thành công!");
+                    }
+                    else {
+                        alert("Có lỗi xảy ra!");
+                    }
+                },
+            });
+        }
+    }
+</script>

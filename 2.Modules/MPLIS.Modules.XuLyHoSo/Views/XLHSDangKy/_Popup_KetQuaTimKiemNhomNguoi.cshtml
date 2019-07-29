@@ -1,0 +1,118 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSNhomNguoiVM
+
+<div class='modal fade' id='modalKQTKNhomNguoiID'>
+    @Html.Hidden("Count", Model.DSNhomNguoi.Count, new { @id = "CountNhomNguoiID" })
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'>Kết quả tìm kiếm nhóm người</h4>
+            </div>
+            <div class='modal-body'>
+                <table id="TableDSNhomNguoiID" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>#</th>
+                            <th>CMT người đại diện</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DSNhomNguoi != null && Model.DSNhomNguoi.Count > 0)
+                        {
+                            int sTT = 0;
+                            foreach (var item in Model.DSNhomNguoi)
+                            {
+                                sTT++;
+                                <tr>
+                                    <td>
+                                        @item.NHOMNGUOIID
+                                    </td>
+                                    <td class="text-right">
+                                        @sTT.
+                                    </td>
+                                    <td>
+                                        @item.CMTNGUOIDAIDIEN
+                                    </td>
+                                    <td class="text-center"></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var columns = [
+            { "data": "NHOMNGUOIID" },
+            { "data": "STT" },
+            { "data": "CMTNGUOIDAIDIEN" },
+            { "data": null }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnSel'>Chọn</button>";
+                }
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "lengthChange": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+            "autoWidth": false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+            },
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": 't<"bottom"p><"clear">'
+        }
+        var TableDSNhomNguoiID = $('#TableDSNhomNguoiID').DataTable(options);
+
+        TableDSNhomNguoiID.rows().nodes().on('click', 'tbody tr', function () {
+            if (TableDSNhomNguoiID.rows().nodes().length > 0) {
+                ChonNhomNguoi(TableDSNhomNguoiID.row($(this)).data());
+            }
+        })
+
+        TableDSNhomNguoiID.rows().nodes().on('click', 'tbody tr button', function (event) {
+            event.stopPropagation();
+        })
+
+        TableDSNhomNguoiID.rows().nodes().on('click', 'tbody tr .btnSel', function (event) {
+            ChonNhomNguoi(TableDSNhomNguoiID.row($(this).parents('tr')).data());
+        })
+
+        function ChonNhomNguoi(rowData) {
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/DonDangKy_ChonNhomNguoi",
+                data: { nhomNguoiID: rowData.NHOMNGUOIID },
+                dataType: "html",
+                success: function (result) {
+                    $('#divCTChuNhomNguoiID')
+                        .html(result)
+                        .ready(function () {
+                            $("#modalKQTKNhomNguoiID").modal('hide');
+                        })
+                }
+            })
+        }
+
+    })
+</script>
+
+

@@ -1,0 +1,139 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSVoChongVM
+
+<div class='modal fade' id='modalKQTKVoChongID'>
+    @Html.Hidden("Count", Model.DSVoChong.Count, new { @id = "CountVoChongID" })
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'>Kết quả tìm kiếm vợ chồng</h4>
+            </div>
+            <div class='modal-body'>
+                <table id="TableDSVoChongID" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>#</th>
+                            <th>Chồng</th>
+                            <th>CMT chồng</th>
+                            <th>Vợ</th>
+                            <th>CMT vợ</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DSVoChong != null && Model.DSVoChong.Count > 0)
+                        {
+                            int sTT = 0;
+                            foreach (var item in Model.DSVoChong)
+                            {
+                                sTT++;
+                                <tr>
+                                    <td>
+                                        @item.VOCHONGID
+                                    </td>
+                                    <td class="text-right">
+                                        @sTT.
+                                    </td>
+                                    <td>
+                                        @item.ChongCN.HOTEN
+                                    </td>
+                                    <td class="text-center">
+                                        @item.CMTCHONG
+                                    </td>
+                                    <td>
+                                        @item.VoCN.HOTEN
+                                    </td>
+                                    <td>
+                                        @item.CMTVO
+                                    </td>
+                                    <td class="text-center"></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var columns = [
+            { "data": "VOCHONGID" },
+            { "data": "STT" },
+            { "data": "CHONGHOTEN" },
+            { "data": "CMTCHONG" },
+            { "data": "VOHOTEN" },
+            { "data": "CMTVO" },
+            { "data": null }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnSel'>Chọn</button>";
+                }
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "lengthChange": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+            "autoWidth": false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+            },
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": 't<"bottom"p><"clear">'
+        }
+        var TableDSVoChongID = $('#TableDSVoChongID').DataTable(options);
+
+        TableDSVoChongID.rows().nodes().on('click', 'tbody tr', function () {
+            if (TableDSVoChongID.rows().nodes().length > 0) {
+                ChonVoChong(TableDSVoChongID.row($(this)).data());
+                //if ($(TableDSCaNhanID.row(this).node()).attr('class').indexOf('activerow') != -1) {
+                //    $(TableDSCaNhanID.row(this).node()).removeClass('activerow');
+                //} else {
+                //    $(TableDSCaNhanID.rows().nodes()).removeClass('activerow');
+                //    $(TableDSCaNhanID.row(this).node()).addClass('activerow');
+                //}
+            }
+        })
+
+        TableDSVoChongID.rows().nodes().on('click', 'tbody tr button', function (event) {
+            event.stopPropagation();
+        })
+
+        TableDSVoChongID.rows().nodes().on('click', 'tbody tr .btnSel', function (event) {
+            ChonVoChong(TableDSVoChongID.row($(this).parents('tr')).data());
+        })
+
+        function ChonVoChong(rowData) {
+            console.log("Chọn vợ chồng!");
+            console.log(rowData);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/DonDangKy_ChonVoChong",
+                data: { voChongID: rowData.VOCHONGID },
+                dataType: "html",
+                success: function (result) {
+                    $('#divCTChuVCID')
+                        .html(result)
+                        .ready(function () {
+                            $("#modalKQTKVoChongID").modal('hide');
+                        })
+                }
+            })
+        }
+
+    })
+</script>

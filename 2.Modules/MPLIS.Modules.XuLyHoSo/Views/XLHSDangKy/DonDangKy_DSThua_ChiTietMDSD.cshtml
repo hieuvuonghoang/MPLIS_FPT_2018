@@ -1,0 +1,198 @@
+﻿@using AppCore.Models
+@model DC_THUADAT
+
+<body>
+    <style type="text/css">
+        .multiselect-container > li > a > label.checkbox {
+            width: 299px;
+        }
+
+        .btn-group > .btn:first-child {
+            width: 299px;
+        }
+        .dropdown-menu > li > a {
+            color: #333;
+        }
+        .btn-group > span {
+            width: 299px;
+        }
+    </style>
+    <form id="div_ChiTietMDSD">
+        @Html.HiddenFor(m => m.CurMDSDDAT.MUCDICHSUDUNGDATID, new { @class = "form-control" })
+        @Html.HiddenFor(m => m.CurMDSDDAT.THUADATID, new { @class = "form-control" })
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurMDSDDAT.MUCDICHSUDUNGID, "Mục đích sử dụng", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(model => model.CurMDSDDAT.MUCDICHSUDUNGID, new SelectList(ViewBag.mdsddat, "MUCDICHSUDUNGID", "TENMUCDICHSUDUNG"), new { @class = "form-control input-sm", @id = "drpMDSD" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurMDSDDAT.MUCDICHSUDUNGQHID, "Mục đích sử dụng quy hoạch", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(model => model.CurMDSDDAT.MUCDICHSUDUNGQHID, new SelectList(ViewBag.mdsdquyhoach, "MUCDICHSUDUNGQHID", "TENMUCDICHSUDUNGQH"), new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurMDSDDAT.HINHTHUCSUDUNGID, "Hình thức sử dụng", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(model => model.CurMDSDDAT.HINHTHUCSUDUNGID, new SelectList(ViewBag.mdsdhinhthuc, "HINHTHUCSUDUNGID", "TENHINHTHUCSUDUNG"), new { @class = "form-control input-sm" })
+            </div>
+        </div> 
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurMDSDDAT.DIENTICH, "Diện tích", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(model => model.CurMDSDDAT.DIENTICH, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurMDSDDAT.DIENTICHPHAINOPTIEN, "Diện tích phải nộp tiền SD đất", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(model => model.CurMDSDDAT.DIENTICHPHAINOPTIEN, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurMDSDDAT.DIENTICHKHONGPHAINOPTIEN, "Diện tích không phải nộp tiền SD đất", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(model => model.CurMDSDDAT.DIENTICHKHONGPHAINOPTIEN, new { @class = "form-control input-sm" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurMDSDDAT.LOAITHOIHANSUDUNG, "Loại thời hạn sử dụng", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.DropDownListFor(model => model.CurMDSDDAT.LOAITHOIHANSUDUNG, new SelectList(new List<Object>{
+                       new { LOAITHOIHANSUDUNG = "0" , text = "Lâu dài"  },
+                       new { LOAITHOIHANSUDUNG = "1" , text = "Có thời hạn" },
+                       new { LOAITHOIHANSUDUNG = "2" , text = "Gia hạn"}
+                    },
+                  "LOAITHOIHANSUDUNG",
+                  "text"), new { @class = "form-control input-sm", @id = "drpLoaiThoiHan" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurMDSDDAT.TUNGAY, "Từ ngày", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(model => model.CurMDSDDAT.TUNGAY, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm ", @disabled = "true", @id = "MDSDTuNgay" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurMDSDDAT.DENNGAY, "Đến ngày", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextBoxFor(model => model.CurMDSDDAT.DENNGAY, "{0:yyyy-MM-dd}", new { @type = "date", @class = "form-control input-sm ", @disabled = "true", @id = "MDSDDenNgay" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurMDSDDAT.NguonID, "Nguồn gốc sử dụng", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.ListBoxFor(model => model.CurMDSDDAT.NguonID, new SelectList(ViewBag.mdsdnguongoc, "LOAINGUONGOCSUDUNGID", "TENNGUONGOCSUDUNG"), new { @class = "select2 form-control input-sm" ,@id="ListBoxNGSD"})
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model=>model.CurMDSDDAT.NGUONGOCSDTH,"Danh sách nguồn gốc", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-8">
+                @Html.TextAreaFor(model=>model.CurMDSDDAT.NGUONGOCSDTH, new { @class = "form-control input-sm " ,@rows="4", @disabled ="true"})
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurMDSDDAT._LAMUCDICHCHINH, "Là mục đích chính", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-2" style="padding-top: 7px;">
+                @Html.CheckBoxFor(model => model.CurMDSDDAT._LAMUCDICHCHINH)
+            </div>
+            <div class="col-xs-4">
+                @Html.LabelFor(model => model.CurMDSDDAT._SUDUNGCHUNG, "Sử dụng chung", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-2" style="padding-top: 7px;">
+                @Html.CheckBoxFor(model => model.CurMDSDDAT._SUDUNGCHUNG)
+            </div>
+        </div>
+    </form>
+    <div class="box-footer">
+        <input type="button" class="btn-xs btn-heading pull-left" id="btncapnhatMDSD" value="Cập nhật" />
+        <input type="button" class="btn-xs btn-heading pull-left" id="btnlammoiMDSD" value="Xóa trắng" />
+    </div>
+</body>
+<script>
+
+    $(document).ready(function () {
+        $('.select2').multiselect({
+            includeSelectAllOption: true,
+            search:true,
+            maxHeight: 400  
+        });
+        $('#btnlammoiMDSD').on("click", function () {
+            $.ajax({
+                type: "GET",
+                url: "/XLHSDangKy/ChiTietMDSD",
+                datatype: "html",
+                success: function (response) {
+                    $('#ChiTietMDSD').html(response);
+                }
+            })
+        });
+        $('#btncapnhatMDSD').on("click", function () {
+            var formdata = $("#div_ChiTietMDSD").serializeArray();
+            var drpMDSD = document.getElementById('drpMDSD');
+            var r = drpMDSD.options[drpMDSD.selectedIndex].innerHTML;
+            formdata.push({
+                name: "TenMDSD",
+                value: r.trim()
+            });
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ThemMoiMDSD",
+                data: formdata,
+                success: function (data) {
+                    $('#div_MDSD_Thua').html(data);
+                }
+            })
+        });
+        $('#drpLoaiThoiHan').on("click", function () {
+            if ($(this).val() != 0) {
+                console.log($('#TUNGAY').val());
+                $('#MDSDTuNgay').prop("disabled", false);
+                $('#MDSDDenNgay').prop("disabled", false);
+            }
+            else {
+                $('#MDSDTuNgay').prop("disabled", true);
+                $('#MDSDDenNgay').prop("disabled", true);
+            }
+        });
+        $('#ListBoxNGSD').change( function () {
+            var formdata = $("#div_ChiTietMDSD").serializeArray();
+            console.log(formdata);
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ChiTietDSNguon",
+
+                data: formdata,
+                success: function (data) {
+                    console.log('CLICKBOX');
+                    $('#CurMDSDDAT_NGUONGOCSDTH').html(data);
+                }
+            })
+        });
+    });
+    </script>

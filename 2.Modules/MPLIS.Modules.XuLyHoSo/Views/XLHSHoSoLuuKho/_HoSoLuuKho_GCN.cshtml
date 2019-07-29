@@ -1,0 +1,74 @@
+﻿@using AppCore.Models
+@model HS_HOSO 
+    <div  id="divHSLK_GCN">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Danh sách thông tin giấy chứng nhận</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <input type="button" class="btn-sm btn-inform" id="btncapnhatgcn" value="Cập nhật từ dữ liệu hồ sơ" />
+                </div>
+                <div class="row">
+                    <table id="table_HoSoLK_GCN" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="t50" hidden>hsgcnid</th>
+                                <th class="t50">STT</th>
+                                <th class="t100">Số phát hành</th>
+                                <th class="t100">Số vào sổ</th>
+                                <th class="t100">Mã vạch</th>
+                                <th class="t100">Xã</th>
+                            </tr>
+                        </thead>
+                        @{
+                            int rtdtable = 0;
+                            if (Model != null)
+                            {
+                                if (Model.DSGCN != null)
+                                {
+                                    foreach (var itemtd in Model.DSGCN)
+                                    {
+                                        rtdtable = rtdtable + 1;
+                                        <tr data-id="@itemtd.TCGCNID">
+                                            <td align="center" hidden>
+                                                @itemtd.TCGCNID
+                                            </td>
+                                            <td align="center">@rtdtable</td>
+                                            <td align="center">@itemtd.SOPHATHANH</td>
+                                            <td align="center">@itemtd.SOVAOSO</td>
+                                            <td align="center">@itemtd.MAVACH</td>
+                                            <td align="center">@itemtd.tenxa</td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        }
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+<script>
+    $(document).ready(function () {
+        table_checkthuats = InitDataTableXLHS($('#table_HoSoLK_GCN'));
+        $('#btncapnhatgcn').on("click", function () {
+            $.ajax({
+                type: "POST",
+                url: "/XLHSHoSoLuuKho/CapNhatGCN",
+                success: function (data) {
+                    console.log(data);
+                    $('#divHoSoTiepNhanID_GCN').html(data);
+                }
+            });
+
+        });
+    });
+
+
+</script>
+
+
+

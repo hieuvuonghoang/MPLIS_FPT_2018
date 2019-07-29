@@ -1,0 +1,293 @@
+﻿@using AppCore.Models
+@model HS_HOSO
+<div class="row" id="divHSLK_DSFile">
+    <div class="col-xs-8">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Danh sách các file đính kèm</h3>
+                </div>
+                <div class="box-body">
+                    <style type="text/css">
+                        .table td {
+                            word-wrap: break-word;
+                            word-break: break-all;
+                            white-space: normal;
+                                 }
+                    </style>
+                        <table id="table_HoSoLK_DSFile" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>STT</th>
+                                    <th>Loại giấy tờ</th>
+                                    <th>Tên tệp dữ liệu</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int rdsgcntable = 0;
+                                    if (Model != null)
+                                    {
+                                        if (Model.DSFileDinhKem != null)
+                                        {
+                                            foreach (var item in Model.DSFileDinhKem)
+                                            {
+                                                rdsgcntable = rdsgcntable + 1;
+                                                <tr>
+                                                    <td>
+                                                        @item.THANHPHANHOSOID
+                                                    </td>
+                                                    <td>
+                                                        @rdsgcntable
+                                                    </td>
+                                                    <td>
+                                                        @item.loaihoso
+                                                    </td>
+                                                    <td>
+                                                        @item.TENTEPDULIEU
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+            </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Chi tiết file đính kèm</h3>
+            </div>
+            <div class="box-body">
+                <style type="text/css">
+                    .btn-file {
+                        position: relative;
+                        overflow: hidden;
+                    }
+                        .btn-file input[type=file] {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            min-width: 100%;
+                            min-height: 100%;
+                            font-size: 100px;
+                            text-align: right;
+                            filter: alpha(opacity=0);
+                            opacity: 0;
+                            outline: none;
+                            cursor: inherit;
+                            display: block;
+                        }
+                </style>
+                <form id="ChiTietFile">
+                    @Html.HiddenFor(m=>m.file.HOSOID, new { @class = "form-control input-sm" })
+                    @Html.HiddenFor(m => m.file.THANHPHANHOSOID, new { @class = "form-control input-sm" })
+                    @Html.HiddenFor(m => m.file.DUONGDAN, new { @class = "form-control input-sm" })
+                    <div class="row">
+                        <div class="col-xs-4">
+                            @Html.LabelFor(Model => Model.file.GIAYTOKEMTHEOHSID, "Loại giấy tờ", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-7">
+                            @Html.DropDownListFor(m => m.file.GIAYTOKEMTHEOHSID, new SelectList(ViewBag.Listfilehoso, "GIAYTOKEMTHEOHSID", "TENGIAYTOKEMTHEOHS"),"", new { @class = "form-control input-sm", @id = "drpfileHSLuuKho" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            @Html.LabelFor(Model => Model.file.TENTEPDULIEU, "Tên file", new { @class = "pull-right control-label" })
+                        </div>
+                        <div class="col-xs-7">
+                            @Html.TextBoxFor(m => m.file.TENTEPDULIEU, new { @class = "form-control input-sm" })
+                        </div>
+                    </div>
+                    <div class="row"enctype="multipart/form-data">
+                        <span class="btn btn-xs btn-heading btn-file">
+                            upload
+                            <input type="file" id="file_upload"multiple>
+                        </span>
+                        <iframe id='hiddenIframe' src="" style="display:none; visibility:hidden;"></iframe>
+                        <input type="button" class="btn btn-xs btn-heading" value="download"  id="btnDownLoad"/>
+                    </div>
+                </form>
+            </div>
+            <div class="box-footer" style="border-top: 1px solid #d2d6de;">
+                <button class="btn-sm btn-inform pull-right" style="margin-left: 5px;" type="button" id="btnLuuThongTinFile">Lưu thông tin</button>
+                <button class="btn-sm btn-inform pull-right" style="margin-right: 5px;" type="button" onclick="LamMoiFile()">Làm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function () {
+        var columns = [
+{ "data": "THANHPHANHOSOID" },
+{ "data": "STT" },
+{ "data": "loaihoso" },
+{ "data": "TENTEPDULIEU" },
+{ "data": null }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "className": "hidden"
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<input type=\"button\" class=\"btn btn-xs btn-heading\" value=\"Xem\" onclick=\"chitiet(this)\" />\
+                     <input type=\"button\" class=\"btn btn-xs btn-heading\" value=\"Xóa\" onclick=\"xoa(this)\" />";
+                },
+                "className": "text-center"
+            },
+            {
+                "targets": 1,
+                "className": "text-right"
+            },
+            {
+                "targets": [2, 3],
+                "className": "text-center"
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "info": false,
+            "lengthChange": false,
+            "searching": false
+        }
+        var tableDSFile = $('#table_HoSoLK_DSFile').DataTable(options);
+        $('#file_upload').change(function () {
+            console.log("click-upload");
+            var filedata = document.getElementById("file_upload");
+            console.log(filedata.files);
+            formdata = false;
+            if (window.FormData) {
+                formdata = new FormData();
+            }
+            var i = 0, len = filedata.files.length, img, reader, file;
+
+            for (; i < len; i++) {
+                file = filedata.files[i];
+
+                if (window.FileReader) {
+                    reader = new FileReader();
+                    //reader.onloadend = function (e) {
+                    //    showUploadedItem(e.target.result, file.fileName);
+                   // };
+                    reader.readAsDataURL(file);
+                }
+                if (formdata) {
+                    formdata.append("file", file);
+                }
+            }
+            for (var p of formdata) {
+                console.log(p);
+            }
+            $.ajax({
+                type: "POST",
+                url: "/XLHSHoSoLuuKho/UpLoadFile",
+                success: function (result) {
+                    $('#file_HOSOID').val(result.hosoinfor.HOSOID);
+                    $('#file_THANHPHANHOSOID').val(result.hosoinfor.THANHPHANHOSOID);
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:51022/api/UpLoadFile?token=" + result.token + "&loaifile=" + result.loaifile + "&xa=" + result.xa + "&huyen=" + result.huyen + "&tinh=" + result.tinh + "&nam=" + result.nam + "&bohoso=" + result.bohoso + "&donvi=" + result.donvi,
+                        data: formdata,
+                        type: "POST", processData: false,
+                        dataType: 'json',
+                        contentType: false,
+                        success: function (data) {
+                            console.log(data);
+                            for (var i = 0; i < data.length;i++){
+                                $('#file_DUONGDAN').val(data[i].DuongDan);
+                                $('#file_TENTEPDULIEU').val(data[i].TenFile);
+                            }
+
+                        },
+                        error: function (er) {
+                            console.log(er);
+                        }
+                    })
+                }
+            });
+           
+        });
+      tableDSFile.rows().nodes().on("click", "tbody tr", function () {
+            console.log("CLICK");
+            if (tableDSFile.rows().nodes().length > 0) {
+                if ($(tableDSFile.row(this).node()).attr('class').indexOf('activerow') != -1) {
+                    $(tableDSFile.row(this).node()).removeClass('activerow');
+                } else {
+                    $(tableDSFile.rows().nodes()).removeClass('activerow');
+                    $(tableDSFile.row(this).node()).addClass('activerow');
+                } var idfile = $(this)[0].cells[0].innerHTML;
+                $.ajax({
+                    type: "POST",
+                    url: "/XLHSHoSoLuuKho/ChiTietFile",
+                    data: { idfile: idfile.trim() },
+                    success: function (data) {
+                        $('#file_HOSOID').val(data.hsid);
+                        $('#file_THANHPHANHOSOID').val(data.fileid);
+                        $('#file_DUONGDAN').val(data.duongdan);
+                        $('#file_TENTEPDULIEU').val(data.tenfile);
+                        $('#file_GIAYTOKEMTHEOHSID').val(data.loaifile);
+                    }
+                })
+            }
+
+        })
+      tableDSFile.rows().nodes().on("click", "tbody tr input", function (event) {
+            event.stopPropagation();
+      });
+      $('#btnLuuThongTinFile').on("click", function () {
+          var formdata = $("#ChiTietFile").serializeArray();
+          $.ajax({
+              type: "POST",
+              url: "/XLHSHoSoLuuKho/CapNhatFile",
+              //  data: formDonDangKy_DSTAISAN.serialize(),
+              data: formdata,
+              success: function (data) {
+                  console.log(data);
+                  if (data == "dacofile") {
+                      alert("da co file");
+                  }
+                  if (data == "cantaomoihoso") {
+                      alert("can tao moi ho so");
+                  }
+                  else {
+                      var objfile = { "THANHPHANHOSOID": data.fileid, "STT": tableDSFile.rows().nodes().length + 1, "loaihoso": data.loaifile, "TENTEPDULIEU": data.tenfile };
+                      console.log(objfile);
+                      tableDSFile.row.add(objfile).draw();
+                  }
+
+              },
+          });
+      });
+      $('#btnDownLoad').on('click', function () {
+          $.ajax({
+              type: "GET",
+              url: "/XLHSHoSoLuuKho/DownLoadFile",
+              success: function (data) {
+                  $('#hiddenIframe').attr('src', 'http://localhost:51022/api/DownLoadFile?url=' + $('#file_DUONGDAN').val() + '&token=' + data);
+              },
+          });
+      });
+    });
+    function LamMoiFile() {
+        $('#file_THANHPHANHOSOID').val("");
+        $('#file_DUONGDAN').val("");
+        $('#file_TENTEPDULIEU').val("");
+        $('#file_GIAYTOKEMTHEOHSID').val("");
+    }
+    function xoa() {
+        alert("xoa");
+    }
+</script>

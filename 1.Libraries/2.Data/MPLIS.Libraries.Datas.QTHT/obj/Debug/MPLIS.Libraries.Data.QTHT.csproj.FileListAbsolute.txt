@@ -1,0 +1,7 @@
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.QTHT\bin\Debug\MPLIS.Libraries.Data.QTHT.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.QTHT\bin\Debug\MPLIS.Libraries.Data.QTHT.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.QTHT\bin\Debug\AppCore.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.QTHT\bin\Debug\AppCore.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.QTHT\obj\Debug\MPLIS.Libraries.Data.QTHT.csprojResolveAssemblyReference.cache
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.QTHT\obj\Debug\MPLIS.Libraries.Data.QTHT.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\2.Data\MPLIS.Libraries.Datas.QTHT\obj\Debug\MPLIS.Libraries.Data.QTHT.pdb

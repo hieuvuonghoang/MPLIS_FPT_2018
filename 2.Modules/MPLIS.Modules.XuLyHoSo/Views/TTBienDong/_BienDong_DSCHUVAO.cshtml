@@ -1,0 +1,41 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSChuBDVM
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Danh sách chủ đầu vào</h3>
+        <button class="btn-xs btn-heading pull-right" type="submit" onclick="">Lưu thông tin</button>
+    </div>
+    <div class="box-body">
+        <div class="row" style="margin-bottom: 10px">
+            <div class="col-xs-2" style="padding-left: 0">
+                @Html.Label("lablelistchovaitro_ttrieng", "Vai trò", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-3">
+                @Html.DropDownList("listchovaitro_ttrieng", ViewBag.DS_dsVaiTro_list as SelectList, new { @class = "form-control input-sm" })
+            </div>
+            <div class="col-xs-2">
+                <button class="btn-sm btn-inform pull-left" type="button" onclick="ThemChuVao()">Thêm mới</button>
+            </div>
+        </div>
+        <div id="divBienDongID_DSCHUVAO_Table">
+            @{Html.RenderPartial("_BienDong_DSCHUVAO_Table", Model);}
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function ThemChuVao() {
+        $.ajax({
+            type: "GET",
+            url: "/TTBienDong/_Popup_DSCHU",
+            success: function (html) {
+                $('#dialogformDSCHUVAOID').html(html);
+                var options = {
+                    "backdrop": "static",
+                    "show": true
+                }
+                $("#modalformDSCHU").modal(options);
+            },
+        });
+    }
+</script>

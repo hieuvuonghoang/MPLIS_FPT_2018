@@ -1,0 +1,902 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0A99AAE9-81DE-4322-AF61-3C99D27629F1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AppCore</RootNamespace>
+    <AssemblyName>AppCore</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\MPLIS_SourceCode\packages\Oracle.ManagedDataAccess.12.1.022\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess.EntityFramework, Version=6.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\MPLIS_SourceCode\packages\Oracle.ManagedDataAccess.EntityFramework.12.1.2400\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomQueries\DonDangKy.cs" />
+    <Compile Include="Models\CS_CHUKYSO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CS_GIAYTOXACMINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CS_LICHSUGIAHAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CS_NHACUNGCAP.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_BD_CHU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_BD_CHUYENHTSDD.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_BD_CHUYENMDSDD.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_BD_GCN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_BD_GCN_GCN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_BD_THECHAP.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_BD_THUA.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_BD_THUA_THUA.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_BD_TREN_GCN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_BIENDONG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_CANHAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_CANHO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_CANHO_HANGMUCNCH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_CAYLAUNAM.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_CHITIETCONGKHAI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_CONGDONG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_CONGTRINHNGAM.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_CONGTRINHXAYDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_DANGKY_GCN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_DANGKY_NGUOI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_DANGKY_TAISAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_DANGKY_THUA.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_DANHSACHCONGKHAI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_DIACHI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_DOANDUONG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_DONDANGKY.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_DONKIENNGHI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_GCN_TILESH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_GIAYCHUNGNHAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_GIAYTOTUYTHAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_GTKEMTHEO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_HANCHE.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_HANGMUCCONGTRINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_HANGMUCNGOAICANHO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_HOGIADINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_HOGIADINH_THANHVIEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_KHOANDUOCTRU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_KHUCHUNGCU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_KHUVUC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_LOAIBIENDONG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_LOAICHEDOMIENGIAM.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_LOAICHEDONO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_LOAIHANCHE.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_LOAINGHIAVUTAICHINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_MIENGIAMNVTC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_MUCDICHSUDUNGDAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_MUCDICHSUDUNGDATLS.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NGANCHANGIAYCHUNGNHAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NGANCHANNGUOI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NGANCHANTAISAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NGANCHANTHUADAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NGHIAVUTAICHINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NGUOI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NGUOILS.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NGUOI_DIACHI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NGUONGOCSUDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NHACHUNGCU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NHARIENGLE.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NHOMNGUOI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NHOMNGUOI_THANHVIEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NOICONGCHUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_NONVTC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_QUYENQUANLYDAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_QUYENSOHUUTAISAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_QUYENSOHUUTAISANLS.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_QUYENSUDUNGDAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_QUYENSUDUNGDATLS.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_QUYENSUDUNGDATSAUBD.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_QUYETDINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_RUNGTRONG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_SODIACHINHDIENTU_CANHO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_SODIACHINHDIENTU_THUADAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_TAILIEUDODAC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_TAISANGANLIENVOIDAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_TAISANGANLIENVOIDATLICHSU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_TAISANGANLIENVOIDATLS.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_TAISAN_DIACHI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_TENDUONG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_THONGTINNGANCHAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_THUADAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_THUADATLS.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_THUADAT_TAILIEUDODAC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_THUADAT_TAISAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_THUATAISAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_THUEDAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_TOCHUC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_TRANHCHAP.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_VITRITHUADAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_VOCHONG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_XACNHANDONDANGKY.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_XA_TENDUONG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DC_YKIENXACNHAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_BOTHUTUCHANHCHINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_DANTOC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_DOITUONGSUDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_GIAYTOKEMTHEOHS.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_HINHTHUCSUDUNGDAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIBANDODIACHINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIBIENDONG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAICAPHANG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIDATHIENTRANG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIDIADANH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIDIEMDOCAO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIDIEMTOADO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIDTMIENGIAM.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIDUONG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIDUONGTHUYHE.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIGIAYTOTUYTHAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIHANHDONG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIHANHLANGANTOANBAOVE.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIKETCAU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIKHUCHUCNANGCAPHUYEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIKHUCHUCNANGCAPTINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIKHUVUCTONGHOP.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIMOC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIMOCBIENGIOIDIAGIOI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAINGHIAVUTAICHINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAINGUONGOCSUDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAINHA.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIQUYHOACH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAITAISANGANLIENVOIDAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAITOCHUC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAITRANGTHAIDANGKYCAPGCN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_LOAIVUNGTHUYHE.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_MUCDICHSUDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_MUCDICHSUDUNGQH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_QHVOICHUHO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_QUOCTICH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_SEQUENCE.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DM_TRANGTHAIHOSO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Ext\BienDong\DC_BD_CHU.cs" />
+    <Compile Include="Models\Ext\BienDong\DC_BD_GCN.cs" />
+    <Compile Include="Models\Ext\BienDong\DC_BD_THECHAP.cs" />
+    <Compile Include="Models\Ext\BienDong\DC_BIENDONG.cs" />
+    <Compile Include="Models\Ext\BienDong\DC_QUYETDINH.cs" />
+    <Compile Include="Models\Ext\CauHinhLCHS\People.cs" />
+    <Compile Include="Models\Ext\CauHinhLCHS\QT_BUOCQT_CAUHINH.cs" />
+    <Compile Include="Models\Ext\CauHinhLCHS\QT_BUOCQUYTRINH.cs" />
+    <Compile Include="Models\Ext\CauHinhLCHS\QT_CONGVIECTHEOBUOC.cs" />
+    <Compile Include="Models\Ext\CauHinhLCHS\QT_QUYTRINH.cs" />
+    <Compile Include="Models\Ext\CauHinhLCHS\QT_TTHC_QUYTRINH.cs" />
+    <Compile Include="Models\Ext\Chu\DC_GIAYTOTUYTHAN.cs" />
+    <Compile Include="Models\Ext\Chu\DC_CANHAN.cs" />
+    <Compile Include="Models\Ext\Chu\DC_CONGDONG.cs" />
+    <Compile Include="Models\Ext\Chu\DC_HOGIADINH_THANHVIEN.cs" />
+    <Compile Include="Models\Ext\Chu\DC_NHOMNGUOI_THANHVIEN.cs" />
+    <Compile Include="Models\Ext\DC_GIAYCHUNGNHAN.cs" />
+    <Compile Include="Models\Ext\Chu\DC_HOGIADINH.cs" />
+    <Compile Include="Models\Ext\Chu\DC_NGUOI.cs" />
+    <Compile Include="Models\Ext\Chu\DC_NHOMNGUOI.cs" />
+    <Compile Include="Models\Ext\Chu\DC_TOCHUC.cs" />
+    <Compile Include="Models\Ext\Chu\DC_VOCHONG.cs" />
+    <Compile Include="Models\Ext\Don\DC_DANGKY_GCN.cs" />
+    <Compile Include="Models\Ext\Don\DC_DANGKY_NGUOI.cs" />
+    <Compile Include="Models\Ext\Don\DC_DANGKY_TAISAN.cs" />
+    <Compile Include="Models\Ext\Don\DC_DANGKY_THUA.cs" />
+    <Compile Include="Models\Ext\Don\DC_DONDANGKY.cs" />
+    <Compile Include="Models\Ext\Don\DC_XACNHANDONDANGKY.cs" />
+    <Compile Include="Models\Ext\GiayChungNhan\DC_GCN_TILESH.cs" />
+    <Compile Include="Models\Ext\GiayChungNhan\QUYENTRENGCN.cs" />
+    <Compile Include="Models\Ext\HoSo\HS_HOSO.cs" />
+    <Compile Include="Models\Ext\HoSo\HS_LIENKETTHUADAT.cs" />
+    <Compile Include="Models\Ext\HoSo\HS_TC_GCN.cs" />
+    <Compile Include="Models\Ext\HoSo\HS_THANHPHANHOSO.cs" />
+    <Compile Include="Models\Ext\HoSo\QT_FILEDINHKEMHOSO.cs" />
+    <Compile Include="Models\Ext\HoSo\QT_HOSOTIEPNHAN.cs" />
+    <Compile Include="Models\Ext\HT_NGUOIDUNG.cs" />
+    <Compile Include="Models\Ext\TaiSan\DangKyTaiSan.cs" />
+    <Compile Include="Models\Ext\TaiSan\DC_CANHO.cs" />
+    <Compile Include="Models\Ext\TaiSan\DC_CANHO_HANGMUCNCH.cs" />
+    <Compile Include="Models\Ext\TaiSan\DC_CONGTRINHXAYDUNG.cs" />
+    <Compile Include="Models\Ext\TaiSan\DC_KHUCHUNGCU.cs" />
+    <Compile Include="Models\Ext\TaiSan\DC_NHACHUNGCU.cs" />
+    <Compile Include="Models\Ext\TaiSan\DC_NHARIENGLE.cs" />
+    <Compile Include="Models\Ext\TaiSan\DC_QUYENSOHUUTAISAN.cs" />
+    <Compile Include="Models\Ext\TaiSan\DC_TAISANGANLIENVOIDAT.cs" />
+    <Compile Include="Models\Ext\Thua\DC_HANCHE.cs" />
+    <Compile Include="Models\Ext\Thua\DC_TRANHCHAP.cs" />
+    <Compile Include="Models\Ext\Thua\DC_BD_THUA.cs" />
+    <Compile Include="Models\Ext\Thua\DC_MUCDICHSUDUNGDAT.cs" />
+    <Compile Include="Models\Ext\Thua\DC_QUYENQUANLYDAT.cs" />
+    <Compile Include="Models\Ext\Thua\DC_QUYENSUDUNGDAT.cs" />
+    <Compile Include="Models\Ext\Thua\DC_TAILIEUDODAC.cs" />
+    <Compile Include="Models\Ext\Thua\DC_THUADAT.cs" />
+    <Compile Include="Models\Ext\UpLoad_infor.cs" />
+    <Compile Include="Models\GD_BANDOGIADAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GD_BANGGIADAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GD_DMLOAIGIADAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GD_GIATHUADAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GD_HSDCGIADAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GD_KHUNGGIADAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GD_QDGIADAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HC_DMKVHC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HC_HUYEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HC_TINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HC_TINHTHAMSO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HSV_HUYEN_NGUOIDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HSV_LICHSU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HSV_TINH_NGUOIDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HSV_XA_NGUOIDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HS_HOSO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HS_LICHSU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HS_LIENKETTHUADAT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HS_TC_CHU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HS_TC_GCN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HS_THANHPHANHOSO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HS_VITRILUUTRU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HTV_MAUGIAYTO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HTV_NGUOIDUNG_CHUCNANG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HTV_NGUOIDUNG_CHUCVU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HTV_NGUOIDUNG_MENU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HTV_NGUOIDUNG_UNGDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_CAUHINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_CAUHINHNGUOIDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_CHUCNANG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_CHUCNANG_NHOMCHUCNANG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_LICHSUTRUYCAP.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_MAUGIAYTOKEMTHEOHS.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_MENU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_NGUOIDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_NGUOIDUNG_QUYEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_NHOMCHUCNANG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_NHOMCHUCNANG_MENU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_QUYEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_THONGBAO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_TOCHUC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_TOCHUC_NGUOIDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_TOCHUC_NHOMCHUCNANG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_UNGDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_XA_NGUOIDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HT_XA_TOCHUC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IdentityUser.cs" />
+    <Compile Include="Models\LCHSV_TAILIEUDODAC_LOAIBDDC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LOAIHOSO_DONVIAPDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LS_BD_GCN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LS_BD_THUA.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LS_BOHOSO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LS_TC_CHU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LS_TC_GCN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LS_TC_HOSO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LS_TC_THUA.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MplisModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MplisModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MplisModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MplisModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MplisModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MT_CHATLUONG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MT_DONVI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MT_GIOIHAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MT_HEQUYCHIEU.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MT_LANDDATA.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MT_METADATA.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MT_PHANPHOI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_BIEUBANG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_BIEUBANGCAPHUYEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_CAPHUYEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_CAPTINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_DINHKEMKCNCAPHUYEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_DINHKEMKCNCAPTINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_DINHKEMQUYHOACHCAPHUYEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_DINHKEMQUYHOACHCAPTINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_DINHKEMQUYHOACHCAPTW.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_DINHKEMQUYHOACHQPAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_KHUCHUCNANGCAPHUYEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_KHUCHUCNANGCAPHUYENGEO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_KHUCHUCNANGCAPTINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_KHUCHUCNANGCAPTINHGEO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_MDSD.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_MDSD_CT.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_QUYHOACHCAPHUYEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_QUYHOACHCAPTINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_QUYHOACHCAPTW.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_QUYHOACHQPAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QH_VUNGQUYHOACHCAPTINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_BUOCQT_CAUHINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_BUOCQUYTRINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_CONGVIECTHEOBUOC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_CONGVIECTHUCHIEN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_FILEDINHKEMHOSO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_GHICHUXULY.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_GIAYTOTHEOTTHC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_HOSOTIEPNHAN.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_HOSO_LANXULY.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_LUANCHUYEN_HOSO.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_NGAYNGHI.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_NHOMQUYTRINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_QUYTRINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_THUTUCHANHCHINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\QT_TTHC_QUYTRINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VIEWNG_HOGIADINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VIEWNG_NHOM.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VIEW_DONDK.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VIEW_NGUOIDUNG_HTXA.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VIEW_NGUONGOCTHUA.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VIEW_QT_NGUOIDUNG.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VIEW_QT_TTHC.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VIEW_TLDD_BDDC_XA.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VIEW_TOCHUC_DONVIHANHCHINH.cs">
+      <DependentUpon>MplisModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\ErrorVM.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <EntityDeploy Include="Models\MplisModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MplisModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\MplisModel.edmx.diagram">
+      <DependentUpon>MplisModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\MplisModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MplisModel.edmx</DependentUpon>
+      <LastGenOutput>MplisModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\MplisModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MplisModel.edmx</DependentUpon>
+      <LastGenOutput>MplisModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

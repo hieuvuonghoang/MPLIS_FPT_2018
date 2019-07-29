@@ -1,0 +1,69 @@
+﻿
+<div id="gcnnavtabID">
+    <ul class="nav nav-tabs nav-justified">
+        <li id="gcn-li1" class="active">
+            <a id="gcnopenTab1" data-toggle="tab" href="#gcn-tabID">Thông tin giấy chứng nhận</a>
+        </li>
+        <li id="gcn-li2">
+            <a id="gcnopenTab2" data-toggle="tab" href="#gcn-tabID">Thông tin nghĩa vụ tài chính</a>
+        </li>
+    </ul>
+    <div id="gcn-tabs-cont" class="tab-content">
+        <div id="gcn-tabID" class="tab-pane fade m-15 in active">
+        </div>
+    </div>
+</div>
+
+<div id="dialogformMAIN_SDDAT_Popup">
+    @*@{Html.RenderPartial("_Popup_QUYENSDDAT");}*@
+</div>
+<div id="dialogformMAIN_SHTAISAN_Popup">
+    @*@{Html.RenderPartial("_Popup_QUYENSHTAISAN");}*@
+</div>
+<div id="dialogformMAIN_CHU_Popup">
+</div>
+<script type="text/javascript">
+    @*function LuuGiayChungNhan_MAIN_TTCHUNG() {
+        //var xhlhs_gcnchon1 = $('#droplistxulyhsgcn').val();
+        var formdatabanquet = new FormData();
+        var fileInputbanquet = document.getElementById('chonfilebanquetid');
+        if (fileInputbanquet.files.length > 0) {
+            formdatabanquet.append(fileInputbanquet.files[0].name, fileInputbanquet.files[0]);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '@(Url.Action("ImportBanQuet", "XLHSGiayChungNhan"))');
+            xhr.send(formdatabanquet);
+        };
+        var formGiayChungNhan_MAIN_TTCHUNG = $('#FormGCN_Main_TTCHUNGID');
+        $.ajax({
+            type: "POST",
+            url: "/XLHSGiayChungNhan/Save_GCN_MAIN_TTCHUNG",
+            data: formGiayChungNhan_MAIN_TTCHUNG.serialize(),
+            success: function (html) {
+                alert("Lưu thông tin GCN thành công");
+            },
+        });
+    };*@
+    $(document).ready(function () {
+        $('#xlhsnavtabID .nav-tabs li').removeClass('active');
+        $('#bhs-li4').removeClass('disabled');
+        $('#bhs-li4').addClass('active');
+        $('#gcnopenTab1').on('click', function () {
+            $('#gcn-tabID').load('/XLHSGiayChungNhan/_GiayChungNhan_Main');
+        });
+        $('#gcnopenTab2').on("click", function () {
+            console.log('Tab2 Click!');
+        });
+        $('#gcnopenTab1').click();
+        $('#droplistxulyhsgcn').change(function () {
+            var xhlhs_gcnchon = $('#droplistxulyhsgcn').val();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSGiayChungNhan/_GiayChungNhan_Main",
+                data: { 'id_chon': xhlhs_gcnchon, },
+                success: function (html) {
+                    $('#divmainpanelID').html(html);
+                },
+            });
+        });
+    })
+</script>

@@ -1,0 +1,173 @@
+﻿@using AppCore.Models
+@model AppCore.Models.DangKyTaiSan
+@{using (Html.BeginForm("_DonDangKy_TSNHARIENGLE", "XLHSDangKy", FormMethod.Post, new { @id = "ThemMoiCongTrinhXayDung" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.CurCongTrinhXayDung.CONGTRINHXAYDUNGID)
+        @Html.HiddenFor(m => m.CurCongTrinhXayDung.uId)
+
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurCongTrinhXayDung.TENCONGTRINH,"Tên công trình", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurCongTrinhXayDung.TENCONGTRINH, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model => Model.tenxats, "Tên xã/phường", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.tenxats, new { @class = "form-control input-sm", @readonly = "true" })
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurCongTrinhXayDung.DIENTICHXAYDUNG,"Diện tích xây dựng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurCongTrinhXayDung.DIENTICHXAYDUNG, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurCongTrinhXayDung.DIENTICHSAN,"Diện tích xây sàn", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurCongTrinhXayDung.DIENTICHSAN, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurCongTrinhXayDung.NAMXAYDUNG,"Năm xây dựng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurCongTrinhXayDung.NAMXAYDUNG, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurCongTrinhXayDung.NAMHOANTHANH,"Năm hoàn thành", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurCongTrinhXayDung.NAMHOANTHANH, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurCongTrinhXayDung.HINHTHUCSOHUU,"Hình thức sở hữu", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurCongTrinhXayDung.HINHTHUCSOHUU, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurCongTrinhXayDung.THOIHANSOHUU,"Thời hạn sở hữu", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurCongTrinhXayDung.THOIHANSOHUU, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model => Model.CurCongTrinhXayDung.SOTANG, "Số tầng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurCongTrinhXayDung.SOTANG, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model => Model.CurCongTrinhXayDung.SOTANGHAM, "Số tầng hầm", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurCongTrinhXayDung.SOTANGHAM, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model => Model.CurCongTrinhXayDung.CAPHANG, "Cấp hạng", new { @class = "pull-right control-label" })
+                </div>
+                <div class="col-xs-3">
+                    @Html.TextBoxFor(m => m.CurCongTrinhXayDung.CAPHANG, new { @class = "form-control input-sm" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+                @Html.LabelFor(m => m.mota, "Mô tả", new { @class = "pull-right control-label" })
+            </div>
+            <div class="col-xs-9">
+                @Html.TextBoxFor(m => m.mota, new { @class = "form-control input-sm " })
+            </div>
+        </div>
+        <div class="row">
+            <div>
+                <div class="col-xs-3">
+                    @Html.LabelFor(Model=>Model.CurCongTrinhXayDung.DIACHI,"Địa chỉ",new { @class="pull-right control-label"})
+                </div>
+                <div class="col-xs-9">
+                    @Html.TextAreaFor(Model=>Model.CurCongTrinhXayDung.DIACHI,new { @class="form-control input-sm",@row="2"})
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    }
+}
+<script>
+    $(function () {
+        // thêm mới nhà riêng lẻ
+
+        $("#btnthemcongtrinh").on('click', function () {
+            // alert($('#CurNhaRiengLe_KETCAU').val());
+            var dondk = $('#DONDANGKYID').val();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/LuuCongTrinh",
+                data: { id: $('#CurCongTrinhXayDung_CONGTRINHXAYDUNGID').val(), tencongtrinh: $('#CurCongTrinhXayDung_TENCONGTRINH').val(), caphang: $('#CurCongTrinhXayDung_CAPHANG').val(), dientichxd: $('#CurCongTrinhXayDung_DIENTICHXAYDUNG').val(), dientichsan: $('#CurCongTrinhXayDung_DIENTICHSAN').val(), sotang: $('#CurCongTrinhXayDung_SOTANG').val(), sotangham: $('#CurCongTrinhXayDung_SOTANGHAM').val(), namxaydung: $('#CurCongTrinhXayDung_NAMXAYDUNG').val(), namhoanthanh: $('#CurCongTrinhXayDung_NAMHOANTHANH').val(), hinhthuc: $('#CurCongTrinhXayDung_HINHTHUCSOHUU').val(), thoihan: $('#CurCongTrinhXayDung_THOIHANSOHUU').val(), dondangkyid: dondk, taisanganvoidatid: $('#CurNhaRiengLe_uId').val() },
+                dataType: "html",
+                success: function (data) {
+                    //alert(data);
+                    $('#divdscongtrinh').html(data);
+                    alert('lưu thành công!!!');
+                    $('#CurCongTrinhXayDung_CONGTRINHXAYDUNGID').val(data.CurCongTrinhXayDung.CONGTRINHXAYDUNGID);
+                   // alert(data.CurNhaRiengLe.NHARIENGLEID);
+                    //$("#btnlammoinhariengle").click();
+                }
+            });
+        });
+        // làm mới nhà riêng lẻ
+        $("#btnlammoicongtrinh").on('click', function () {
+            $('#CurCongTrinhXayDung_CONGTRINHXAYDUNGID').val('');
+            $('#CurCongTrinhXayDung_TENCONGTRINH').val('');
+            $('#CurCongTrinhXayDung_CAPHANG').val('');
+            $('#CurCongTrinhXayDung_DIENTICHXAYDUNG').val('');
+            $('#CurCongTrinhXayDung_DIENTICHSAN').val('');
+            $('#CurCongTrinhXayDung_SOTANG').val('');
+            $('#CurCongTrinhXayDung_SOTANGHAM').val('');
+            $('#CurCongTrinhXayDung_NAMXAYDUNG').val('');
+
+            $('#CurCongTrinhXayDung_NAMHOANTHANH').val('');
+            $('#CurCongTrinhXayDung_HINHTHUCSOHUU').val('');
+            $('#CurCongTrinhXayDung_THOIHANSOHUU').val('');
+
+            $('#CurCongTrinhXayDung_uId').val('');
+        });
+    });
+
+</script>

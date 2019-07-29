@@ -1,0 +1,273 @@
+﻿@model AppCore.Models.QT_BUOCQUYTRINH
+
+<div class='modal fade' id='modalChiTietBuocQuyTrinh'>
+    <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'>Chỉnh sửa bước trong quy trình</h4>
+            </div>
+            <div class='modal-body p-0'>
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">@Html.Raw(Model.TENBUOC)</h3>
+                    </div>
+                    <div class="box-body">
+                        @Html.HiddenFor(model => model.BUOCQUYTRINHID)
+                        <div class="row">
+                            <div class="col-xs-2">
+                                @Html.LabelFor(model => model.THOIGIANQUYDINH, "Thời gian quy định", new { @class = "pull-right control-label" })
+                            </div>
+                            <div class="col-xs-10">
+                                @Html.TextBoxFor(model => model.THOIGIANQUYDINH, "", new { @class = "form-control input-sm" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                @Html.LabelFor(model => model.MOTA, "Mô tả", new { @class = "pull-right control-label" })
+                            </div>
+                            <div class="col-xs-10">
+                                @Html.TextAreaFor(model => model.MOTA, new { @class = "form-control", @rows = "3" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Danh sách công việc cần thực hiện</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                @Html.Label("", "STT", new { @class = "pull-right control-label" })
+                            </div>
+                            <div class="col-xs-2">
+                                @Html.TextBox("STT", "", new { @class = "form-control input-sm", @id = "STTID" })
+                            </div>
+                            <div class="col-xs-2">
+                                @Html.Label("", "Tên công việc", new { @class = "pull-right control-label", @id = "TENCONGVIEC" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.TextBox("TENCONGVIEC", "", new { @class = "form-control input-sm", @id = "TENCONGVIECID" })
+                            </div>
+                            <div class="col-xs-2">
+                                <button id="btnSaveCongViecID" type="button" class="btn btn-sm btn-default">Thêm mới</button>
+                            </div>
+                        </div>
+                        <table id="TableDSCongViecTheoBuocID" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>STT</th>
+                                    <th>Tên công việc</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.DSCongViecTheoBuoc != null && Model.DSCongViecTheoBuoc.Count > 0)
+                                {
+                                    foreach (var item in Model.DSCongViecTheoBuoc)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.CONGVIECTHEOBUOCID
+                                            </td>
+                                            <td>
+                                                @item.STT
+                                            </td>
+                                            <td>
+                                                @item.TENCONGVIEC
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class='modal-footer'>
+                <button type='button' class='btn btn-default btn-sm pull-right' onclick="SaveQuyTrinh_TTBuocQuyTrinh()">Lưu thông tin</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var curCONGVIECTHEOBUOCID = "";
+    var arrDataTable = [];
+    $(document).ready(function () {
+        var columns = [
+            { "data": "CONGVIECTHEOBUOCID" },
+            { "data": "STT" },
+            { "data": "TENCONGVIEC" },
+            { "data": null }
+        ]
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": [1],
+                "className": "text-right"
+            },
+            {
+                "targets": -1,
+                "render": function () {
+                    return "<button type='button' class='btn btn-xs btn-heading btnDel'>Xóa</button>";
+                },
+                "className": "text-center"
+            }
+        ]
+        var options = {
+            "pageLength": 5,
+            "lengthChange": false,
+            "ordering": false,
+            "info": false,
+            "searching": false,
+            "autoWidth": false,
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+            },
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "<'row p-0'<'col-sm-12 p-0'tr>><'row p-0'<'col-sm-6 p-0'><'col-sm-6 p-0'p>>"
+        }
+
+        var TableDSCongViecTheoBuocID = $('#TableDSCongViecTheoBuocID').DataTable(options);
+
+        var CONGVIECTHEOBUOCID = 1;
+
+        TableDSCongViecTheoBuocID.rows().nodes().on('click', 'tbody tr', function () {
+            if (TableDSCongViecTheoBuocID.rows().nodes().length > 0) {
+                if (TableDSCongViecTheoBuocID.row($(this)).data().CONGVIECTHEOBUOCID != curCONGVIECTHEOBUOCID) {
+                    curCONGVIECTHEOBUOCID = TableDSCongViecTheoBuocID.row($(this)).data().CONGVIECTHEOBUOCID;
+                    $('#btnSaveCongViecID').text('Cập nhật');
+                    XemTTCongViec(TableDSCongViecTheoBuocID.row($(this)).data());
+                } else {
+                    curCONGVIECTHEOBUOCID = "";
+                    $('#STTID').val("");
+                    $('#TENCONGVIECID').val("");
+                    $('#btnSaveCongViecID').text('Thêm mới');
+                }
+                if ($(TableDSCongViecTheoBuocID.row(this).node()).attr('class').indexOf('activerow') != -1) {
+                    $(TableDSCongViecTheoBuocID.row(this).node()).removeClass('activerow');
+                } else {
+                    $(TableDSCongViecTheoBuocID.rows().nodes()).removeClass('activerow');
+                    $(TableDSCongViecTheoBuocID.row(this).node()).addClass('activerow');
+                }
+            }
+        })
+
+        TableDSCongViecTheoBuocID.rows().nodes().on('click', 'tbody tr button', function (event) {
+            event.stopPropagation();
+        })
+
+        TableDSCongViecTheoBuocID.rows().nodes().on('click', 'tbody tr .btnDel', function (event) {
+            XoaCongViec(TableDSCongViecTheoBuocID, TableDSCongViecTheoBuocID.row($(this).parents('tr')).data(), TableDSCongViecTheoBuocID.row($(this).parents('tr')));
+        })
+
+        function XoaCongViec(table, rowData, rowDel) {
+            if (confirm("Xác nhận xóa công việc?")) {
+                var congViecTheoBuocID = rowData.CONGVIECTHEOBUOCID;
+                var index = -1;
+                for (var tempCongViec in arrDataTable) {
+                    var objCongViec = arrDataTable[tempCongViec];
+                    if (congViecTheoBuocID == objCongViec.CONGVIECTHEOBUOCID) {
+                        //console.log('Trùng ID');
+                        index = tempCongViec;
+                        break;
+                    }
+                }
+                arrDataTable.splice(index, 1);
+                //console.log(arrDataTable);
+                table
+                    .row(rowDel)
+                    .remove()
+                    .draw();
+                //var i = 1;
+                //table.rows().every(function () {
+                //    var d = this.data();
+                //    d.STT = i++;
+                //    d.STT += ".";
+                //    table.row(this).data(d);
+                //})
+                //table.draw();
+            }
+        }
+
+        function XemTTCongViec(rowData) {
+            $('#STTID').val(rowData.STT);
+            $('#TENCONGVIECID').val(rowData.TENCONGVIEC);
+        }
+
+        $.each(TableDSCongViecTheoBuocID.rows().nodes(), function () {
+            var tempObj = TableDSCongViecTheoBuocID.row(this).data();
+            arrDataTable.push(tempObj);
+        })
+
+        //console.log(arrDataTable);
+
+        $('#btnSaveCongViecID').on('click', function () {
+            if (curCONGVIECTHEOBUOCID == "") {
+                console.log('Thêm mới!');
+                var congViec = { CONGVIECTHEOBUOCID: CONGVIECTHEOBUOCID, STT: $('#STTID').val(), TENCONGVIEC: $('#TENCONGVIECID').val() };
+                CONGVIECTHEOBUOCID++;
+                arrDataTable.push(congViec);
+                TableDSCongViecTheoBuocID.row.add(congViec).draw();
+                console.log(arrDataTable);
+            } else {
+                console.log('Cập nhật');
+                for (var tempCongViec in arrDataTable) {
+                    var objCongViec = arrDataTable[tempCongViec];
+                    if (curCONGVIECTHEOBUOCID == objCongViec.CONGVIECTHEOBUOCID) {
+                        console.log('Trùng ID');
+                        objCongViec.STT = $('#STTID').val();
+                        objCongViec.TENCONGVIEC = $('#TENCONGVIECID').val();
+                        $.each(TableDSCongViecTheoBuocID.rows().nodes(), function () {
+                            var tempObj = TableDSCongViecTheoBuocID.row(this).data();
+                            if (tempObj.CONGVIECTHEOBUOCID == curCONGVIECTHEOBUOCID) {
+                                tempObj.STT = $('#STTID').val();
+                                tempObj.TENCONGVIEC = $('#TENCONGVIECID').val();
+                                TableDSCongViecTheoBuocID.row(this).data(tempObj);
+                                TableDSCongViecTheoBuocID.draw();
+                                return false;
+                            }
+                        })
+                        break;
+                    }
+                }
+            }
+        })
+    })
+
+    function SaveQuyTrinh_TTBuocQuyTrinh() {
+        var obj = { BUOCQUYTRINHID: $('#BUOCQUYTRINHID').val(), THOIGIANQUYDINH: $('#THOIGIANQUYDINH').val(), MOTA: $('#MOTA').val(), DSCongViecTheoBuoc: arrDataTable };
+
+        $.ajax({
+            type: "POST",
+            url: "/DiagramWorkflow/_Save_QuyTrinh_TTBuocQuyTrinh",
+            data: { dataJSON: JSON.stringify(obj) },
+            dataType: "json",
+            success: function (result) {
+                if (result.err) {
+                    alert("Lưu thông tin không thành công, xảy ra lỗi!");
+                } else {
+                    var Table_BUOCQUYTRINH_ID = $('#Table_BUOCQUYTRINH_ID').DataTable();
+                    $.each(Table_BUOCQUYTRINH_ID.rows().nodes(), function () {
+                        var curRow = Table_BUOCQUYTRINH_ID.row(this).data();
+                        if (curRow.BUOCQUYTRINHID == result.BUOCQUYTRINHID) {
+                            result.STT = curRow.STT;
+                            result.TENBUOC = curRow.TENBUOC;
+                            Table_BUOCQUYTRINH_ID.row(this).data(result).draw();
+                            return false;
+                        }
+                    })
+                    alert("Lưu thông tin cho bước trong quy trình thành công!");
+                }
+            }
+        })
+    }
+</script>

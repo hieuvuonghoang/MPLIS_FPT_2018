@@ -1,0 +1,46 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.VM_XuLyHoSo_DK
+<table id="table_THUADAT" class="table table-bordered">
+    <thead>
+        <tr>
+            <th class="t50"><input type="checkbox" id="checkall_ThuaTS" /></th>
+            <th class="t50">STT</th>
+            <th class="t100">Xã/Phường</th>
+            <th class="t100">Số tờ bản đồ</th>
+            <th class="t100">Stt thửa đất</th>
+        </tr>
+    </thead>
+    @{
+        int rtdtable = 0;
+        if (Model != null)
+        {
+            if (Model.TAISAN_DANGKY != null)
+            {
+                foreach (var itemtd in Model.THUA_DANGKY)
+                {
+                    rtdtable = rtdtable + 1;
+                    <tr data-id="@itemtd.THUADATID">
+                        <td align="center">
+                            <input type="checkbox" name="Array_ThuaDat" id="@itemtd.THUADATID" value="@itemtd.THUADATID"
+                                   onclick="cacl(@itemtd.THUADATID);" />
+                        </td>
+                        <td align="center">@rtdtable</td>
+                        <td align="center">@itemtd.TenXaPhuong</td>
+                        <td align="center">@itemtd.SHToBanDo</td>
+                        <td align="center">@itemtd.STTThua</td>
+                    </tr>
+                }
+            }
+        }
+    }
+</table>
+<script>
+    $(document).ready(function () {
+        table_checkthuats = InitDataTableXLHS($('#table_THUADAT'));
+        ProcessCheckBox(table_checkthuats, $('#checkall_ThuaTS'));
+    });
+
+
+</script>
+
+
+

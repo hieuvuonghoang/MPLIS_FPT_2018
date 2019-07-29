@@ -1,0 +1,64 @@
+﻿@using AppCore.Models
+@model AppCore.Models.DC_DIACHI
+<div class='modal fade' id='modalformDiaChi'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title' id="title_popup_diachi">Địa chỉ</h4>
+            </div>
+            <div class='modal-body' id="modalformDiaChi_body">
+                @Html.Partial("_ChiTietDiaChi")
+            </div>
+            <div class='modal-footer' style='text-align:center;'>
+                <button type='submit' id="btnthemdiachi" class='t100 btn btn-primary btn-sm pull-right'>Lưu</button>
+                <button type='submit' id="btnlammoidiachi" class='t100 btn btn-primary btn-sm pull-left'>Làm mới</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#btnthemdiachi').on("click", function () {
+            $('#drpxa').prop("disabled", false);
+            $('#drphuyen').prop("disabled", false);
+            var formdata = $('#pop_up_themdiachi').serializeArray();
+            $.ajax({
+                type: "POST",
+                url: "/XLHSDangKy/ThemDiaChi",
+                data: formdata,
+                success: function (data) {
+                    if ($("#drpchontaisan").val() == "1") {
+                        $('#CurNhaRiengLe_DIACHI').html(data);
+                    }
+                    else if ($("#drpchontaisan").val() == "4") {
+                    }
+                    else if ($("#drpchontaisan").val() == "6") {
+                        $('#CurCongTrinhXayDung_DIACHI').html(data);
+                    }
+                    else if ($("#drpchontaisan").val() == "7") {
+                        $('#CurCongTrinhNgam_DIACHI').html(data);
+                    }
+                    else if ($("#drpchontaisan").val() == "8") {
+                        $('#CurHangMucCongTrinh_DIACHIID').html(data);
+                    }
+                    else if ($("#drpchontaisan").val() == "9") {
+                        $('#CurRungTrong_DIACHI').html(data);
+                    }
+                    else if ($("#drpchontaisan").val() == "10") {
+                        $('#CurCayLauNam_DIACHI').html(data);
+                    }
+                }
+            });
+        });
+        $('#btnlammoidiachi').on("click", function () {
+            $.ajax({
+                type: "GET",
+                url: "/XLHSDangKy/LoadDiaChi",
+                success: function (html) {
+                    $('#modalformDiaChi_body').html(html);
+                }
+            });
+        });
+    });
+</script>

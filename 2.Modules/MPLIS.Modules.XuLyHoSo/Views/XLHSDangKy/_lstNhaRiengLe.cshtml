@@ -1,0 +1,124 @@
+﻿@model AppCore.Models.DangKyTaiSan
+@Html.HiddenFor(m => m.CurNhaRiengLe.NHARIENGLEID, new { @class = "form-control input-sm" })
+@Html.HiddenFor(m => m.CurNhaRiengLe.uId, new { @class = "form-control input-sm" })
+<table id="table_nhariengle" class="bordered">
+    <thead>
+        <tr>
+            <th class="t50" hidden="true">NHARIENGLEID</th>
+            <th class="t50">STT</th>
+            <th class="t50">Kết cấu</th>
+            <th class="t50">Cấp hạng</th>
+            <th class="t50">Diện tích xây dựng</th>
+            <th class="t50">Diện tích sàn</th>
+            <th class="t50">Số tầng</th>
+            <th class="t200">Địa chỉ</th>
+            <th class="50" hidden="true">taisanganlienvoidatid</th>
+            <th class="t50">Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int rdsgcntable = 0;
+            if (Model != null)
+            {
+                if (Model.lstNhaRiengLe != null)
+                {
+                    foreach (var item in Model.lstNhaRiengLe)
+                    {
+
+                        rdsgcntable = rdsgcntable + 1;
+                        <tr data-id="@item.NHARIENGLEID">
+                            <td hidden="true">
+                                @item.NHARIENGLEID
+                            </td>
+                            <td>
+                                @rdsgcntable
+                            </td>
+                            <td>
+                                @item.KETCAU
+                            </td>
+                            <td>
+                                @item.CAPHANG
+                            </td>
+                            <td>
+                                @item.DIENTICHXAYDUNG
+                            </td>
+                            <td>
+                                @item.DIENTICHSAN
+                            </td>
+                            <td>
+                                @item.SOTANG
+                            </td>
+                            <td>
+                                @item.DIACHI
+                            </td>
+                            <td hidden="true">
+                                @item.uId
+                            </td>
+                            <td>
+                                <input type="button" value="Chi tiết" onclick="chitietnhariengle(this)" />
+                                <input type="button" value="Xóa" onclick="xoanhariengle(this)" />
+                            </td>
+
+                        </tr>
+
+                    }
+                }
+            }
+        }
+    </tbody>
+</table>
+<script>
+    //xóa nhà riêng lẻ
+    function xoanhariengle(oButton) {
+
+        var empTab = document.getElementById('table_nhariengle');
+        var index = oButton.parentNode.parentNode.rowIndex;
+        // alert(index);
+        var nhariengleid = empTab.rows[index].cells[0].innerHTML;
+        var dondk = $('#DONDANGKYID').val();
+        empTab.deleteRow(oButton.parentNode.parentNode.rowIndex);
+        $.ajax({
+            type: "POST",
+            url: "/XLHSDangKy/XOA_NHARIENGLE",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({ nhaid: nhariengleid, dondangky_id: dondk }),
+            success: function (data) {
+                if (data === "true") {
+                    alert("Xóa nhà gắn đăng ký thành công!");
+                }
+                else {
+                    alert("Có lỗi xảy ra!");
+                }
+            },
+        });
+    }
+    //chi tiết nhà riêng lẻ
+    function chitietnhariengle(oButton) {
+
+        var empTab = document.getElementById('table_nhariengle');
+        var index = oButton.parentNode.parentNode.rowIndex;
+        // alert(index);
+        var nhariengleid = empTab.rows[index].cells[0].innerHTML;
+        var ketcau = empTab.rows[index].cells[1].innerHTML;
+        var caphang = empTab.rows[index].cells[2].innerHTML;
+        var dientichxd = empTab.rows[index].cells[3].innerHTML;
+        var dientichsan = empTab.rows[index].cells[4].innerHTML;
+        var sotang = empTab.rows[index].cells[5].innerHTML;
+        var sotangham = empTab.rows[index].cells[6].innerHTML;
+        var diachi = empTab.rows[index].cells[7].innerHTML;
+        var id = empTab.rows[index].cells[8].innerHTML;
+      //  var dondk = $('#DONDANGKYID').val();
+        //alert(nhariengleid);
+        $('#CurNhaRiengLe_NHARIENGLEID').val(nhariengleid.trim());
+        $('#CurNhaRiengLe_KETCAU').val(ketcau.trim());
+        $('#CurNhaRiengLe_CAPHANG').val(caphang.trim());
+        $('#CurNhaRiengLe_DIENTICHXAYDUNG').val(dientichxd.trim());
+        $('#CurNhaRiengLe_DIENTICHSAN').val(dientichsan.trim());
+        $('#CurNhaRiengLe_SOTANG').val(sotang.trim());
+        $('#CurNhaRiengLe_SOTANGHAM').val(sotangham.trim());
+        $('#CurNhaRiengLe_DIACHI').val(diachi.trim());
+        $('#CurNhaRiengLe_uId').val(id.trim());
+        
+    }
+</script>

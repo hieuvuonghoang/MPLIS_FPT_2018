@@ -1,0 +1,136 @@
+﻿@model MPLIS.Libraries.Data.XuLyHoSo.Models.DSChuDonVM
+
+<div class='modal fade' id='modalDSChuID'>
+    <div class='modal-dialog modal-lg'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                <h4 class='modal-title'>Danh sách chủ trong đăng ký</h4>
+            </div>
+            <div class='modal-body p-10'>
+                <table id="TablePopUpDSChuID" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th>#</th>
+                            <th>Loại chủ</th>
+                            <th>Tên chủ</th>
+                            <th>CMT/Hộ chiếu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.DSDangKyChu != null && Model.DSDangKyChu.Count > 0)
+                        {
+                            int sTT = 0;
+                            foreach (var item in Model.DSDangKyChu)
+                            {
+                                sTT++;
+                        <tr>
+                            <td>@item.NGUOIID</td>
+                            <td></td>
+                            <td>@sTT.</td>
+                            <td>@item.Chu_TenLoaiChu</td>
+                            <td>@item.Chu_HoTen</td>
+                            <td>@item.Chu_CMT</td>
+                        </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <button id="TablePopUpDSChuID_btnSave" type='button' class='btn btn-default btn-sm pull-left'><i class='fa fa-check'></i> Xong</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var columns = [
+            { "data": "NGUOIID" },
+            { "data": null },
+            { "data": "STT" },
+            { "data": "TENLOAICHU" },
+            { "data": "TENCHU" },
+            { "data": "CMT" }
+        ]
+
+        var columnDefs = [
+            {
+                "targets": 0,
+                "visible": false
+            },
+            {
+                "targets": 1,
+                "render": function (data) {
+                    if ('@Model.NGUOIID' == data.NGUOIID) {
+                        return "<input type='radio' checked/>";
+                    } else {
+                        return "<input type='radio' />";
+                    }
+                },
+                "className": "text-center"
+            },
+            {
+                "targets": 2,
+                "className": "text-right"
+            }
+        ]
+
+        var options = {
+            "pageLength": 5,
+            "ordering": false,
+            "autoWidth": false,
+            "columns": columns,
+            "columnDefs": columnDefs,
+            "dom": "t<'row p-0'<'col-xs-6 p-0'<'row p-0'<'col-xs-6 p-0'<'#TablePopUpDSChuID_divBTSave'>><'col-xs-6 p-0' >>><'col-xs-6 p-0'<'pull-right'p>>>",
+            "initComplete": function () {
+                initComplete();
+            }
+        }
+
+        function initComplete() {
+            $('#TablePopUpDSChuID_btnSave').appendTo($('#TablePopUpDSChuID_divBTSave'));
+        }
+
+        var TablePopUpDSChuID = $('#TablePopUpDSChuID').DataTable(options);
+
+        TablePopUpDSChuID.rows().nodes().on('click', 'tbody tr input', function () {
+            $.each(TablePopUpDSChuID.rows().nodes(), function () {
+                $('[type=radio]', this).prop('checked', false);
+            });
+            $(this).prop('checked', true);
+        })
+
+        $('#TablePopUpDSChuID_btnSave').on('click', function () {
+            var NGUOIID = null;
+            $.each(TablePopUpDSChuID.rows().nodes(), function () {
+                if ($('[type=radio]', this).is(':checked')) {
+                    NGUOIID = TablePopUpDSChuID.row(this).data().NGUOIID
+                    return false;
+                }
+            });
+            if (NGUOIID == null) {
+                alert("Vui lòng chọn một chủ trong danh sách!");
+            } else if (NGUOIID == '@Model.NGUOIID') {
+                $('#modalDSChuID').modal('hide');
+            } else {
+                if ('@Model.NGUOIID' == '') {
+                    $('#formGiayChungNhanID [name = NGUOIID]').val(NGUOIID);
+                    $("#divGiayChungNhanID").children().not('#tabGCN_TTChung_ID').remove();
+                    alert('Sau khi thay đổi chủ bạn cần lưu thông tin GCN để tải dữ liệu liên quan!');
+                    $('#modalDSChuID').modal('hide');
+                } else {
+                    if (confirm('Việc thay đổi chủ trên GCN sẽ ảnh hưởng tới các dữ liệu liên quan?\nSau khi thay đổi chủ bạn cần lưu thông tin GCN để tải dữ liệu liên quan!')) {
+                        $('#formGiayChungNhanID [name = NGUOIID]').val(NGUOIID);
+                        $("#divGiayChungNhanID").children().not('#tabGCN_TTChung_ID').remove();
+                        $('#modalDSChuID').modal('hide');
+                    }
+                }
+            }
+        })
+
+    })
+</script>

@@ -1,0 +1,56 @@
+﻿@model MPLIS.Libraries.Data.SSO.Models.SSOUserLoginInfors
+
+<a href='#' class='dropdown-toggle' data-toggle='dropdown'>
+    <!-- The user image in the navbar-->
+    @{
+        if (!string.IsNullOrEmpty(Convert.ToString(Model.User.ANHBIEUTUONG)))
+        {
+            <img src='data:image/png;base64,
+                    @Convert.ToBase64String(Model.User.ANHBIEUTUONG)' class='user-image' alt='!' />
+        }
+        else if (Model.User.GIOITINH == "1")
+        {
+            <img src='/Images/AnhDaiDienMacDinh/AnhDaiDienNam.jpg' class='user-image' />
+        }
+        else
+        {
+            <img src='/Images/AnhDaiDienMacDinh/AnhDaiDienNu.jpg' class='user-image' alt='!' />
+        }
+    }
+    <!-- hidden-xs hides the username on small devices so only the image appears. -->
+    <span>@Model.User.HOTENNGUOIDUNG</span>
+</a>
+<ul class='dropdown-menu'>
+    <!-- The user image in the menu -->
+    <li class='user-header' style='background-color:#C6DB9B;'>
+        @{ if (Model.User.ANHBIEUTUONG != null)
+            {
+                <img src='data:image/png;base64,@Convert.ToBase64String(Model.User.ANHBIEUTUONG)' class='img-circle' alt='Chưa có ảnh đại diện !' data-toggle='modal' data-target='#ThongTinCaNhan' />
+            }
+            else
+            {
+                if (Model.User.GIOITINH == "1")
+                {
+                    <img src='/Images/AnhDaiDienMacDinh/AnhDaiDienNam.jpg' class='img-circle' alt='Chưa có ảnh đại diện !' data-toggle='modal' data-target='#ThongTinCaNhan' />
+                }
+                else
+                {
+                    <img src='/Images/AnhDaiDienMacDinh/AnhDaiDienNu.jpg' class='img-circle' alt='Chưa có ảnh đại diện !' data-toggle='modal' data-target='#ThongTinCaNhan' />
+                }
+            }
+        }
+        <p>
+            <a href='#' class='link' data-toggle='modal' data-target='#ThongTinCaNhan'>@Model.User.HOTENNGUOIDUNG</a>
+            <small>@Model.User.TENDANGNHAP : tên đăng nhập hệ thống</small>
+        </p>
+    </li>
+    <!-- Menu Body -->
+    <!-- Menu Footer-->
+    <li class='user-footer'>
+        <div style="margin-left:10px;">
+            <a href="#" class='btn btn-xs btn-heading' data-toggle='modal' data-target='#ThongTinCaNhan' style="font-size:14px;">Cấu hình</a>
+            <a href="#" class='btn btn-xs btn-heading' data-toggle='modal' data-target='#DoiMatKhau' id='doimkbt' style="font-size:14px;">Đổi mật khẩu</a>
+            <a href="/Home/Logout" class='btn btn-xs btn-heading' style="font-size:14px;">Đăng xuất</a>
+        </div>
+    </li>
+</ul>

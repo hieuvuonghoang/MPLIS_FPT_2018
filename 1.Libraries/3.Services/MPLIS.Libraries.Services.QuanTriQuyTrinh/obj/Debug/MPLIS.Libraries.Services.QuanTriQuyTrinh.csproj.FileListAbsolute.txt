@@ -1,0 +1,15 @@
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\bin\Debug\MPLIS.Libraries.Services.QuanTriQuyTrinh.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\bin\Debug\MPLIS.Libraries.Services.QuanTriQuyTrinh.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\bin\Debug\AppCore.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\bin\Debug\AutoMapper.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\bin\Debug\EntityFramework.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\bin\Debug\EntityFramework.SqlServer.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\bin\Debug\Newtonsoft.Json.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\bin\Debug\AppCore.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\bin\Debug\AutoMapper.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\bin\Debug\EntityFramework.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\bin\Debug\EntityFramework.SqlServer.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\bin\Debug\Newtonsoft.Json.xml
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\obj\Debug\MPLIS.Libraries.Services.QuanTriQuyTrinh.dll
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\obj\Debug\MPLIS.Libraries.Services.QuanTriQuyTrinh.pdb
+D:\MPLIS\MPLIS_FPT_2018\1.Libraries\3.Services\MPLIS.Libraries.Services.QuanTriQuyTrinh\obj\Debug\MPLIS.Libraries.Services.QuanTriQuyTrinh.csprojResolveAssemblyReference.cache
